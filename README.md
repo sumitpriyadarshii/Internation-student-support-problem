@@ -1,7 +1,4 @@
 # Far From Home – International Student Support Platform
-> **Course:** INT257 – Modern Web Application Development  
-> **Project P11:** Far From Home  
-> **Tagline:** *"Your new home starts here."*
 
 ---
 

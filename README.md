@@ -344,8 +344,3 @@ All 53 routes (public pages, authenticated student pages, administrative screens
 
 ---
 
-## 14. Academic Course Information
-
-- **Course**: INT257 – Modern Web Application Development
-- **Project P11**: Far From Home – International Student Support Platform
-- **License**: MIT

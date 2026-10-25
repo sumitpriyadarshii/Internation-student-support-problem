@@ -120,10 +120,9 @@ export default function RegisterPage() {
 
       if (signInRes?.error) {
         toast.info('Account created! Please sign in with your credentials.');
-        router.push('/login');
+        window.location.href = '/login';
       } else {
-        router.push('/onboarding');
-        router.refresh();
+        window.location.href = '/onboarding';
       }
     } catch (err: any) {
       console.error('Registration exception:', err);

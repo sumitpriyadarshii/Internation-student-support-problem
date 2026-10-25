@@ -136,6 +136,10 @@ export default function OnboardingPage() {
           const json = await res.json();
           if (json.success && json.data) {
             const data = json.data;
+            if (data.onboardingCompleted) {
+              window.location.href = '/dashboard';
+              return;
+            }
             if (data.name) setValue('name', data.name);
             if (data.profile?.profileImage) setValue('profileImage', data.profile.profileImage);
             if (data.profile?.countryOfOrigin) setValue('countryOfOrigin', data.profile.countryOfOrigin);
@@ -298,12 +302,12 @@ export default function OnboardingPage() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         toast.success('Welcome to Far From Home! Your profile is ready.');
-        // Update session so middleware recognises onboardingCompleted
         if (updateSession) {
-          await updateSession({ onboardingCompleted: true });
+          try {
+            await updateSession({ onboardingCompleted: true });
+          } catch {}
         }
-        router.push('/dashboard');
-        router.refresh();
+        window.location.href = '/dashboard';
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Something went wrong';

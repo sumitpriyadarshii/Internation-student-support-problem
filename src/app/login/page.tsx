@@ -71,8 +71,7 @@ function LoginForm() {
         setIsLoading(false);
       } else {
         toast.success('Welcome back to Far From Home!');
-        router.push(callbackUrl);
-        router.refresh();
+        window.location.href = callbackUrl;
       }
     } catch (err: any) {
       console.error('Sign-in error:', err);

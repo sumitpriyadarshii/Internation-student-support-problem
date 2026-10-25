@@ -24,12 +24,9 @@ export const authConfig = {
       ];
       const isStudentRoute = studentRoutes.some((r) => pathname.startsWith(r));
 
+      // Protect student routes (must be logged in)
       if (isStudentRoute && !isLoggedIn) {
         return false;
-      }
-
-      if (isStudentRoute && isLoggedIn && !isOnboardingCompleted && !pathname.startsWith('/onboarding')) {
-        return Response.redirect(new URL('/onboarding', nextUrl));
       }
 
       if (pathname.startsWith('/admin') && !isAdmin) {

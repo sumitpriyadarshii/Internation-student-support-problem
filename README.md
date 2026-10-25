@@ -292,7 +292,15 @@ All 53 routes (public pages, authenticated student pages, administrative screens
    - `AUTH_SECRET`: A secure 32+ character string.
    - `AUTH_URL`: Your production domain (e.g. `https://far-from-home.vercel.app`).
    - `AUTH_TRUST_HOST`: `true`
-6. Click **Deploy**. Vercel will automatically build and serve the application.
+6. In MongoDB Atlas, allow connections from Vercel by configuring the deployment's
+   outbound access as permitted by your Atlas network access policy.
+7. Click **Deploy**. Vercel will automatically run `npm run build` and serve the application.
+8. If you want the sample data, run `npm run seed` locally with the production
+   `MONGODB_URI` before signing in. Do not add production credentials to Git.
+
+Vercel deployments do not need a committed `vercel.json`; the Next.js framework
+preset detects the build and routing configuration automatically. Keep
+`.env.local` and the `.vercel` directory untracked.
 
 ---
 
@@ -340,4 +348,3 @@ All 53 routes (public pages, authenticated student pages, administrative screens
 - **Privacy Controls**: Contact information is shielded until connection requests are mutually accepted. Students can adjust directory visibility in Settings.
 
 ---
-

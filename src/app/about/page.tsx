@@ -80,98 +80,82 @@ const TEAM_MEMBERS = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-[#060913] text-slate-100">
       <Navbar />
 
-      <main className="flex-1">
+      <main className="flex-1 pt-24 sm:pt-28">
         {/* HERO / MISSION BANNER */}
-        <section className="relative py-16 sm:py-24 bg-gradient-to-b from-slate-900 to-slate-950 overflow-hidden border-b border-slate-800">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+        <section className="relative py-16 sm:py-24 overflow-hidden border-b border-white/[0.08]">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-indigo-600/15 via-violet-600/10 to-cyan-500/15 rounded-full blur-[140px] pointer-events-none" />
+          <div className="absolute inset-0 bg-grid-cyber opacity-30 pointer-events-none" />
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span className="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-teal-400 bg-teal-500/10 border border-teal-500/20">
+            <span className="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-500/10 border border-cyan-500/20">
               Our Story & Mission
             </span>
-            <h1 className="mt-4 text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
-              Bridging the Distance to Your Dreams
+            <h1 className="mt-4 text-4xl sm:text-6xl font-black text-white tracking-tight">
+              Bridging the Distance to Your <span className="text-gradient-aurora">Dreams</span>
             </h1>
-            <p className="mt-6 text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="mt-6 text-base sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
               Far From Home was created with a single purpose: to ensure no international student ever feels stranded, confused, or alone in a new country.
             </p>
           </div>
         </section>
 
         {/* MISSION & VISION */}
-        <section className="py-16 sm:py-24 bg-slate-950">
+        <section className="py-16 sm:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-              <div className="p-8 sm:p-10 rounded-3xl bg-slate-900 border border-slate-800 relative">
-                <div className="w-12 h-12 rounded-2xl bg-teal-500/10 text-teal-400 flex items-center justify-center border border-teal-500/20 mb-6">
+              <div className="p-8 sm:p-10 rounded-3xl glass-panel glass-card-specular border border-white/10 relative">
+                <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30 mb-6">
                   <Target className="w-6 h-6" />
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-                  Our Mission
-                </h2>
-                <p className="text-slate-300 leading-relaxed text-base">
-                  To eliminate the stress, cultural shock, and bureaucratic disorientation of studying abroad by providing verified, personalized knowledge, milestone tracking, and a compassionate peer community.
+                <h2 className="text-2xl font-black text-white mb-4">Our Mission</h2>
+                <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                  To democratize access to reliable, personalized relocation support for every international scholar. We believe moving abroad for higher education is one of the bravest leaps a young person can take, and they deserve a compassionate, tech-enabled safety net at every step.
                 </p>
-                <div className="mt-6 flex items-center gap-2 text-teal-400 text-sm font-medium">
-                  <Sparkles className="w-4 h-4" />
-                  Every student deserves a smooth landing.
-                </div>
               </div>
 
-              <div className="p-8 sm:p-10 rounded-3xl bg-slate-900 border border-slate-800 relative">
-                <div className="w-12 h-12 rounded-2xl bg-sky-500/10 text-sky-400 flex items-center justify-center border border-sky-500/20 mb-6">
-                  <Globe2 className="w-6 h-6" />
+              <div className="p-8 sm:p-10 rounded-3xl glass-panel glass-card-specular border border-white/10 relative">
+                <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center border border-cyan-500/30 mb-6">
+                  <Sparkles className="w-6 h-6" />
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-                  Our Vision
-                </h2>
-                <p className="text-slate-300 leading-relaxed text-base">
-                  A borderless educational landscape where international students thrive academically, socially, and emotionally — feeling confident and connected from day one to graduation.
+                <h2 className="text-2xl font-black text-white mb-4">Our Vision</h2>
+                <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                  A borderless world where international students arrive at their universities feeling fully prepared, financially savvy, culturally welcomed, and connected to an inspiring global network of peers who lift each other up.
                 </p>
-                <div className="mt-6 flex items-center gap-2 text-sky-400 text-sm font-medium">
-                  <GraduationCap className="w-4 h-4" />
-                  Building global citizenship together.
-                </div>
               </div>
             </div>
           </div>
         </section>
 
         {/* CORE VALUES */}
-        <section id="values" className="py-16 sm:py-24 bg-slate-900 border-y border-slate-800">
+        <section className="py-16 sm:py-24 border-t border-white/[0.08] bg-slate-950/60">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-teal-400 bg-teal-500/10 border border-teal-500/20">
-                Pillars of Our Work
+              <span className="text-xs font-bold uppercase tracking-wider text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">
+                Guiding Principles
               </span>
-              <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                The Values That Drive Far From Home
+              <h2 className="mt-4 text-3xl sm:text-5xl font-black text-white tracking-tight">
+                What We Stand For
               </h2>
-              <p className="mt-4 text-base sm:text-lg text-slate-400">
-                We believe in ethical support, student privacy, and genuine peer connections.
-              </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {VALUES.map((val) => {
-                const IconComponent = val.icon;
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {VALUES.map((val, idx) => {
+                const Icon = val.icon;
                 return (
                   <div
-                    key={val.title}
-                    className="p-6 rounded-2xl bg-slate-950 border border-slate-800/80 hover:border-teal-500/40 transition-all flex flex-col"
+                    key={idx}
+                    className="p-6 rounded-3xl glass-panel border border-white/10 flex flex-col justify-between hover:border-indigo-500/40 transition-all group"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center border border-teal-500/20 mb-5">
-                      <IconComponent className="w-6 h-6" />
+                    <div>
+                      <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-lg font-bold text-white mb-2">{val.title}</h3>
+                      <p className="text-xs text-slate-400 leading-relaxed">{val.description}</p>
                     </div>
-                    <h3 className="text-lg font-bold text-white mb-2">
-                      {val.title}
-                    </h3>
-                    <p className="text-sm text-slate-400 leading-relaxed flex-1">
-                      {val.description}
-                    </p>
                   </div>
                 );
               })}
@@ -179,63 +163,35 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* TEAM SECTION */}
-        <section id="team" className="py-16 sm:py-24 bg-slate-950">
+        {/* TEAM MEMBERS */}
+        <section className="py-16 sm:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-teal-400 bg-teal-500/10 border border-teal-500/20">
-                The Builders
+              <span className="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">
+                Built by Scholars
               </span>
-              <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                Built by Former International Students
+              <h2 className="mt-4 text-3xl sm:text-5xl font-black text-white tracking-tight">
+                Meet the Leadership Team
               </h2>
-              <p className="mt-4 text-base sm:text-lg text-slate-400">
-                We’ve spent nights pacing airport terminals, decoding visa acronyms, and shivering in new climates. We’re building the product we wished we had.
-              </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {TEAM_MEMBERS.map((member) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {TEAM_MEMBERS.map((member, idx) => (
                 <div
-                  key={member.name}
-                  className="p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col items-center text-center group hover:border-teal-500/30 transition-all"
+                  key={idx}
+                  className="p-6 rounded-3xl glass-panel border border-white/10 text-center flex flex-col items-center hover:border-cyan-500/40 transition-all"
                 >
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-teal-500 to-teal-400 text-slate-950 font-black text-2xl flex items-center justify-center shadow-lg shadow-teal-500/20 mb-4 group-hover:scale-105 transition-transform">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-500 to-pink-500 flex items-center justify-center text-white text-lg font-black mb-4 shadow-md">
                     {member.avatar}
                   </div>
-                  <h3 className="text-lg font-bold text-white">{member.name}</h3>
-                  <p className="text-xs font-semibold text-teal-400 mt-0.5">
-                    {member.role}
-                  </p>
-                  <div className="mt-2 px-2.5 py-1 rounded-md bg-slate-800 text-[11px] font-medium text-slate-300">
+                  <h3 className="text-base font-bold text-white">{member.name}</h3>
+                  <p className="text-xs text-cyan-400 font-semibold mt-0.5">{member.role}</p>
+                  <span className="mt-2 text-xs text-slate-400 bg-white/[0.04] px-2.5 py-1 rounded-full border border-white/5 font-medium">
                     {member.flag}
-                  </div>
-                  <p className="mt-4 text-xs text-slate-400 leading-relaxed">
-                    {member.bio}
-                  </p>
+                  </span>
+                  <p className="mt-4 text-xs text-slate-400 leading-relaxed">{member.bio}</p>
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* BOTTOM CTA */}
-        <section className="py-16 bg-slate-900 border-t border-slate-800">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              Ready to start your journey with us?
-            </h2>
-            <p className="mt-3 text-slate-300 max-w-xl mx-auto text-sm sm:text-base">
-              Create your student profile today and connect with mentors and guides tailored for your destination.
-            </p>
-            <div className="mt-8 flex justify-center">
-              <Link
-                href="/register"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-slate-950 bg-teal-400 hover:bg-teal-300 shadow-md shadow-teal-500/20 text-sm transition-all"
-              >
-                Join Far From Home
-                <ArrowRight className="w-4 h-4" />
-              </Link>
             </div>
           </div>
         </section>

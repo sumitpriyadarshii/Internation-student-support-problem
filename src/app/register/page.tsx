@@ -8,10 +8,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { signIn } from 'next-auth/react';
 import { toast } from 'sonner';
+import { motion } from 'framer-motion';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import {
-  Globe,
+  Globe2,
   Lock,
   Mail,
   User,
@@ -20,7 +21,9 @@ import {
   ArrowRight,
   AlertCircle,
   ShieldCheck,
-  CheckCircle,
+  CheckCircle2,
+  Sparkles,
+  Plane,
 } from 'lucide-react';
 
 const registerSchema = z
@@ -98,66 +101,68 @@ export default function RegisterPage() {
         }),
       });
 
-      const result = await response.json();
+      const resData = await response.json();
 
-      if (!response.ok || !result.success) {
-        const errorMsg =
-          result.error || 'Failed to create account. Please check your information.';
-        setErrorMessage(errorMsg);
-        toast.error(errorMsg);
+      if (!response.ok) {
+        setErrorMessage(resData.error?.message || 'Registration failed. Please try again.');
+        toast.error(resData.error?.message || 'Registration failed');
         setIsLoading(false);
         return;
       }
 
-      toast.success('Account created! Signing you in...');
+      toast.success('Account created successfully! Signing you in...');
 
-      // Auto sign-in
-      const signInRes = await signIn('credentials', {
+      const signInResult = await signIn('credentials', {
         email: data.email,
         password: data.password,
         redirect: false,
       });
 
-      if (signInRes?.error) {
-        toast.info('Account created! Please sign in with your credentials.');
-        window.location.href = '/login';
+      if (signInResult?.error) {
+        toast.info('Please sign in with your new credentials');
+        router.push('/login');
       } else {
         window.location.href = '/onboarding';
       }
     } catch (err: any) {
-      console.error('Registration exception:', err);
-      setErrorMessage(
-        err?.message || 'An unexpected network error occurred. Please try again.'
-      );
-      toast.error('Registration failed. Please try again.');
+      console.error('Registration error:', err);
+      setErrorMessage(err?.message || 'An unexpected error occurred. Please try again.');
+      toast.error('An error occurred during registration.');
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-[#060913] text-slate-100">
       <Navbar />
 
-      <main className="flex-1 flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Ambient Background Glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+      <main className="flex-1 flex items-center justify-center py-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Ambient Glows */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-indigo-600/15 via-violet-600/10 to-cyan-500/15 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute inset-0 bg-grid-cyber opacity-30 pointer-events-none" />
 
-        <div className="w-full max-w-lg mx-auto">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4 }}
+          className="w-full max-w-xl mx-auto"
+        >
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-teal-500 to-teal-400 mx-auto flex items-center justify-center text-slate-950 shadow-lg shadow-teal-500/20 mb-4">
-              <Globe className="w-7 h-7 text-slate-950 stroke-[2.2]" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-semibold mb-4 backdrop-blur-md">
+              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Free Student Registration</span>
             </div>
-            <h1 className="text-3xl font-extrabold text-white tracking-tight">
-              Start Your Journey
+            <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+              Begin Your <span className="text-gradient-aurora">Global Journey</span>
             </h1>
-            <p className="mt-2 text-sm text-slate-400">
-              Create your free student profile to unlock personalized guides and mentors
+            <p className="mt-2 text-sm text-slate-400 max-w-md mx-auto">
+              Join thousands of international scholars getting tailored relocation support
             </p>
           </div>
 
           {/* Form Card */}
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative">
+          <div className="glass-panel glass-card-specular rounded-3xl p-6 sm:p-10 shadow-2xl relative border border-white/10">
             {errorMessage && (
               <div className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-start gap-3 text-rose-300">
                 <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
@@ -168,7 +173,7 @@ export default function RegisterPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               {/* Full Name */}
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                   Full Name
                 </label>
                 <div className="relative">
@@ -176,11 +181,11 @@ export default function RegisterPage() {
                   <input
                     {...register('name')}
                     type="text"
-                    placeholder="e.g. Liam Tanaka"
+                    placeholder="e.g. Priya Sharma"
                     disabled={isLoading}
                     autoComplete="name"
-                    className={`w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50 ${
-                      errors.name ? 'border-rose-500' : 'border-slate-800'
+                    className={`w-full pl-10 pr-4 py-3 rounded-xl bg-slate-950/70 border text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all ${
+                      errors.name ? 'border-rose-500' : 'border-white/10'
                     }`}
                   />
                 </div>
@@ -189,9 +194,9 @@ export default function RegisterPage() {
                 )}
               </div>
 
-              {/* Email Address */}
+              {/* Email */}
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                   Email Address
                 </label>
                 <div className="relative">
@@ -199,11 +204,11 @@ export default function RegisterPage() {
                   <input
                     {...register('email')}
                     type="email"
-                    placeholder="liam@student.edu"
+                    placeholder="student@university.edu"
                     disabled={isLoading}
                     autoComplete="email"
-                    className={`w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50 ${
-                      errors.email ? 'border-rose-500' : 'border-slate-800'
+                    className={`w-full pl-10 pr-4 py-3 rounded-xl bg-slate-950/70 border text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all ${
+                      errors.email ? 'border-rose-500' : 'border-white/10'
                     }`}
                   />
                 </div>
@@ -214,62 +219,51 @@ export default function RegisterPage() {
 
               {/* Password */}
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-                  Create Password
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+                  Password
                 </label>
                 <div className="relative">
                   <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                   <input
                     {...register('password')}
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="Min. 8 characters"
+                    placeholder="At least 8 characters"
                     disabled={isLoading}
                     autoComplete="new-password"
-                    className={`w-full pl-10 pr-11 py-2.5 rounded-xl bg-slate-950 border text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50 ${
-                      errors.password ? 'border-rose-500' : 'border-slate-800'
+                    className={`w-full pl-10 pr-11 py-3 rounded-xl bg-slate-950/70 border text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all ${
+                      errors.password ? 'border-rose-500' : 'border-white/10'
                     }`}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 focus:outline-none"
-                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
-                    {showPassword ? (
-                      <EyeOff className="w-4 h-4" />
-                    ) : (
-                      <Eye className="w-4 h-4" />
-                    )}
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
+                </div>
+
+                {/* Password strength visualizer */}
+                <div className="grid grid-cols-4 gap-1.5 mt-2">
+                  <div className={`h-1.5 rounded-full transition-all ${hasMinLength ? 'bg-emerald-400' : 'bg-white/10'}`} />
+                  <div className={`h-1.5 rounded-full transition-all ${hasUppercase ? 'bg-emerald-400' : 'bg-white/10'}`} />
+                  <div className={`h-1.5 rounded-full transition-all ${hasLowercase ? 'bg-emerald-400' : 'bg-white/10'}`} />
+                  <div className={`h-1.5 rounded-full transition-all ${hasNumber ? 'bg-emerald-400' : 'bg-white/10'}`} />
+                </div>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1.5 text-[11px] text-slate-400">
+                  <span className={hasMinLength ? 'text-emerald-400' : ''}>8+ chars</span>
+                  <span className={hasUppercase ? 'text-emerald-400' : ''}>1 uppercase</span>
+                  <span className={hasLowercase ? 'text-emerald-400' : ''}>1 lowercase</span>
+                  <span className={hasNumber ? 'text-emerald-400' : ''}>1 number</span>
                 </div>
                 {errors.password && (
                   <p className="text-xs text-rose-400 mt-1">{errors.password.message}</p>
                 )}
-
-                {/* Password Strength Checklist */}
-                <div className="mt-2 grid grid-cols-2 gap-1.5 text-[11px] text-slate-400">
-                  <div className={`flex items-center gap-1.5 ${hasMinLength ? 'text-teal-400' : 'text-slate-500'}`}>
-                    <CheckCircle className="w-3.5 h-3.5" />
-                    <span>8+ characters</span>
-                  </div>
-                  <div className={`flex items-center gap-1.5 ${hasUppercase ? 'text-teal-400' : 'text-slate-500'}`}>
-                    <CheckCircle className="w-3.5 h-3.5" />
-                    <span>1 uppercase letter</span>
-                  </div>
-                  <div className={`flex items-center gap-1.5 ${hasLowercase ? 'text-teal-400' : 'text-slate-500'}`}>
-                    <CheckCircle className="w-3.5 h-3.5" />
-                    <span>1 lowercase letter</span>
-                  </div>
-                  <div className={`flex items-center gap-1.5 ${hasNumber ? 'text-teal-400' : 'text-slate-500'}`}>
-                    <CheckCircle className="w-3.5 h-3.5" />
-                    <span>1 number</span>
-                  </div>
-                </div>
               </div>
 
               {/* Confirm Password */}
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                   Confirm Password
                 </label>
                 <div className="relative">
@@ -277,64 +271,47 @@ export default function RegisterPage() {
                   <input
                     {...register('confirmPassword')}
                     type={showConfirmPassword ? 'text' : 'password'}
-                    placeholder="Re-enter your password"
+                    placeholder="Repeat password"
                     disabled={isLoading}
                     autoComplete="new-password"
-                    className={`w-full pl-10 pr-11 py-2.5 rounded-xl bg-slate-950 border text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50 ${
-                      errors.confirmPassword ? 'border-rose-500' : 'border-slate-800'
+                    className={`w-full pl-10 pr-11 py-3 rounded-xl bg-slate-950/70 border text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all ${
+                      errors.confirmPassword ? 'border-rose-500' : 'border-white/10'
                     }`}
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 focus:outline-none"
-                    aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
                   >
-                    {showConfirmPassword ? (
-                      <EyeOff className="w-4 h-4" />
-                    ) : (
-                      <Eye className="w-4 h-4" />
-                    )}
+                    {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
                 {errors.confirmPassword && (
-                  <p className="text-xs text-rose-400 mt-1">
-                    {errors.confirmPassword.message}
-                  </p>
+                  <p className="text-xs text-rose-400 mt-1">{errors.confirmPassword.message}</p>
                 )}
               </div>
 
               {/* Terms Checkbox */}
               <div className="pt-2">
-                <label className="flex items-start gap-2.5 cursor-pointer">
+                <label className="flex items-start gap-2.5 text-xs text-slate-300 cursor-pointer">
                   <input
                     {...register('agreeTerms')}
                     type="checkbox"
-                    className="mt-1 w-4 h-4 rounded border-slate-700 bg-slate-950 text-teal-500 focus:ring-teal-500 focus:ring-offset-slate-900"
+                    className="mt-0.5 rounded border-white/20 bg-slate-950 text-indigo-500 focus:ring-indigo-500 cursor-pointer"
                   />
-                  <span className="text-xs text-slate-400 leading-normal">
+                  <span>
                     I agree to the{' '}
-                    <Link
-                      href="/terms"
-                      target="_blank"
-                      className="text-teal-400 hover:underline"
-                    >
-                      Terms of Use
+                    <Link href="/terms" className="text-cyan-400 hover:underline">
+                      Terms of Service
                     </Link>{' '}
                     and{' '}
-                    <Link
-                      href="/privacy"
-                      target="_blank"
-                      className="text-teal-400 hover:underline"
-                    >
+                    <Link href="/privacy" className="text-cyan-400 hover:underline">
                       Privacy Policy
                     </Link>
                   </span>
                 </label>
                 {errors.agreeTerms && (
-                  <p className="text-xs text-rose-400 mt-1">
-                    {errors.agreeTerms.message}
-                  </p>
+                  <p className="text-xs text-rose-400 mt-1">{errors.agreeTerms.message}</p>
                 )}
               </div>
 
@@ -342,42 +319,35 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-slate-950 bg-teal-400 hover:bg-teal-300 active:scale-[0.99] disabled:opacity-60 transition-all text-sm cursor-pointer shadow-lg shadow-teal-500/20 mt-4"
+                className="btn-shimmer w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-500 via-violet-600 to-cyan-500 hover:from-indigo-600 hover:to-cyan-600 active:scale-[0.99] disabled:opacity-60 transition-all text-sm cursor-pointer shadow-lg shadow-indigo-500/25 mt-4"
               >
                 {isLoading ? (
                   <span className="flex items-center gap-2">
-                    <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
-                    Creating your account...
+                    <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Creating Account...
                   </span>
                 ) : (
                   <>
-                    Create Student Account
+                    <span>Create Free Account</span>
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
               </button>
             </form>
 
-            {/* Login Link */}
-            <div className="mt-8 pt-6 border-t border-slate-800 text-center">
+            <div className="mt-8 pt-6 border-t border-white/10 text-center">
               <p className="text-sm text-slate-400">
-                Already have an account?{' '}
+                Already registered?{' '}
                 <Link
                   href="/login"
-                  className="text-teal-400 hover:text-teal-300 font-semibold transition-colors"
+                  className="text-cyan-400 hover:text-cyan-300 font-bold transition-colors"
                 >
                   Sign in here
                 </Link>
               </p>
             </div>
           </div>
-
-          {/* Trust Banner */}
-          <div className="mt-6 flex items-center justify-center gap-2 text-xs text-slate-400">
-            <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            <span>Zero spam • Free for all international students</span>
-          </div>
-        </div>
+        </motion.div>
       </main>
 
       <Footer />

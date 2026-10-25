@@ -137,10 +137,11 @@ export default function SettingsPage() {
     <div className="max-w-3xl mx-auto space-y-8 pb-16">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-          <Settings className="h-7 w-7 text-teal-600" /> Account Settings
+        <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
+          <Settings className="h-7 w-7 text-indigo-400" />
+          <span>Account & Security Settings</span>
         </h1>
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-xs sm:text-sm text-slate-400 mt-1">
           Manage your credentials, alerts, privacy visibility, and platform security.
         </p>
       </div>

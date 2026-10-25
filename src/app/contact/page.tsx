@@ -80,20 +80,21 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-[#060913] text-slate-100">
       <Navbar />
 
-      <main className="flex-1">
+      <main className="flex-1 pt-24 sm:pt-28">
         {/* HERO HEADER */}
-        <section className="relative py-14 sm:py-20 bg-gradient-to-b from-slate-900 to-slate-950 border-b border-slate-800">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[250px] bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+        <section className="relative py-14 sm:py-20 overflow-hidden border-b border-white/[0.08]">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-gradient-to-tr from-indigo-600/15 via-violet-600/10 to-cyan-500/15 rounded-full blur-[140px] pointer-events-none" />
+          <div className="absolute inset-0 bg-grid-cyber opacity-30 pointer-events-none" />
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span className="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-teal-400 bg-teal-500/10 border border-teal-500/20">
+            <span className="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-500/10 border border-cyan-500/20">
               Get in Touch
             </span>
-            <h1 className="mt-4 text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
-              We&apos;re Here to Help You Feel at Home
+            <h1 className="mt-4 text-4xl sm:text-5xl font-black text-white tracking-tight">
+              We&apos;re Here to Help You Feel <span className="text-gradient-aurora">at Home</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
               Have questions about your student relocation, university guides, or want to become a mentor? Send us a message and our support team will reply swiftly.

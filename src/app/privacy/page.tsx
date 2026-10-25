@@ -14,10 +14,10 @@ export default function PrivacyPage() {
   const lastUpdated = 'October 18, 2026';
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-[#060913] text-slate-100">
       <Navbar />
 
-      <main className="flex-1">
+      <main className="flex-1 pt-24 sm:pt-28">
         {/* HEADER */}
         <section className="relative py-14 sm:py-20 bg-gradient-to-b from-slate-900 to-slate-950 border-b border-slate-800">
           <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

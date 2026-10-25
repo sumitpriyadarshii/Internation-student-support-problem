@@ -4,6 +4,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { format, isPast } from 'date-fns';
 import { toast } from 'sonner';
+import { motion } from 'framer-motion';
+import confetti from 'canvas-confetti';
 import {
   Calendar,
   Search,
@@ -15,6 +17,7 @@ import {
   ArrowRight,
   Ticket,
   AlertCircle,
+  Sparkles,
 } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -135,7 +138,7 @@ export default function CommunityEventsPage() {
     fetchEvents();
   }, [fetchEvents]);
 
-  // Handle Register
+  // Handle Register with celebratory confetti
   const handleRegister = async (eventId: string) => {
     setActionLoadingId(eventId);
     try {
@@ -144,7 +147,13 @@ export default function CommunityEventsPage() {
       });
       const json = await res.json();
       if (res.ok && json.success) {
-        toast.success('You are registered! Ticket added to My Events.');
+        confetti({
+          particleCount: 60,
+          spread: 60,
+          origin: { y: 0.6 },
+          colors: ['#f43f5e', '#6366f1', '#06b6d4'],
+        });
+        toast.success('You are registered! Your spot is confirmed! 🎟️');
         setRegisteredIds((prev) => new Set(prev).add(eventId));
         setEvents((prev) =>
           prev.map((e) =>
@@ -178,17 +187,13 @@ export default function CommunityEventsPage() {
           updated.delete(eventId);
           return updated;
         });
-        if (activeTab === 'my-events') {
-          setEvents((prev) => prev.filter((e) => e._id !== eventId));
-        } else {
-          setEvents((prev) =>
-            prev.map((e) =>
-              e._id === eventId
-                ? { ...e, registrationCount: Math.max(0, (e.registrationCount || 1) - 1), isRegistered: false }
-                : e
-            )
-          );
-        }
+        setEvents((prev) =>
+          prev.map((e) =>
+            e._id === eventId
+              ? { ...e, registrationCount: Math.max(0, (e.registrationCount || 1) - 1), isRegistered: false }
+              : e
+          )
+        );
       } else {
         throw new Error(json.error || 'Failed to cancel registration');
       }
@@ -200,242 +205,230 @@ export default function CommunityEventsPage() {
   };
 
   return (
-    <div className="space-y-6 pb-12">
-      {/* Page Header & Tabs */}
+    <div className="space-y-6 pb-16">
+      {/* Header & Tabs */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-            <Calendar className="h-7 w-7 text-teal-600" /> Student Community Events
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
+            <Calendar className="h-7 w-7 text-rose-400" />
+            <span>Community Events & Mixers</span>
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Meet fellow international students, explore your new city, and join campus activities.
+          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+            Meet fellow international students at orientation workshops, city tours, and social mixers.
           </p>
         </div>
 
-        <Tabs
-          value={activeTab}
-          onValueChange={(val) => setActiveTab(val as 'all' | 'my-events')}
-          className="w-auto"
-        >
-          <TabsList className="bg-slate-200/80 p-1">
-            <TabsTrigger value="all" className="text-xs sm:text-sm cursor-pointer">
-              All Events
-            </TabsTrigger>
-            <TabsTrigger value="my-events" className="text-xs sm:text-sm cursor-pointer flex items-center gap-1.5">
-              <Ticket className="h-3.5 w-3.5 text-teal-600" />
-              My Events
+        {/* Tab switcher: All Events vs My Events */}
+        <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-900/80 border border-white/10 w-fit">
+          <button
+            onClick={() => setActiveTab('all')}
+            className={`relative px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              activeTab === 'all' ? 'text-white' : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            {activeTab === 'all' && (
+              <motion.div
+                layoutId="eventTabPill"
+                className="absolute inset-0 rounded-xl bg-gradient-to-r from-rose-600 to-indigo-600 shadow-md"
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+              />
+            )}
+            <span className="relative z-10">All Meetups</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('my-events')}
+            className={`relative px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              activeTab === 'my-events' ? 'text-white' : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            {activeTab === 'my-events' && (
+              <motion.div
+                layoutId="eventTabPill"
+                className="absolute inset-0 rounded-xl bg-gradient-to-r from-rose-600 to-indigo-600 shadow-md"
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+              />
+            )}
+            <span className="relative z-10 flex items-center gap-1.5">
+              <Ticket className="w-3.5 h-3.5 text-cyan-400" />
+              <span>My RSVP&apos;d Tickets</span>
               {registeredIds.size > 0 && (
-                <span className="ml-1 px-1.5 py-0.2 rounded-full bg-teal-600 text-white text-[10px] font-bold">
+                <span className="px-1.5 py-0.2 rounded-full bg-cyan-400 text-slate-950 font-black text-[10px]">
                   {registeredIds.size}
                 </span>
               )}
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+            </span>
+          </button>
+        </div>
       </div>
 
-      {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
-        <div className="flex flex-col md:flex-row gap-3">
-          {/* Search Input */}
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-            <Input
-              type="text"
-              placeholder="Search events by title, keyword, or venue..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 bg-slate-50 border-slate-200 text-sm"
-            />
-          </div>
-
-          {/* Date Filter Buttons */}
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg shrink-0">
-            <button
-              onClick={() => setDateFilter('upcoming')}
-              className={`text-xs px-3 py-1.5 rounded-md font-semibold transition-colors cursor-pointer ${
-                dateFilter === 'upcoming'
-                  ? 'bg-white text-slate-900 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              Upcoming
-            </button>
-            <button
-              onClick={() => setDateFilter('past')}
-              className={`text-xs px-3 py-1.5 rounded-md font-semibold transition-colors cursor-pointer ${
-                dateFilter === 'past'
-                  ? 'bg-white text-slate-900 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              Past
-            </button>
-          </div>
+      {/* Filter Bar */}
+      <div className="glass-panel p-4 rounded-2xl border border-white/10 flex flex-col md:flex-row items-center gap-3">
+        {/* Search */}
+        <div className="relative flex-1 w-full">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
+          <Input
+            type="text"
+            placeholder="Search events by title, campus, city..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-10 bg-slate-950/60 border-white/10 text-white text-xs rounded-xl"
+          />
         </div>
 
-        {/* Category Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 no-scrollbar">
-          <Filter className="h-4 w-4 text-slate-400 shrink-0 ml-1 mr-1" />
-          {EVENT_CATEGORIES.map((cat) => {
-            const isSelected = categoryFilter === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setCategoryFilter(cat.id)}
-                className={`text-xs px-3 py-1.5 rounded-full font-medium whitespace-nowrap transition-colors cursor-pointer ${
-                  isSelected
-                    ? 'bg-teal-600 text-white shadow-sm'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
-                }`}
-              >
-                {cat.label}
-              </button>
-            );
-          })}
+        {/* Category Filter */}
+        <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto py-1">
+          {EVENT_CATEGORIES.slice(0, 4).map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setCategoryFilter(cat.id)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                categoryFilter === cat.id
+                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40 shadow-sm'
+                  : 'bg-white/[0.04] text-slate-400 hover:text-white border border-white/5'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Date Filter */}
+        <div className="flex items-center gap-1 bg-slate-950/60 p-1 rounded-xl border border-white/10 shrink-0">
+          <button
+            onClick={() => setDateFilter('upcoming')}
+            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              dateFilter === 'upcoming'
+                ? 'bg-indigo-600 text-white shadow-sm'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            Upcoming
+          </button>
+          <button
+            onClick={() => setDateFilter('past')}
+            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              dateFilter === 'past'
+                ? 'bg-indigo-600 text-white shadow-sm'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            Past
+          </button>
         </div>
       </div>
 
       {/* Events Grid */}
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {Array.from({ length: 6 }).map((_, i) => (
-            <Card key={i} className="p-6 space-y-4">
-              <Skeleton className="h-5 w-24" />
-              <Skeleton className="h-6 w-3/4" />
-              <Skeleton className="h-16 w-full" />
-              <Skeleton className="h-9 w-full" />
-            </Card>
+            <div key={i} className="glass-panel h-64 rounded-3xl animate-pulse" />
           ))}
         </div>
       ) : events.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {events.map((event) => {
-            const isRegistered = registeredIds.has(event._id) || event.isRegistered;
-            const capacity = event.capacity;
-            const registeredCount = event.registrationCount || 0;
-            const isFull = capacity ? registeredCount >= capacity : false;
+            const isRegistered = registeredIds.has(event._id);
             const isPastEvent = isPast(new Date(event.startDate));
+            const isFull = event.capacity && event.registrationCount >= event.capacity && !isRegistered;
 
             return (
-              <Card
+              <motion.div
                 key={event._id}
-                className="border-slate-200 hover:border-teal-500 hover:shadow-lg transition-all flex flex-col justify-between group"
+                whileHover={{ y: -4 }}
+                className="glass-panel glass-card-specular rounded-3xl p-6 border border-white/10 flex flex-col justify-between hover:border-rose-500/40 transition-all duration-300 group"
               >
-                <CardHeader className="p-5 pb-3">
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <Badge variant="outline" className="capitalize text-[11px] font-semibold text-teal-800 border-teal-200 bg-teal-50">
+                <div>
+                  {/* Category and Capacity Status */}
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-lg bg-rose-500/15 text-rose-300 border border-rose-500/25">
                       {event.category.replace('-', ' ')}
-                    </Badge>
+                    </span>
 
                     {isRegistered && (
-                      <span className="flex items-center gap-1 text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-bold border border-emerald-200">
-                        <CheckCircle2 className="h-3.5 w-3.5" /> Registered
+                      <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 rounded-full flex items-center gap-1">
+                        <CheckCircle2 className="w-3 h-3" /> Confirmed RSVP
                       </span>
                     )}
                   </div>
 
                   <Link href={`/community/${event._id}`} className="block">
-                    <CardTitle className="text-lg font-bold text-slate-900 group-hover:text-teal-600 transition-colors line-clamp-1">
+                    <h3 className="text-base font-bold text-white group-hover:text-rose-300 transition-colors line-clamp-2 mb-2">
                       {event.title}
-                    </CardTitle>
-                    <CardDescription className="text-xs text-slate-500 line-clamp-2 mt-2 leading-relaxed">
-                      {event.description}
-                    </CardDescription>
+                    </h3>
                   </Link>
-                </CardHeader>
 
-                <CardContent className="p-5 pt-0 space-y-3">
-                  {/* Date & Location */}
-                  <div className="space-y-1.5 text-xs text-slate-600 bg-slate-50 p-3 rounded-lg border border-slate-100">
-                    <div className="flex items-center gap-2 font-medium text-slate-800">
-                      <Clock className="h-3.5 w-3.5 text-teal-600 shrink-0" />
-                      {format(new Date(event.startDate), 'EEE, MMM d, yyyy • h:mm a')}
+                  <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-4">
+                    {event.description}
+                  </p>
+
+                  <div className="space-y-2 text-xs text-slate-300 bg-black/20 p-3 rounded-2xl border border-white/5 mb-4">
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                      <span>{format(new Date(event.startDate), 'EEE, MMM d, yyyy • h:mm a')}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-slate-500 truncate">
-                      <MapPin className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-3.5 h-3.5 text-rose-400 shrink-0" />
                       <span className="truncate">{event.location}</span>
                     </div>
-                  </div>
-
-                  {/* Capacity Bar */}
-                  {capacity ? (
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-[11px] text-slate-500">
-                        <span>Capacity ({registeredCount}/{capacity})</span>
-                        <span className={isFull ? 'text-red-600 font-bold' : 'text-slate-600'}>
-                          {isFull ? 'Sold Out' : `${capacity - registeredCount} spots left`}
-                        </span>
-                      </div>
-                      <Progress
-                        value={(registeredCount / capacity) * 100}
-                        className="h-1.5 bg-slate-100"
-                      />
+                    <div className="flex items-center gap-2 text-slate-400">
+                      <Users className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                      <span>
+                        {event.registrationCount} {event.capacity ? `/ ${event.capacity}` : ''} attending
+                      </span>
                     </div>
-                  ) : (
-                    <p className="text-[11px] text-slate-400 flex items-center gap-1">
-                      <Users className="h-3.5 w-3.5" /> Open attendance • {registeredCount} joined
-                    </p>
-                  )}
-                </CardContent>
+                  </div>
+                </div>
 
-                <CardFooter className="p-5 pt-3 border-t border-slate-100 flex items-center gap-2">
-                  <Button variant="outline" size="sm" asChild className="flex-1 text-xs">
+                {/* RSVP Action */}
+                <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    asChild
+                    className="border-white/10 bg-white/[0.04] hover:bg-white/10 text-white text-xs rounded-xl"
+                  >
                     <Link href={`/community/${event._id}`}>Details</Link>
                   </Button>
 
                   {isPastEvent ? (
-                    <Button disabled size="sm" className="flex-1 text-xs bg-slate-100 text-slate-400">
-                      Event Ended
-                    </Button>
+                    <span className="text-xs text-slate-500 font-semibold">Event Ended</span>
                   ) : isRegistered ? (
                     <Button
                       size="sm"
                       variant="outline"
-                      onClick={() => handleCancelRegistration(event._id)}
                       disabled={actionLoadingId === event._id}
-                      className="flex-1 text-xs text-red-600 border-red-200 hover:bg-red-50 cursor-pointer"
+                      onClick={() => handleCancelRegistration(event._id)}
+                      className="border-rose-500/30 text-rose-400 hover:bg-rose-500/10 text-xs rounded-xl"
                     >
                       {actionLoadingId === event._id ? 'Cancelling...' : 'Cancel RSVP'}
                     </Button>
                   ) : isFull ? (
-                    <Button disabled size="sm" className="flex-1 text-xs bg-slate-100 text-slate-400">
-                      Full
-                    </Button>
+                    <span className="text-xs text-amber-400 font-bold">At Full Capacity</span>
                   ) : (
                     <Button
                       size="sm"
-                      onClick={() => handleRegister(event._id)}
                       disabled={actionLoadingId === event._id}
-                      className="flex-1 text-xs bg-teal-600 hover:bg-teal-500 text-white cursor-pointer"
+                      onClick={() => handleRegister(event._id)}
+                      className="bg-gradient-to-r from-rose-500 to-indigo-600 hover:from-rose-600 hover:to-indigo-700 text-white font-bold text-xs rounded-xl shadow-md cursor-pointer"
                     >
-                      {actionLoadingId === event._id ? 'Joining...' : 'RSVP Now'}
+                      {actionLoadingId === event._id ? 'Reserving...' : 'RSVP Free 🎟️'}
                     </Button>
                   )}
-                </CardFooter>
-              </Card>
+                </div>
+              </motion.div>
             );
           })}
         </div>
       ) : (
-        <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-slate-200 p-8 max-w-md mx-auto">
-          <Calendar className="h-12 w-12 text-slate-300 mx-auto mb-3" />
-          <h3 className="text-lg font-bold text-slate-800">
-            {activeTab === 'my-events' ? 'No registered events' : 'No events found'}
-          </h3>
-          <p className="text-sm text-slate-500 mt-1">
+        <div className="text-center py-16 bg-white/[0.02] rounded-3xl border border-dashed border-white/10 p-8">
+          <Calendar className="h-12 w-12 text-slate-500 mx-auto mb-3" />
+          <h3 className="text-base font-bold text-white">No Events Found</h3>
+          <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
             {activeTab === 'my-events'
-              ? 'Browse upcoming gatherings above and RSVP to attend.'
-              : 'Try checking past events or selecting a different category.'}
+              ? 'You have not RSVP’d to any events yet. Check out upcoming meetups!'
+              : 'No upcoming events match your search. Check back soon for fresh community mixers.'}
           </p>
-          {activeTab === 'my-events' && (
-            <Button
-              onClick={() => setActiveTab('all')}
-              className="mt-4 bg-teal-600 hover:bg-teal-500 text-white text-xs"
-            >
-              Browse All Events
-            </Button>
-          )}
         </div>
       )}
     </div>

@@ -349,11 +349,12 @@ export default function ProfilePage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-            <User className="h-7 w-7 text-teal-600" /> Student Profile & Buddy Settings
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
+            <User className="h-7 w-7 text-cyan-400" />
+            <span>Profile & Peer Mentorship</span>
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Manage your personal background, study destination, and peer mentorship preferences.
+          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+            Manage your personal background, study destination, and peer mentorship status.
           </p>
         </div>
 
@@ -362,15 +363,15 @@ export default function ProfilePage() {
           onValueChange={(val) => setActiveTab(val as 'profile' | 'buddy')}
           className="w-auto"
         >
-          <TabsList className="bg-slate-200/80 p-1">
-            <TabsTrigger value="profile" className="text-xs sm:text-sm cursor-pointer">
-              My Profile
+          <TabsList className="bg-slate-900/80 p-1 border border-white/10 rounded-2xl">
+            <TabsTrigger value="profile" className="text-xs font-bold cursor-pointer">
+              Student Profile
             </TabsTrigger>
-            <TabsTrigger value="buddy" className="text-xs sm:text-sm cursor-pointer flex items-center gap-1.5">
-              <Users className="h-3.5 w-3.5 text-teal-600" />
-              Buddy Profile
+            <TabsTrigger value="buddy" className="text-xs font-bold cursor-pointer flex items-center gap-1.5">
+              <Users className="h-3.5 w-3.5 text-indigo-400" />
+              <span>Mentor Profile</span>
               {existingBuddy && (
-                <span className="h-2 w-2 rounded-full bg-teal-500 ml-1"></span>
+                <span className="h-2 w-2 rounded-full bg-cyan-400 ml-1"></span>
               )}
             </TabsTrigger>
           </TabsList>

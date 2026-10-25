@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { format, formatDistanceToNow } from 'date-fns';
 import { toast } from 'sonner';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Bell,
   CheckCircle2,
@@ -91,7 +92,7 @@ export default function NotificationsPage() {
       });
       const json = await res.json();
       if (res.ok && json.success) {
-        toast.success('All notifications marked as read');
+        toast.success('All notifications marked as read! 🚀');
         setNotifications((prev) =>
           prev.map((n) => ({ ...n, readAt: new Date().toISOString() }))
         );
@@ -110,15 +111,15 @@ export default function NotificationsPage() {
   const getIcon = (type: string) => {
     switch (type) {
       case 'task-reminder':
-        return <CheckSquare className="h-5 w-5 text-amber-600" />;
+        return <CheckSquare className="h-5 w-5 text-amber-400" />;
       case 'buddy-request':
-        return <Users className="h-5 w-5 text-teal-600" />;
+        return <Users className="h-5 w-5 text-cyan-400" />;
       case 'event-update':
-        return <Calendar className="h-5 w-5 text-blue-600" />;
+        return <Calendar className="h-5 w-5 text-rose-400" />;
       case 'guide-update':
-        return <BookOpen className="h-5 w-5 text-purple-600" />;
+        return <BookOpen className="h-5 w-5 text-purple-400" />;
       default:
-        return <Info className="h-5 w-5 text-teal-600" />;
+        return <Info className="h-5 w-5 text-indigo-400" />;
     }
   };
 
@@ -136,11 +137,12 @@ export default function NotificationsPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-            <Bell className="h-7 w-7 text-teal-600" /> Notifications & Alerts
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
+            <Bell className="h-7 w-7 text-indigo-400" />
+            <span>Alerts & Notifications</span>
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Stay up to date with task deadlines, buddy invitations, and campus event changes.
+          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+            Stay up to date with task deadlines, senior buddy messages, and campus event changes.
           </p>
         </div>
 
@@ -150,7 +152,7 @@ export default function NotificationsPage() {
             size="sm"
             onClick={handleMarkAllAsRead}
             disabled={markingAll}
-            className="text-xs text-teal-700 border-teal-200 hover:bg-teal-50 cursor-pointer w-fit"
+            className="border-white/10 text-cyan-400 hover:text-cyan-300 hover:bg-white/5 rounded-xl text-xs cursor-pointer w-fit"
           >
             <CheckCheck className="h-4 w-4 mr-1.5" />
             {markingAll ? 'Updating...' : 'Mark all as read'}
@@ -159,29 +161,29 @@ export default function NotificationsPage() {
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+      <div className="flex items-center justify-between glass-panel p-3 rounded-2xl border border-white/10">
         <div className="flex items-center gap-2">
           <button
             onClick={() => setUnreadOnly(false)}
-            className={`text-xs px-3.5 py-1.5 rounded-lg font-semibold transition-colors cursor-pointer ${
+            className={`text-xs px-3.5 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
               !unreadOnly
-                ? 'bg-slate-900 text-white'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md'
+                : 'text-slate-400 hover:text-white'
             }`}
           >
-            All Notifications
+            All Alerts
           </button>
           <button
             onClick={() => setUnreadOnly(true)}
-            className={`text-xs px-3.5 py-1.5 rounded-lg font-semibold transition-colors cursor-pointer flex items-center gap-1.5 ${
+            className={`text-xs px-3.5 py-1.5 rounded-xl font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               unreadOnly
-                ? 'bg-slate-900 text-white'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md'
+                : 'text-slate-400 hover:text-white'
             }`}
           >
-            Unread Only
+            <span>Unread Only</span>
             {unreadCount > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full bg-teal-500 text-white text-[10px] font-bold">
+              <span className="px-1.5 py-0.2 rounded-full bg-rose-500 text-white text-[10px] font-black">
                 {unreadCount}
               </span>
             )}
@@ -197,15 +199,7 @@ export default function NotificationsPage() {
       {loading ? (
         <div className="space-y-3">
           {Array.from({ length: 4 }).map((_, i) => (
-            <Card key={i} className="p-4">
-              <div className="flex items-start gap-4">
-                <Skeleton className="h-10 w-10 rounded-xl" />
-                <div className="space-y-2 flex-1">
-                  <Skeleton className="h-4 w-1/3" />
-                  <Skeleton className="h-8 w-full" />
-                </div>
-              </div>
-            </Card>
+            <div key={i} className="glass-panel h-24 rounded-2xl animate-pulse" />
           ))}
         </div>
       ) : notifications.length > 0 ? (
@@ -215,19 +209,22 @@ export default function NotificationsPage() {
             const actionLink = getActionLink(item);
 
             return (
-              <Card
+              <motion.div
                 key={item._id}
-                className={`border transition-all hover:shadow-md ${
+                whileHover={{ y: -2 }}
+                className={`glass-panel glass-card-specular rounded-2xl p-4 sm:p-5 border transition-all ${
                   isUnread
-                    ? 'border-teal-200 bg-teal-50/20'
-                    : 'border-slate-200 bg-white opacity-85'
+                    ? 'border-indigo-500/40 bg-indigo-950/20'
+                    : 'border-white/10 bg-slate-900/60 opacity-80'
                 }`}
               >
-                <CardContent className="p-4 sm:p-5 flex items-start justify-between gap-4">
+                <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3.5 min-w-0 flex-1">
                     <div
-                      className={`h-10 w-10 rounded-xl flex items-center justify-center shrink-0 ${
-                        isUnread ? 'bg-teal-100/80 shadow-sm' : 'bg-slate-100'
+                      className={`h-11 w-11 rounded-2xl flex items-center justify-center shrink-0 border ${
+                        isUnread
+                          ? 'bg-indigo-500/20 border-indigo-500/40 shadow-sm'
+                          : 'bg-white/[0.04] border-white/10'
                       }`}
                     >
                       {getIcon(item.type)}
@@ -237,33 +234,28 @@ export default function NotificationsPage() {
                       <div className="flex items-center gap-2">
                         <h3
                           className={`text-sm ${
-                            isUnread ? 'font-bold text-slate-900' : 'font-semibold text-slate-700'
+                            isUnread ? 'font-black text-white' : 'font-semibold text-slate-300'
                           }`}
                         >
                           {item.title}
                         </h3>
                         {isUnread && (
-                          <span className="h-2 w-2 rounded-full bg-teal-500 shrink-0" />
+                          <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse shrink-0" />
                         )}
                       </div>
 
-                      <p className="text-xs text-slate-600 leading-relaxed">{item.message}</p>
+                      <p className="text-xs text-slate-400 leading-relaxed">{item.message}</p>
 
-                      <div className="flex items-center gap-3 pt-1 text-[11px] text-slate-400">
-                        <span>
-                          {item.createdAt
-                            ? formatDistanceToNow(new Date(item.createdAt), { addSuffix: true })
-                            : 'Recently'}
-                        </span>
-
+                      <div className="flex items-center gap-3 pt-1 text-[11px] text-slate-500">
+                        <span>{formatDistanceToNow(new Date(item.createdAt), { addSuffix: true })}</span>
                         {actionLink && (
                           <>
                             <span>•</span>
                             <Link
                               href={actionLink}
-                              className="text-teal-600 hover:text-teal-700 font-semibold flex items-center gap-0.5"
+                              className="text-cyan-400 hover:text-cyan-300 font-bold flex items-center gap-0.5"
                             >
-                              View Details <ExternalLink className="h-3 w-3" />
+                              View Resource <ExternalLink className="h-3 w-3" />
                             </Link>
                           </>
                         )}
@@ -276,36 +268,25 @@ export default function NotificationsPage() {
                       variant="ghost"
                       size="sm"
                       onClick={() => handleMarkAsRead(item._id)}
-                      className="text-xs text-slate-500 hover:text-teal-700 h-8 shrink-0 cursor-pointer"
+                      className="text-xs text-slate-400 hover:text-white shrink-0 rounded-xl"
                     >
                       Mark read
                     </Button>
                   )}
-                </CardContent>
-              </Card>
+                </div>
+              </motion.div>
             );
           })}
         </div>
       ) : (
-        <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-slate-200 p-8 max-w-md mx-auto">
-          <Bell className="h-12 w-12 text-slate-300 mx-auto mb-3" />
-          <h3 className="text-lg font-bold text-slate-800">
-            {unreadOnly ? 'No unread notifications' : 'No notifications'}
-          </h3>
-          <p className="text-sm text-slate-500 mt-1">
+        <div className="text-center py-16 bg-white/[0.02] rounded-3xl border border-dashed border-white/10 p-8">
+          <Bell className="h-12 w-12 text-slate-500 mx-auto mb-3" />
+          <h3 className="text-base font-bold text-white">No Notifications</h3>
+          <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
             {unreadOnly
-              ? 'You have caught up with all your updates!'
-              : 'Important announcements and reminders will appear here.'}
+              ? 'You have zero unread alerts. You are fully up to date!'
+              : 'You do not have any notifications at the moment.'}
           </p>
-          {unreadOnly && (
-            <Button
-              variant="outline"
-              onClick={() => setUnreadOnly(false)}
-              className="mt-4 text-xs"
-            >
-              View All Notifications
-            </Button>
-          )}
         </div>
       )}
     </div>

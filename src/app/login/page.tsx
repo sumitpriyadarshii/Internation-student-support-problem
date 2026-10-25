@@ -40,7 +40,18 @@ type LoginFormData = z.infer<typeof loginSchema>;
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+  const rawCallbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+  let callbackUrl = '/dashboard';
+  if (rawCallbackUrl.startsWith('/')) {
+    callbackUrl = rawCallbackUrl;
+  } else {
+    try {
+      const parsed = new URL(rawCallbackUrl);
+      callbackUrl = parsed.pathname + parsed.search;
+    } catch {
+      callbackUrl = '/dashboard';
+    }
+  }
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

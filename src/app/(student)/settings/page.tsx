@@ -138,107 +138,110 @@ export default function SettingsPage() {
       {/* Page Header */}
       <div>
         <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
-          <Settings className="h-7 w-7 text-indigo-400" />
+          <Settings className="h-7 w-7 text-amber-400" />
           <span>Account & Security Settings</span>
         </h1>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">
+        <p className="text-xs sm:text-sm text-stone-400 mt-1">
           Manage your credentials, alerts, privacy visibility, and platform security.
         </p>
       </div>
 
       {/* Account Info Card */}
-      <Card className="border-slate-200 shadow-sm">
-        <CardHeader className="p-6 pb-4 border-b border-slate-100">
-          <CardTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <User className="h-4 w-4 text-teal-600" /> Account Identity
-          </CardTitle>
-          <CardDescription>Your registered login credentials</CardDescription>
-        </CardHeader>
-        <CardContent className="p-6 space-y-4">
+      <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
+        <div className="p-6 pb-4 border-b border-white/10">
+          <h2 className="text-base font-bold text-white flex items-center gap-2">
+            <User className="h-4 w-4 text-amber-400" /> Account Identity
+          </h2>
+          <p className="text-xs text-stone-400 mt-0.5">Your registered login credentials</p>
+        </div>
+        <div className="p-6 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <Label className="text-xs text-slate-500">Name</Label>
-              <p className="text-sm font-semibold text-slate-800 mt-0.5">
+              <Label className="text-xs text-stone-400">Name</Label>
+              <p className="text-sm font-semibold text-white mt-0.5">
                 {session?.user?.name || 'Student'}
               </p>
             </div>
             <div>
-              <Label className="text-xs text-slate-500">Email Address</Label>
-              <p className="text-sm font-semibold text-slate-800 mt-0.5">
+              <Label className="text-xs text-stone-400">Email Address</Label>
+              <p className="text-sm font-semibold text-white mt-0.5">
                 {session?.user?.email || 'N/A'}
               </p>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Security: Change Password Card */}
-      <Card className="border-slate-200 shadow-sm">
-        <CardHeader className="p-6 pb-4 border-b border-slate-100">
-          <CardTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <Lock className="h-4 w-4 text-teal-600" /> Change Password
-          </CardTitle>
-          <CardDescription>Update your secret password for secure logins</CardDescription>
-        </CardHeader>
+      <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
+        <div className="p-6 pb-4 border-b border-white/10">
+          <h2 className="text-base font-bold text-white flex items-center gap-2">
+            <Lock className="h-4 w-4 text-amber-400" /> Change Password
+          </h2>
+          <p className="text-xs text-stone-400 mt-0.5">Update your secret password for secure logins</p>
+        </div>
         <form onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
-          <CardContent className="p-6 space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="currPass">Current Password *</Label>
+          <div className="p-6 space-y-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="currPass" className="text-xs font-bold text-stone-300">Current Password *</Label>
               <Input
                 id="currPass"
                 type="password"
                 placeholder="••••••••"
                 {...regPassword('currentPassword', { required: true })}
+                className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
               />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="newPass">New Password *</Label>
+              <div className="space-y-1.5">
+                <Label htmlFor="newPass" className="text-xs font-bold text-stone-300">New Password *</Label>
                 <Input
                   id="newPass"
                   type="password"
                   placeholder="Min 8 chars, uppercase, lowercase, number"
                   {...regPassword('newPassword', { required: true })}
+                  className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="confPass">Confirm New Password *</Label>
+              <div className="space-y-1.5">
+                <Label htmlFor="confPass" className="text-xs font-bold text-stone-300">Confirm New Password *</Label>
                 <Input
                   id="confPass"
                   type="password"
                   placeholder="Confirm new password"
                   {...regPassword('confirmPassword', { required: true })}
+                  className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
                 />
               </div>
             </div>
-          </CardContent>
-          <CardFooter className="p-6 border-t border-slate-100 flex justify-end">
+          </div>
+          <div className="p-6 border-t border-white/10 flex justify-end">
             <Button
               type="submit"
               disabled={changingPassword}
-              className="bg-teal-600 hover:bg-teal-500 text-white font-medium text-xs cursor-pointer"
+              className="btn-ios-primary text-xs px-6 py-2.5 cursor-pointer shadow-md"
             >
               {changingPassword ? 'Updating...' : 'Update Password'}
             </Button>
-          </CardFooter>
+          </div>
         </form>
-      </Card>
+      </div>
 
       {/* Notification Preferences */}
-      <Card className="border-slate-200 shadow-sm">
-        <CardHeader className="p-6 pb-4 border-b border-slate-100">
-          <CardTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <Bell className="h-4 w-4 text-teal-600" /> Notifications & Reminders
-          </CardTitle>
-          <CardDescription>Control which in-app updates and alerts you receive</CardDescription>
-        </CardHeader>
-        <CardContent className="p-6 space-y-4 divide-y divide-slate-100">
+      <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
+        <div className="p-6 pb-4 border-b border-white/10">
+          <h2 className="text-base font-bold text-white flex items-center gap-2">
+            <Bell className="h-4 w-4 text-orange-400" /> Notifications & Reminders
+          </h2>
+          <p className="text-xs text-stone-400 mt-0.5">Control which in-app updates and alerts you receive</p>
+        </div>
+        <div className="p-6 space-y-4 divide-y divide-white/5">
           <div className="flex items-center justify-between pt-1">
             <div className="space-y-0.5">
-              <Label className="text-sm font-semibold text-slate-800">Checklist Task Reminders</Label>
-              <p className="text-xs text-slate-500">
+              <Label className="text-sm font-semibold text-white">Checklist Task Reminders</Label>
+              <p className="text-xs text-stone-400">
                 Receive notifications when visa, flight, and registration deadlines approach.
               </p>
             </div>
@@ -247,8 +250,8 @@ export default function SettingsPage() {
 
           <div className="flex items-center justify-between pt-4">
             <div className="space-y-0.5">
-              <Label className="text-sm font-semibold text-slate-800">Buddy Request Alerts</Label>
-              <p className="text-xs text-slate-500">
+              <Label className="text-sm font-semibold text-white">Buddy Request Alerts</Label>
+              <p className="text-xs text-stone-400">
                 Get notified when another student sends or accepts a connection request.
               </p>
             </div>
@@ -257,8 +260,8 @@ export default function SettingsPage() {
 
           <div className="flex items-center justify-between pt-4">
             <div className="space-y-0.5">
-              <Label className="text-sm font-semibold text-slate-800">Campus Events & Workshops</Label>
-              <p className="text-xs text-slate-500">
+              <Label className="text-sm font-semibold text-white">Campus Events & Workshops</Label>
+              <p className="text-xs text-stone-400">
                 Receive reminders about gatherings and orientations you have registered for.
               </p>
             </div>
@@ -267,40 +270,40 @@ export default function SettingsPage() {
 
           <div className="flex items-center justify-between pt-4">
             <div className="space-y-0.5">
-              <Label className="text-sm font-semibold text-slate-800">Weekly Pre-Departure Digest</Label>
-              <p className="text-xs text-slate-500">
+              <Label className="text-sm font-semibold text-white">Weekly Pre-Departure Digest</Label>
+              <p className="text-xs text-stone-400">
                 Receive a weekly summary email of tips and newly published destination handbooks.
               </p>
             </div>
             <Switch checked={prefWeeklyDigest} onCheckedChange={setPrefWeeklyDigest} />
           </div>
-        </CardContent>
-        <CardFooter className="p-6 border-t border-slate-100 flex justify-end">
+        </div>
+        <div className="p-6 border-t border-white/10 flex justify-end">
           <Button
             type="button"
             onClick={handleSavePreferences}
-            className="bg-slate-900 hover:bg-slate-800 text-white text-xs cursor-pointer"
+            className="ios-pill text-xs px-5 py-2 cursor-pointer bg-white/[0.04] text-white hover:bg-white/10"
           >
             Save Alert Preferences
           </Button>
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
 
       {/* Privacy Settings */}
-      <Card className="border-slate-200 shadow-sm">
-        <CardHeader className="p-6 pb-4 border-b border-slate-100">
-          <CardTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <Eye className="h-4 w-4 text-teal-600" /> Privacy & Student Visibility
-          </CardTitle>
-          <CardDescription>Choose how you appear to fellow campus international students</CardDescription>
-        </CardHeader>
-        <CardContent className="p-6 space-y-4 divide-y divide-slate-100">
+      <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
+        <div className="p-6 pb-4 border-b border-white/10">
+          <h2 className="text-base font-bold text-white flex items-center gap-2">
+            <Eye className="h-4 w-4 text-amber-400" /> Privacy & Student Visibility
+          </h2>
+          <p className="text-xs text-stone-400 mt-0.5">Choose how you appear to fellow campus international students</p>
+        </div>
+        <div className="p-6 space-y-4 divide-y divide-white/5">
           <div className="flex items-center justify-between pt-1">
             <div className="space-y-0.5">
-              <Label className="text-sm font-semibold text-slate-800">
+              <Label className="text-sm font-semibold text-white">
                 Show in Peer Buddy Search Directory
               </Label>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-stone-400">
                 Allow peers from your destination university to find and connect with you.
               </p>
             </div>
@@ -312,10 +315,10 @@ export default function SettingsPage() {
 
           <div className="flex items-center justify-between pt-4">
             <div className="space-y-0.5">
-              <Label className="text-sm font-semibold text-slate-800">
+              <Label className="text-sm font-semibold text-white">
                 Display Enrolled Institution
               </Label>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-stone-400">
                 Show your university and destination city on your public buddy card.
               </p>
             </div>
@@ -327,10 +330,10 @@ export default function SettingsPage() {
 
           <div className="flex items-center justify-between pt-4">
             <div className="space-y-0.5">
-              <Label className="text-sm font-semibold text-slate-800">
+              <Label className="text-sm font-semibold text-white">
                 Allow Direct Peer Inquiries
               </Label>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-stone-400">
                 Allow students to send you intro messages when requesting buddy connections.
               </p>
             </div>
@@ -339,65 +342,59 @@ export default function SettingsPage() {
               onCheckedChange={setPrivacyAllowMessages}
             />
           </div>
-        </CardContent>
-        <CardFooter className="p-6 border-t border-slate-100 flex justify-end">
+        </div>
+        <div className="p-6 border-t border-white/10 flex justify-end">
           <Button
             type="button"
             onClick={handleSavePreferences}
-            className="bg-slate-900 hover:bg-slate-800 text-white text-xs cursor-pointer"
+            className="ios-pill text-xs px-5 py-2 cursor-pointer bg-white/[0.04] text-white hover:bg-white/10"
           >
             Save Privacy Settings
           </Button>
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
 
       {/* Danger Zone: Account Deactivation */}
-      <Card className="border-red-200 bg-red-50/20 shadow-sm">
-        <CardHeader className="p-6 pb-3">
-          <CardTitle className="text-base font-bold text-red-700 flex items-center gap-2">
-            <ShieldAlert className="h-5 w-5 text-red-600" /> Danger Zone
-          </CardTitle>
-          <CardDescription className="text-xs text-red-600/80">
-            Irreversible account action
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="p-6 pt-0 space-y-3">
-          <p className="text-xs text-slate-600 leading-relaxed">
-            Deactivating your account will remove your buddy listing, cancel active event RSVPs, and
-            archive your pre-departure checklist.
-          </p>
-          <Button
-            variant="destructive"
-            size="sm"
-            onClick={() => setIsDeleteOpen(true)}
-            className="text-xs cursor-pointer"
-          >
-            Deactivate My Account
-          </Button>
-        </CardContent>
-      </Card>
+      <div className="ios-glass rounded-3xl border border-rose-500/30 bg-rose-950/20 shadow-sm overflow-hidden p-6 space-y-3">
+        <h2 className="text-base font-bold text-rose-400 flex items-center gap-2">
+          <ShieldAlert className="h-5 w-5 text-rose-400" /> Danger Zone
+        </h2>
+        <p className="text-xs text-stone-400 leading-relaxed">
+          Deactivating your account will remove your buddy listing, cancel active event RSVPs, and
+          archive your pre-departure checklist.
+        </p>
+        <Button
+          variant="destructive"
+          size="sm"
+          onClick={() => setIsDeleteOpen(true)}
+          className="text-xs rounded-full px-4 cursor-pointer"
+        >
+          Deactivate My Account
+        </Button>
+      </div>
 
       {/* Account Deletion Dialog */}
       <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md ios-glass-prominent bg-[#171311]/95 border-white/15 text-white backdrop-blur-3xl">
           <DialogHeader>
-            <DialogTitle className="text-red-600 flex items-center gap-2">
+            <DialogTitle className="text-rose-400 flex items-center gap-2">
               <AlertTriangle className="h-5 w-5" /> Confirm Account Deactivation
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-stone-400 text-xs">
               Please enter your password to confirm that you want to deactivate your Far From Home
               student account.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-2">
-            <div className="space-y-2">
-              <Label htmlFor="delPass">Your Password *</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="delPass" className="text-xs font-bold text-stone-300">Your Password *</Label>
               <Input
                 id="delPass"
                 type="password"
                 placeholder="••••••••"
                 value={deletePassword}
                 onChange={(e) => setDeletePassword(e.target.value)}
+                className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
               />
             </div>
           </div>
@@ -409,6 +406,7 @@ export default function SettingsPage() {
                 setIsDeleteOpen(false);
                 setDeletePassword('');
               }}
+              className="ios-pill text-xs border-white/15 text-stone-300 hover:text-white"
             >
               Cancel
             </Button>
@@ -416,7 +414,7 @@ export default function SettingsPage() {
               type="button"
               disabled={deletingAccount}
               onClick={handleDeleteAccount}
-              className="bg-red-600 hover:bg-red-500 text-white cursor-pointer"
+              className="bg-rose-600 hover:bg-rose-500 text-white text-xs rounded-full px-4 cursor-pointer"
             >
               {deletingAccount ? 'Deactivating...' : 'Confirm Deactivation'}
             </Button>

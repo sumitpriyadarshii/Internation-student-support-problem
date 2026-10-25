@@ -19,10 +19,10 @@ import {
   X,
   Search,
   Compass,
-  Globe2,
   Sparkles,
   ShieldCheck,
   ChevronRight,
+  Heart,
 } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -114,25 +114,25 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   };
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 flex flex-col md:flex-row antialiased selection:bg-indigo-500 selection:text-white">
-      {/* Ambient background glows */}
-      <div className="fixed top-0 left-64 w-[600px] h-[350px] bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none -z-10" />
-      <div className="fixed bottom-0 right-0 w-[500px] h-[300px] bg-cyan-600/10 rounded-full blur-[140px] pointer-events-none -z-10" />
-      <div className="fixed inset-0 bg-grid-cyber opacity-25 pointer-events-none -z-10" />
+    <div className="min-h-screen bg-[#090a0f] text-[#f7f5f0] flex flex-col md:flex-row antialiased selection:bg-amber-500 selection:text-white">
+      {/* Subtle Warm ambient glow */}
+      <div className="fixed top-0 left-64 w-[600px] h-[350px] bg-amber-600/10 rounded-full blur-[160px] pointer-events-none -z-10" />
+      <div className="fixed bottom-0 right-0 w-[500px] h-[300px] bg-rose-600/10 rounded-full blur-[160px] pointer-events-none -z-10" />
+      <div className="fixed inset-0 bg-grid-warm opacity-25 pointer-events-none -z-10" />
 
-      {/* DESKTOP SIDEBAR */}
-      <aside className="hidden md:flex flex-col w-72 shrink-0 bg-slate-950/80 border-r border-white/[0.08] backdrop-blur-2xl h-screen sticky top-0 z-40">
+      {/* DESKTOP SIDEBAR: Apple-grade frosted glass */}
+      <aside className="hidden md:flex flex-col w-72 shrink-0 bg-black/40 border-r border-white/[0.08] backdrop-blur-3xl saturate-180 h-screen sticky top-0 z-40">
         {/* Brand header */}
         <div className="p-6 border-b border-white/[0.08]">
           <Link href="/dashboard" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-violet-600 to-cyan-400 flex items-center justify-center text-white shadow-[0_0_20px_rgba(99,102,241,0.5)] group-hover:scale-105 transition-all">
-              <Globe2 className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 via-orange-500 to-rose-500 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-all">
+              <Compass className="w-5 h-5 text-white" />
             </div>
             <div className="flex flex-col">
-              <span className="font-black text-lg tracking-tight text-white group-hover:text-indigo-200 transition-colors">
-                Far From <span className="text-gradient-aurora">Home</span>
+              <span className="font-bold text-lg tracking-tight text-white group-hover:text-amber-200 transition-colors">
+                Far From <span className="text-gradient-sunset">Home</span>
               </span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+              <span className="text-[10px] font-semibold text-stone-400 uppercase tracking-wider flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 <span>Student Cockpit</span>
               </span>
@@ -153,29 +153,29 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <Link
                 key={item.name}
                 href={item.href}
-                className={`relative flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                className={`relative flex items-center gap-3.5 px-4 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
                   isActive
-                    ? 'text-white'
-                    : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
+                    ? 'text-white font-bold'
+                    : 'text-stone-400 hover:text-white hover:bg-white/[0.04]'
                 }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeSidebarPill"
-                    className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-600/30 via-violet-600/25 to-indigo-600/10 border border-indigo-500/40 shadow-[0_0_15px_rgba(99,102,241,0.25)]"
+                    className="absolute inset-0 rounded-2xl bg-white/12 border border-white/20 shadow-sm"
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}
                 <Icon
                   className={`relative z-10 w-4 h-4 transition-colors ${
-                    isActive ? 'text-cyan-400' : 'text-slate-400 group-hover:text-white'
+                    isActive ? 'text-amber-400' : 'text-stone-400 group-hover:text-white'
                   }`}
                 />
                 <span className="relative z-10">{item.name}</span>
 
                 {/* Notification Badge */}
                 {item.href === '/notifications' && unreadCount > 0 && (
-                  <span className="relative z-10 ml-auto px-2 py-0.5 text-[10px] font-extrabold rounded-full bg-rose-500 text-white shadow-sm">
+                  <span className="relative z-10 ml-auto px-2 py-0.5 text-[10px] font-black rounded-full bg-rose-500 text-white shadow-sm">
                     {unreadCount}
                   </span>
                 )}
@@ -185,17 +185,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </nav>
 
         {/* User Card at bottom */}
-        <div className="p-4 border-t border-white/[0.08] bg-white/[0.02]">
-          <div className="flex items-center justify-between p-2 rounded-xl bg-slate-900/60 border border-white/5">
+        <div className="p-4 border-t border-white/[0.08]">
+          <div className="flex items-center justify-between p-2.5 rounded-2xl ios-glass border border-white/10">
             <div className="flex items-center gap-2.5 overflow-hidden">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-500 to-pink-500 flex items-center justify-center text-xs font-black text-white shrink-0 shadow-md">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center text-xs font-bold text-white shrink-0 shadow-sm">
                 {getInitials(session?.user?.name)}
               </div>
               <div className="truncate">
                 <p className="text-xs font-bold text-white truncate">
                   {session?.user?.name || 'Student'}
                 </p>
-                <p className="text-[10px] text-slate-400 truncate">
+                <p className="text-[10px] text-stone-400 truncate">
                   {session?.user?.email}
                 </p>
               </div>
@@ -204,7 +204,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <button
               onClick={handleSignOut}
               title="Sign Out"
-              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
+              className="p-1.5 rounded-xl text-stone-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors cursor-pointer"
             >
               <LogOut className="w-4 h-4" />
             </button>
@@ -214,17 +214,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* MAIN CONTENT AREA */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* TOP BAR */}
-        <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-4 sm:px-8 bg-slate-950/70 border-b border-white/[0.08] backdrop-blur-2xl">
+        {/* TOP BAR: Apple Frosted Island style */}
+        <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-4 sm:px-8 bg-black/40 border-b border-white/[0.08] backdrop-blur-3xl saturate-180">
           {/* Mobile menu trigger */}
           <div className="flex items-center gap-3 md:hidden">
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="p-2 rounded-xl bg-slate-900 border border-white/10 text-slate-300 hover:text-white"
+              className="p-2 rounded-full bg-white/10 border border-white/10 text-stone-300 hover:text-white"
             >
               <Menu className="w-5 h-5" />
             </button>
-            <span className="text-sm font-black text-white">Far From Home</span>
+            <span className="text-sm font-bold text-white">Far From Home</span>
           </div>
 
           {/* Quick search input */}
@@ -232,13 +232,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             onSubmit={handleSearchSubmit}
             className="hidden sm:flex items-center relative max-w-md w-full"
           >
-            <Search className="absolute left-3.5 w-4 h-4 text-slate-500 pointer-events-none" />
+            <Search className="absolute left-3.5 w-4 h-4 text-stone-400 pointer-events-none" />
             <input
               type="text"
-              placeholder="Search visa rules, SIM cards, roommates, checklists..."
+              placeholder="Search guides, packing checklists, banking, senior peers..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-900/60 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+              className="w-full pl-10 pr-4 py-2 rounded-full bg-white/[0.05] border border-white/10 text-xs text-white placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
             />
           </form>
 
@@ -247,7 +247,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {/* Notifications Button */}
             <Link
               href="/notifications"
-              className="relative p-2 rounded-xl bg-slate-900/60 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-colors"
+              className="relative p-2 rounded-full bg-white/[0.05] hover:bg-white/10 border border-white/10 text-stone-300 hover:text-white transition-colors"
               title="Notifications"
             >
               <Bell className="w-4 h-4" />
@@ -261,8 +261,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {/* Quick Actions Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-2 p-1.5 rounded-xl bg-slate-900/60 hover:bg-white/10 border border-white/10 text-xs font-semibold text-white focus:outline-none">
-                  <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-indigo-500 to-pink-500 flex items-center justify-center text-xs font-bold text-white shadow-sm">
+                <button className="flex items-center gap-2 p-1.5 rounded-full bg-white/[0.05] hover:bg-white/10 border border-white/10 text-xs font-semibold text-white focus:outline-none cursor-pointer">
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center text-xs font-bold text-white shadow-sm">
                     {getInitials(session?.user?.name)}
                   </div>
                   <span className="hidden sm:inline-block max-w-[100px] truncate">
@@ -272,24 +272,24 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 align="end"
-                className="w-56 bg-slate-950/95 border-white/10 backdrop-blur-2xl text-slate-200"
+                className="w-56 bg-stone-950/90 border-white/15 backdrop-blur-3xl text-stone-200 rounded-2xl"
               >
                 <DropdownMenuLabel className="text-xs text-white">
                   Signed in as
-                  <span className="block font-normal text-slate-400 truncate">
+                  <span className="block font-normal text-stone-400 truncate">
                     {session?.user?.email}
                   </span>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-white/10" />
                 <DropdownMenuItem asChild>
                   <Link href="/profile" className="cursor-pointer text-xs">
-                    <User className="w-3.5 h-3.5 mr-2 text-cyan-400" />
+                    <User className="w-3.5 h-3.5 mr-2 text-amber-400" />
                     My Profile
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/settings" className="cursor-pointer text-xs">
-                    <Settings className="w-3.5 h-3.5 mr-2 text-indigo-400" />
+                    <Settings className="w-3.5 h-3.5 mr-2 text-orange-400" />
                     Account Settings
                   </Link>
                 </DropdownMenuItem>
@@ -297,9 +297,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   <DropdownMenuItem asChild>
                     <Link
                       href="/admin"
-                      className="cursor-pointer text-xs text-amber-300 focus:text-amber-200"
+                      className="cursor-pointer text-xs text-rose-300 focus:text-rose-200"
                     >
-                      <ShieldCheck className="w-3.5 h-3.5 mr-2 text-amber-400" />
+                      <ShieldCheck className="w-3.5 h-3.5 mr-2 text-rose-400" />
                       Admin Console
                     </Link>
                   </DropdownMenuItem>
@@ -325,7 +325,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/70 backdrop-blur-sm"
+                className="fixed inset-0 bg-black/75 backdrop-blur-md"
                 onClick={() => setMobileMenuOpen(false)}
               />
               <motion.div
@@ -333,13 +333,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 animate={{ x: 0 }}
                 exit={{ x: -300 }}
                 transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                className="relative flex flex-col w-72 bg-slate-950 border-r border-white/10 h-full p-6 z-10"
+                className="relative flex flex-col w-72 bg-stone-950/95 border-r border-white/10 h-full p-6 z-10 backdrop-blur-3xl"
               >
                 <div className="flex items-center justify-between pb-6 border-b border-white/10">
                   <span className="font-bold text-white text-base">Navigation</span>
                   <button
                     onClick={() => setMobileMenuOpen(false)}
-                    className="p-1 rounded-lg text-slate-400 hover:text-white"
+                    className="p-1 rounded-full text-stone-400 hover:text-white"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -350,9 +350,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     <Link
                       key={item.name}
                       href={item.href}
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold text-slate-300 hover:bg-white/5 hover:text-white"
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold text-stone-300 hover:bg-white/5 hover:text-white"
                     >
-                      <item.icon className="w-4 h-4 text-indigo-400" />
+                      <item.icon className="w-4 h-4 text-amber-400" />
                       <span>{item.name}</span>
                     </Link>
                   ))}

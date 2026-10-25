@@ -350,90 +350,95 @@ export default function ProfilePage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
-            <User className="h-7 w-7 text-cyan-400" />
+            <User className="h-7 w-7 text-amber-400" />
             <span>Profile & Peer Mentorship</span>
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-stone-400 mt-1">
             Manage your personal background, study destination, and peer mentorship status.
           </p>
         </div>
 
-        <Tabs
-          value={activeTab}
-          onValueChange={(val) => setActiveTab(val as 'profile' | 'buddy')}
-          className="w-auto"
-        >
-          <TabsList className="bg-slate-900/80 p-1 border border-white/10 rounded-2xl">
-            <TabsTrigger value="profile" className="text-xs font-bold cursor-pointer">
-              Student Profile
-            </TabsTrigger>
-            <TabsTrigger value="buddy" className="text-xs font-bold cursor-pointer flex items-center gap-1.5">
-              <Users className="h-3.5 w-3.5 text-indigo-400" />
-              <span>Mentor Profile</span>
-              {existingBuddy && (
-                <span className="h-2 w-2 rounded-full bg-cyan-400 ml-1"></span>
-              )}
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+        <div className="flex items-center gap-1.5 p-1 rounded-full ios-glass border border-white/10 w-fit">
+          <button
+            onClick={() => setActiveTab('profile')}
+            className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              activeTab === 'profile' ? 'btn-ios-primary text-white shadow-md' : 'text-stone-400 hover:text-white'
+            }`}
+          >
+            Student Profile
+          </button>
+          <button
+            onClick={() => setActiveTab('buddy')}
+            className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'buddy' ? 'btn-ios-primary text-white shadow-md' : 'text-stone-400 hover:text-white'
+            }`}
+          >
+            <Users className="h-3.5 w-3.5 text-amber-400" />
+            <span>Mentor Profile</span>
+            {existingBuddy && (
+              <span className="h-2 w-2 rounded-full bg-amber-400 ml-1"></span>
+            )}
+          </button>
+        </div>
       </div>
 
       {activeTab === 'profile' ? (
         /* MY STUDENT PROFILE FORM */
         <form onSubmit={handleUserSubmit(onSaveUserProfile)} className="space-y-6">
-          <Card className="border-slate-200 shadow-sm">
-            <CardHeader className="p-6 pb-4 border-b border-slate-100">
-              <CardTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                <User className="h-5 w-5 text-teal-600" /> Basic Details
-              </CardTitle>
-              <CardDescription>Your contact name and avatar identifier</CardDescription>
-            </CardHeader>
+          <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
+            <div className="p-6 pb-4 border-b border-white/10">
+              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                <User className="h-5 w-5 text-amber-400" /> Basic Details
+              </h2>
+              <p className="text-xs text-stone-400 mt-0.5">Your contact name and avatar identifier</p>
+            </div>
 
-            <CardContent className="p-6 space-y-4">
+            <div className="p-6 space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Full Display Name *</Label>
-                  <Input id="name" {...regUser('name', { required: true })} />
+                <div className="space-y-1.5">
+                  <Label htmlFor="name" className="text-xs font-bold text-stone-300">Full Display Name *</Label>
+                  <Input id="name" {...regUser('name', { required: true })} className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl" />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="profileImage">Profile Image URL (Optional)</Label>
+                <div className="space-y-1.5">
+                  <Label htmlFor="profileImage" className="text-xs font-bold text-stone-300">Profile Image URL (Optional)</Label>
                   <Input
                     id="profileImage"
                     placeholder="https://example.com/avatar.jpg"
                     {...regUser('profileImage')}
+                    className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
                   />
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           {/* Location & Institution */}
-          <Card className="border-slate-200 shadow-sm">
-            <CardHeader className="p-6 pb-4 border-b border-slate-100">
-              <CardTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                <Globe className="h-5 w-5 text-teal-600" /> Location & University
-              </CardTitle>
-              <CardDescription>
+          <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
+            <div className="p-6 pb-4 border-b border-white/10">
+              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                <Globe className="h-5 w-5 text-orange-400" /> Location & University
+              </h2>
+              <p className="text-xs text-stone-400 mt-0.5">
                 Where you are travelling from and where you will be studying
-              </CardDescription>
-            </CardHeader>
+              </p>
+            </div>
 
-            <CardContent className="p-6 space-y-4">
+            <div className="p-6 space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Country of Origin</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-bold text-stone-300">Country of Origin</Label>
                   <Controller
                     name="countryOfOrigin"
                     control={userControl}
                     render={({ field }) => (
                       <Select value={field.value} onValueChange={field.onChange}>
-                        <SelectTrigger>
+                        <SelectTrigger className="bg-white/[0.04] border-white/10 text-white text-xs rounded-xl">
                           <SelectValue placeholder="Select home country" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="bg-[#1c1613] border-white/15 text-white">
                           {COUNTRIES.map((c) => (
-                            <SelectItem key={c} value={c}>
+                            <SelectItem key={c} value={c} className="text-xs">
                               {c}
                             </SelectItem>
                           ))}
@@ -443,19 +448,19 @@ export default function ProfilePage() {
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label>Destination Country</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-bold text-stone-300">Destination Country</Label>
                   <Controller
                     name="destinationCountry"
                     control={userControl}
                     render={({ field }) => (
                       <Select value={field.value} onValueChange={field.onChange}>
-                        <SelectTrigger>
+                        <SelectTrigger className="bg-white/[0.04] border-white/10 text-white text-xs rounded-xl">
                           <SelectValue placeholder="Select destination country" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="bg-[#1c1613] border-white/15 text-white">
                           {COUNTRIES.map((c) => (
-                            <SelectItem key={c} value={c}>
+                            <SelectItem key={c} value={c} className="text-xs">
                               {c}
                             </SelectItem>
                           ))}
@@ -467,56 +472,59 @@ export default function ProfilePage() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="destinationCity">Destination City</Label>
+                <div className="space-y-1.5">
+                  <Label htmlFor="destinationCity" className="text-xs font-bold text-stone-300">Destination City</Label>
                   <Input
                     id="destinationCity"
                     placeholder="e.g. Melbourne, London"
                     {...regUser('destinationCity')}
+                    className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="arrivalDate">Estimated Arrival Date</Label>
-                  <Input id="arrivalDate" type="date" {...regUser('arrivalDate')} />
+                <div className="space-y-1.5">
+                  <Label htmlFor="arrivalDate" className="text-xs font-bold text-stone-300">Estimated Arrival Date</Label>
+                  <Input id="arrivalDate" type="date" {...regUser('arrivalDate')} className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl" />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="university">University / College</Label>
+              <div className="space-y-1.5">
+                <Label htmlFor="university" className="text-xs font-bold text-stone-300">University / College</Label>
                 <Input
                   id="university"
                   placeholder="e.g. University of Melbourne"
                   {...regUser('university')}
+                  className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
                 />
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           {/* Languages & Preferences */}
-          <Card className="border-slate-200 shadow-sm">
-            <CardHeader className="p-6 pb-4 border-b border-slate-100">
-              <CardTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                <Languages className="h-5 w-5 text-teal-600" /> Languages & Mentorship Needs
-              </CardTitle>
-              <CardDescription>
+          <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
+            <div className="p-6 pb-4 border-b border-white/10">
+              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                <Languages className="h-5 w-5 text-amber-400" /> Languages & Mentorship Needs
+              </h2>
+              <p className="text-xs text-stone-400 mt-0.5">
                 Help other students connect with you on the right topics
-              </CardDescription>
-            </CardHeader>
+              </p>
+            </div>
 
-            <CardContent className="p-6 space-y-5">
+            <div className="p-6 space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="preferredLang">Preferred Language</Label>
+                <div className="space-y-1.5">
+                  <Label htmlFor="preferredLang" className="text-xs font-bold text-stone-300">Preferred Language</Label>
                   <Input
                     id="preferredLang"
                     placeholder="e.g. English, Spanish"
                     {...regUser('preferredLanguage')}
+                    className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label>Languages Spoken</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-bold text-stone-300">Languages Spoken</Label>
                   <div className="flex gap-2">
                     <Input
                       placeholder="Add language..."
@@ -528,8 +536,9 @@ export default function ProfilePage() {
                           addSpokenLang();
                         }
                       }}
+                      className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
                     />
-                    <Button type="button" variant="secondary" onClick={addSpokenLang} className="text-xs">
+                    <Button type="button" variant="secondary" onClick={addSpokenLang} className="ios-pill text-xs">
                       Add
                     </Button>
                   </div>
@@ -537,13 +546,13 @@ export default function ProfilePage() {
                     {(userValues.languagesSpoken || []).map((lang) => (
                       <span
                         key={lang}
-                        className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-teal-50 text-teal-800 border border-teal-200 text-xs font-semibold"
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full ios-glass border border-amber-500/30 text-amber-300 text-xs font-semibold"
                       >
                         {lang}
                         <button
                           type="button"
                           onClick={() => removeSpokenLang(lang)}
-                          className="hover:text-red-500 ml-1 font-bold"
+                          className="hover:text-rose-400 ml-1 font-bold"
                         >
                           ×
                         </button>
@@ -555,7 +564,7 @@ export default function ProfilePage() {
 
               {/* Interests */}
               <div className="space-y-2 pt-2">
-                <Label className="font-semibold text-slate-800">Your Interests</Label>
+                <Label className="text-xs font-bold text-stone-300">Your Interests</Label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
                   {INTEREST_OPTIONS.map((item) => {
                     const checked = (userValues.interests || []).includes(item.id);
@@ -563,10 +572,10 @@ export default function ProfilePage() {
                       <div
                         key={item.id}
                         onClick={() => toggleInterest(item.id)}
-                        className={`p-2.5 rounded-lg border text-xs font-medium cursor-pointer transition-all flex items-center space-x-2 ${
+                        className={`p-3 rounded-2xl border text-xs font-medium cursor-pointer transition-all flex items-center space-x-2.5 ${
                           checked
-                            ? 'bg-teal-50 text-teal-900 border-teal-400 font-semibold'
-                            : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                            ? 'bg-amber-500/20 text-white border-amber-500/50 shadow-sm'
+                            : 'ios-glass border-white/5 text-stone-400 hover:border-white/20'
                         }`}
                       >
                         <Checkbox checked={checked} onCheckedChange={() => toggleInterest(item.id)} />
@@ -579,7 +588,7 @@ export default function ProfilePage() {
 
               {/* Support Preferences */}
               <div className="space-y-2 pt-2">
-                <Label className="font-semibold text-slate-800">Support Preferences</Label>
+                <Label className="text-xs font-bold text-stone-300">Support Preferences</Label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
                   {SUPPORT_OPTIONS.map((item) => {
                     const checked = (userValues.supportPreferences || []).includes(item.id);
@@ -587,10 +596,10 @@ export default function ProfilePage() {
                       <div
                         key={item.id}
                         onClick={() => toggleSupport(item.id)}
-                        className={`p-2.5 rounded-lg border text-xs font-medium cursor-pointer transition-all flex items-center space-x-2 ${
+                        className={`p-3 rounded-2xl border text-xs font-medium cursor-pointer transition-all flex items-center space-x-2.5 ${
                           checked
-                            ? 'bg-teal-50 text-teal-900 border-teal-400 font-semibold'
-                            : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                            ? 'bg-orange-500/20 text-white border-orange-500/50 shadow-sm'
+                            : 'ios-glass border-white/5 text-stone-400 hover:border-white/20'
                         }`}
                       >
                         <Checkbox checked={checked} onCheckedChange={() => toggleSupport(item.id)} />
@@ -600,75 +609,69 @@ export default function ProfilePage() {
                   })}
                 </div>
               </div>
-            </CardContent>
+            </div>
 
-            <CardFooter className="p-6 border-t border-slate-100 flex justify-end">
+            <div className="p-6 border-t border-white/10 flex justify-end">
               <Button
                 type="submit"
                 disabled={savingUser}
-                className="bg-teal-600 hover:bg-teal-500 text-white font-bold cursor-pointer"
+                className="btn-ios-primary text-xs px-6 py-2.5 cursor-pointer shadow-md"
               >
                 <Save className="h-4 w-4 mr-2" />
                 {savingUser ? 'Saving Changes...' : 'Save Profile Changes'}
               </Button>
-            </CardFooter>
-          </Card>
+            </div>
+          </div>
         </form>
       ) : (
         /* BUDDY PROFILE FORM */
         <form onSubmit={handleBuddySubmit(onSaveBuddyProfile)} className="space-y-6">
-          <Card className="border-slate-200 shadow-sm">
-            <CardHeader className="p-6 pb-4 border-b border-slate-100 flex flex-row items-center justify-between">
+          <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
+            <div className="p-6 pb-4 border-b border-white/10 flex flex-row items-center justify-between">
               <div>
-                <CardTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                  <Users className="h-5 w-5 text-teal-600" /> Peer Buddy Profile
-                </CardTitle>
-                <CardDescription>
+                <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                  <Users className="h-5 w-5 text-amber-400" /> Peer Buddy Profile
+                </h2>
+                <p className="text-xs text-stone-400 mt-0.5">
                   Share your campus tips and become a mentor for incoming international students
-                </CardDescription>
+                </p>
               </div>
 
               {existingBuddy && (
                 <Badge
-                  variant={
-                    existingBuddy.approvalStatus === 'approved'
-                      ? 'success'
-                      : existingBuddy.approvalStatus === 'rejected'
-                      ? 'destructive'
-                      : 'warning'
-                  }
-                  className="capitalize text-xs font-bold"
+                  className="capitalize text-xs font-bold px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30"
                 >
                   {existingBuddy.approvalStatus === 'approved' ? 'Approved Mentor' : `Status: ${existingBuddy.approvalStatus}`}
                 </Badge>
               )}
-            </CardHeader>
+            </div>
 
-            <CardContent className="p-6 space-y-5">
+            <div className="p-6 space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="buddyUni">University Campus *</Label>
+                <div className="space-y-1.5">
+                  <Label htmlFor="buddyUni" className="text-xs font-bold text-stone-300">University Campus *</Label>
                   <Input
                     id="buddyUni"
                     placeholder="e.g. University of Melbourne"
                     {...regBuddy('university', { required: true })}
+                    className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label>Availability Status</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-bold text-stone-300">Availability Status</Label>
                   <Controller
                     name="availability"
                     control={buddyControl}
                     render={({ field }) => (
                       <Select value={field.value} onValueChange={field.onChange}>
-                        <SelectTrigger>
+                        <SelectTrigger className="bg-white/[0.04] border-white/10 text-white text-xs rounded-xl">
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="available">Available (Accepting Requests)</SelectItem>
-                          <SelectItem value="busy">Busy (Limited Advice)</SelectItem>
-                          <SelectItem value="unavailable">Unavailable (Temporarily Paused)</SelectItem>
+                        <SelectContent className="bg-[#1c1613] border-white/15 text-white">
+                          <SelectItem value="available" className="text-xs">Available (Accepting Requests)</SelectItem>
+                          <SelectItem value="busy" className="text-xs">Busy (Limited Advice)</SelectItem>
+                          <SelectItem value="unavailable" className="text-xs">Unavailable (Temporarily Paused)</SelectItem>
                         </SelectContent>
                       </Select>
                     )}
@@ -677,19 +680,20 @@ export default function ProfilePage() {
               </div>
 
               {/* Biography */}
-              <div className="space-y-2">
-                <Label htmlFor="bio">Mentor Introduction / Biography</Label>
+              <div className="space-y-1.5">
+                <Label htmlFor="bio" className="text-xs font-bold text-stone-300">Mentor Introduction / Biography</Label>
                 <Textarea
                   id="bio"
                   placeholder="Tell incoming students about yourself, what degree you are pursuing, favorite local spots, and how you can support them..."
                   rows={4}
                   {...regBuddy('biography')}
+                  className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
                 />
               </div>
 
               {/* Support Areas Offered */}
               <div className="space-y-2 pt-2">
-                <Label className="font-semibold text-slate-800">
+                <Label className="text-xs font-bold text-stone-300">
                   Areas Where You Can Mentor Peers *
                 </Label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
@@ -699,10 +703,10 @@ export default function ProfilePage() {
                       <div
                         key={item.id}
                         onClick={() => toggleBuddySupportArea(item.id)}
-                        className={`p-2.5 rounded-lg border text-xs font-medium cursor-pointer transition-all flex items-center space-x-2 ${
+                        className={`p-3 rounded-2xl border text-xs font-medium cursor-pointer transition-all flex items-center space-x-2.5 ${
                           checked
-                            ? 'bg-teal-50 text-teal-900 border-teal-400 font-semibold'
-                            : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                            ? 'bg-amber-500/20 text-white border-amber-500/50 shadow-sm'
+                            : 'ios-glass border-white/5 text-stone-400 hover:border-white/20'
                         }`}
                       >
                         <Checkbox checked={checked} onCheckedChange={() => toggleBuddySupportArea(item.id)} />
@@ -712,19 +716,19 @@ export default function ProfilePage() {
                   })}
                 </div>
               </div>
-            </CardContent>
+            </div>
 
-            <CardFooter className="p-6 border-t border-slate-100 flex justify-end">
+            <div className="p-6 border-t border-white/10 flex justify-end">
               <Button
                 type="submit"
                 disabled={savingBuddy}
-                className="bg-teal-600 hover:bg-teal-500 text-white font-bold cursor-pointer"
+                className="btn-ios-primary text-xs px-6 py-2.5 cursor-pointer shadow-md"
               >
                 <Save className="h-4 w-4 mr-2" />
                 {savingBuddy ? 'Saving...' : existingBuddy ? 'Update Buddy Profile' : 'Apply to Become a Buddy'}
               </Button>
-            </CardFooter>
-          </Card>
+            </div>
+          </div>
         </form>
       )}
     </div>

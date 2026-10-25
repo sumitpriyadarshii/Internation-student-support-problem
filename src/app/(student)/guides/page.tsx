@@ -226,29 +226,29 @@ export default function GuidesPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
-            <BookOpen className="h-7 w-7 text-indigo-400" />
+            <BookOpen className="h-7 w-7 text-amber-400" />
             <span>Relocation Handbooks</span>
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-stone-400 mt-1">
             Practical survival guides, verified legal checklists, and city housing tips.
           </p>
         </div>
 
         {/* Tab switcher: All Guides vs Bookmarks */}
-        <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-900/80 border border-white/10 w-fit">
+        <div className="flex items-center gap-1.5 p-1 rounded-full ios-glass border border-white/10 w-fit">
           <button
             onClick={() => {
               setActiveTab('all');
               setPage(1);
             }}
-            className={`relative px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'all' ? 'text-white' : 'text-slate-400 hover:text-white'
+            className={`relative px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              activeTab === 'all' ? 'text-white' : 'text-stone-400 hover:text-white'
             }`}
           >
             {activeTab === 'all' && (
               <motion.div
                 layoutId="guideTabPill"
-                className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 shadow-md"
+                className="absolute inset-0 rounded-full btn-ios-primary shadow-md"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
@@ -260,22 +260,22 @@ export default function GuidesPage() {
               setActiveTab('bookmarks');
               setPage(1);
             }}
-            className={`relative px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'bookmarks' ? 'text-white' : 'text-slate-400 hover:text-white'
+            className={`relative px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              activeTab === 'bookmarks' ? 'text-white' : 'text-stone-400 hover:text-white'
             }`}
           >
             {activeTab === 'bookmarks' && (
               <motion.div
                 layoutId="guideTabPill"
-                className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 shadow-md"
+                className="absolute inset-0 rounded-full btn-ios-primary shadow-md"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
             <span className="relative z-10 flex items-center gap-1.5">
-              <Bookmark className="w-3.5 h-3.5 text-cyan-400" />
+              <Bookmark className="w-3.5 h-3.5 text-amber-400" />
               <span>Saved Bookmarks</span>
               {bookmarkedIds.size > 0 && (
-                <span className="px-1.5 py-0.2 rounded-full bg-cyan-500 text-slate-950 font-black text-[10px]">
+                <span className="px-1.5 py-0.2 rounded-full bg-amber-500 text-stone-950 font-black text-[10px]">
                   {bookmarkedIds.size}
                 </span>
               )}
@@ -287,17 +287,17 @@ export default function GuidesPage() {
       {/* Filters Bar */}
       <form
         onSubmit={handleSearchSubmit}
-        className="glass-panel p-4 rounded-2xl border border-white/10 flex flex-col md:flex-row items-center gap-3"
+        className="ios-glass p-4 rounded-2xl border border-white/10 flex flex-col md:flex-row items-center gap-3"
       >
         {/* Search */}
         <div className="relative flex-1 w-full">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-stone-500" />
           <Input
             type="text"
             placeholder="Search guides (e.g. SIN number, Monzo bank, NHS GP, lease)..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 bg-slate-950/60 border-white/10 text-white text-xs rounded-xl"
+            className="pl-10 bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
           />
         </div>
 
@@ -310,10 +310,10 @@ export default function GuidesPage() {
               setPage(1);
             }}
           >
-            <SelectTrigger className="bg-slate-950/60 border-white/10 text-white text-xs rounded-xl">
+            <SelectTrigger className="bg-white/[0.04] border-white/10 text-white text-xs rounded-xl">
               <SelectValue placeholder="Category" />
             </SelectTrigger>
-            <SelectContent className="bg-slate-950 border-white/15 text-white">
+            <SelectContent className="bg-[#1c1613] border-white/15 text-white">
               {CATEGORIES.map((c) => (
                 <SelectItem key={c.id} value={c.id} className="text-xs">
                   {c.label}
@@ -332,10 +332,10 @@ export default function GuidesPage() {
               setPage(1);
             }}
           >
-            <SelectTrigger className="bg-slate-950/60 border-white/10 text-white text-xs rounded-xl">
+            <SelectTrigger className="bg-white/[0.04] border-white/10 text-white text-xs rounded-xl">
               <SelectValue placeholder="Country" />
             </SelectTrigger>
-            <SelectContent className="bg-slate-950 border-white/15 text-white">
+            <SelectContent className="bg-[#1c1613] border-white/15 text-white">
               {COUNTRIES.map((cty) => (
                 <SelectItem key={cty} value={cty} className="text-xs">
                   {cty === 'all' ? 'All Countries' : cty}
@@ -347,7 +347,7 @@ export default function GuidesPage() {
 
         <Button
           type="submit"
-          className="w-full md:w-auto bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shrink-0"
+          className="w-full md:w-auto btn-ios-primary text-xs rounded-full px-5 py-2.5 shrink-0"
         >
           Search
         </Button>
@@ -357,7 +357,7 @@ export default function GuidesPage() {
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="glass-panel h-60 rounded-3xl animate-pulse" />
+            <div key={i} className="ios-glass h-60 rounded-3xl animate-pulse" />
           ))}
         </div>
       ) : guides.length > 0 ? (
@@ -368,12 +368,12 @@ export default function GuidesPage() {
               <motion.div
                 key={guide._id}
                 whileHover={{ y: -4 }}
-                className="glass-panel glass-card-specular rounded-3xl p-6 border border-white/10 flex flex-col justify-between hover:border-indigo-500/40 transition-all duration-300 relative group"
+                className="ios-glass rounded-3xl p-6 border border-white/10 flex flex-col justify-between hover:border-amber-500/40 transition-all duration-300 relative group"
               >
                 <div>
                   {/* Category and Bookmark button */}
                   <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-lg bg-indigo-500/15 text-indigo-300 border border-indigo-500/25">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/25">
                       {guide.category.replace('-', ' ')}
                     </span>
 
@@ -382,8 +382,8 @@ export default function GuidesPage() {
                       onClick={(e) => toggleBookmark(e, guide._id)}
                       className={`p-2 rounded-xl border transition-all cursor-pointer ${
                         isBookmarked
-                          ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/40'
-                          : 'bg-white/[0.04] text-slate-400 hover:text-white border-white/10 hover:bg-white/10'
+                          ? 'bg-amber-500/20 text-amber-400 border-amber-500/40'
+                          : 'bg-white/[0.04] text-stone-400 hover:text-white border-white/10 hover:bg-white/10'
                       }`}
                       title={isBookmarked ? 'Remove bookmark' : 'Bookmark this guide'}
                     >
@@ -397,13 +397,13 @@ export default function GuidesPage() {
 
                   {/* Title */}
                   <Link href={`/guides/${guide._id}`} className="block">
-                    <h3 className="text-base font-bold text-white group-hover:text-cyan-300 transition-colors line-clamp-2 mb-2">
+                    <h3 className="text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-2 mb-2">
                       {guide.title}
                     </h3>
                   </Link>
 
                   {/* Summary */}
-                  <p className="text-xs text-slate-400 line-clamp-3 leading-relaxed mb-4">
+                  <p className="text-xs text-stone-400 line-clamp-3 leading-relaxed mb-4">
                     {guide.summary}
                   </p>
 
@@ -413,7 +413,7 @@ export default function GuidesPage() {
                       {guide.tags.slice(0, 3).map((tag) => (
                         <span
                           key={tag}
-                          className="text-[10px] text-slate-400 bg-white/[0.04] px-2 py-0.5 rounded-md"
+                          className="text-[10px] text-stone-400 bg-white/[0.04] px-2.5 py-0.5 rounded-full"
                         >
                           #{tag}
                         </span>
@@ -423,9 +423,9 @@ export default function GuidesPage() {
                 </div>
 
                 {/* Footer metadata */}
-                <div className="flex items-center justify-between text-xs text-slate-400 pt-3 border-t border-white/10">
+                <div className="flex items-center justify-between text-xs text-stone-400 pt-3 border-t border-white/10">
                   <div className="flex items-center gap-1.5">
-                    <Globe className="h-3.5 w-3.5 text-indigo-400" />
+                    <Globe className="h-3.5 w-3.5 text-amber-400" />
                     <span className="truncate max-w-[120px]">
                       {guide.applicableCountries?.join(', ') || 'Global'}
                     </span>
@@ -433,7 +433,7 @@ export default function GuidesPage() {
 
                   <Link
                     href={`/guides/${guide._id}`}
-                    className="text-cyan-400 hover:text-cyan-300 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform"
+                    className="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform"
                   >
                     <span>Read Handbook</span>
                     <ChevronRight className="h-3.5 w-3.5" />
@@ -445,9 +445,9 @@ export default function GuidesPage() {
         </div>
       ) : (
         <div className="text-center py-16 bg-white/[0.02] rounded-3xl border border-dashed border-white/10 p-8">
-          <BookOpen className="h-12 w-12 text-slate-500 mx-auto mb-3" />
+          <BookOpen className="h-12 w-12 text-stone-500 mx-auto mb-3" />
           <h3 className="text-base font-bold text-white">No Handbooks Found</h3>
-          <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
+          <p className="text-xs text-stone-400 mt-1 max-w-sm mx-auto">
             {activeTab === 'bookmarks'
               ? 'You have not bookmarked any guides yet. Browse guides and click the bookmark ribbon!'
               : 'Try clearing your category or search query to find relevant guides.'}
@@ -463,11 +463,11 @@ export default function GuidesPage() {
             size="sm"
             disabled={page <= 1}
             onClick={() => setPage((p) => Math.max(1, p - 1))}
-            className="border-white/10 text-slate-300 hover:text-white rounded-xl text-xs"
+            className="ios-pill border-white/10 text-stone-300 hover:text-white text-xs"
           >
             <ChevronLeft className="h-4 w-4 mr-1" /> Previous
           </Button>
-          <span className="text-xs text-slate-400 font-semibold px-3">
+          <span className="text-xs text-stone-400 font-semibold px-3">
             Page {page} of {totalPages}
           </span>
           <Button
@@ -475,7 +475,7 @@ export default function GuidesPage() {
             size="sm"
             disabled={page >= totalPages}
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-            className="border-white/10 text-slate-300 hover:text-white rounded-xl text-xs"
+            className="ios-pill border-white/10 text-stone-300 hover:text-white text-xs"
           >
             Next <ChevronRight className="h-4 w-4 ml-1" />
           </Button>

@@ -12,7 +12,7 @@ import { motion } from 'framer-motion';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import {
-  Globe2,
+  Compass,
   Lock,
   Mail,
   User,
@@ -23,7 +23,6 @@ import {
   ShieldCheck,
   CheckCircle2,
   Sparkles,
-  Plane,
 } from 'lucide-react';
 
 const registerSchema = z
@@ -133,38 +132,38 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#060913] text-slate-100">
+    <div className="min-h-screen flex flex-col bg-[#090a0f] text-[#f7f5f0]">
       <Navbar />
 
       <main className="flex-1 flex items-center justify-center py-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Ambient Glows */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-indigo-600/15 via-violet-600/10 to-cyan-500/15 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute inset-0 bg-grid-cyber opacity-30 pointer-events-none" />
+        {/* Ambient Warm Sunset Glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-amber-600/15 via-orange-600/10 to-rose-600/15 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute inset-0 bg-grid-warm opacity-30 pointer-events-none" />
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
+          initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4 }}
           className="w-full max-w-xl mx-auto"
         >
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-semibold mb-4 backdrop-blur-md">
-              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full ios-pill text-amber-300 text-xs font-semibold mb-4">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
               <span>Free Student Registration</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-              Begin Your <span className="text-gradient-aurora">Global Journey</span>
+              Begin Your <span className="text-gradient-sunset">Global Chapter</span>
             </h1>
-            <p className="mt-2 text-sm text-slate-400 max-w-md mx-auto">
-              Join thousands of international scholars getting tailored relocation support
+            <p className="mt-2 text-sm text-stone-400 max-w-md mx-auto">
+              Join thousands of international scholars receiving warm, tailored relocation guidance
             </p>
           </div>
 
-          {/* Form Card */}
-          <div className="glass-panel glass-card-specular rounded-3xl p-6 sm:p-10 shadow-2xl relative border border-white/10">
+          {/* Form Card: Apple Frosted Glass */}
+          <div className="ios-glass-prominent rounded-3xl p-6 sm:p-10 shadow-2xl relative">
             {errorMessage && (
-              <div className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-start gap-3 text-rose-300">
+              <div className="mb-6 p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-start gap-3 text-rose-300">
                 <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
                 <p className="text-xs sm:text-sm leading-relaxed">{errorMessage}</p>
               </div>
@@ -173,18 +172,18 @@ export default function RegisterPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               {/* Full Name */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-stone-300 mb-1.5">
                   Full Name
                 </label>
                 <div className="relative">
-                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
                   <input
                     {...register('name')}
                     type="text"
                     placeholder="e.g. Priya Sharma"
                     disabled={isLoading}
                     autoComplete="name"
-                    className={`w-full pl-10 pr-4 py-3 rounded-xl bg-slate-950/70 border text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all ${
+                    className={`w-full pl-10 pr-4 py-3 rounded-2xl bg-black/30 border text-sm text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all ${
                       errors.name ? 'border-rose-500' : 'border-white/10'
                     }`}
                   />
@@ -196,18 +195,18 @@ export default function RegisterPage() {
 
               {/* Email */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-stone-300 mb-1.5">
                   Email Address
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
                   <input
                     {...register('email')}
                     type="email"
                     placeholder="student@university.edu"
                     disabled={isLoading}
                     autoComplete="email"
-                    className={`w-full pl-10 pr-4 py-3 rounded-xl bg-slate-950/70 border text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all ${
+                    className={`w-full pl-10 pr-4 py-3 rounded-2xl bg-black/30 border text-sm text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all ${
                       errors.email ? 'border-rose-500' : 'border-white/10'
                     }`}
                   />
@@ -219,25 +218,25 @@ export default function RegisterPage() {
 
               {/* Password */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-stone-300 mb-1.5">
                   Password
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
                   <input
                     {...register('password')}
                     type={showPassword ? 'text' : 'password'}
                     placeholder="At least 8 characters"
                     disabled={isLoading}
                     autoComplete="new-password"
-                    className={`w-full pl-10 pr-11 py-3 rounded-xl bg-slate-950/70 border text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all ${
+                    className={`w-full pl-10 pr-11 py-3 rounded-2xl bg-black/30 border text-sm text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all ${
                       errors.password ? 'border-rose-500' : 'border-white/10'
                     }`}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 focus:outline-none"
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-200 focus:outline-none"
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -250,7 +249,7 @@ export default function RegisterPage() {
                   <div className={`h-1.5 rounded-full transition-all ${hasLowercase ? 'bg-emerald-400' : 'bg-white/10'}`} />
                   <div className={`h-1.5 rounded-full transition-all ${hasNumber ? 'bg-emerald-400' : 'bg-white/10'}`} />
                 </div>
-                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1.5 text-[11px] text-slate-400">
+                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1.5 text-[11px] text-stone-400">
                   <span className={hasMinLength ? 'text-emerald-400' : ''}>8+ chars</span>
                   <span className={hasUppercase ? 'text-emerald-400' : ''}>1 uppercase</span>
                   <span className={hasLowercase ? 'text-emerald-400' : ''}>1 lowercase</span>
@@ -263,25 +262,25 @@ export default function RegisterPage() {
 
               {/* Confirm Password */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-stone-300 mb-1.5">
                   Confirm Password
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
                   <input
                     {...register('confirmPassword')}
                     type={showConfirmPassword ? 'text' : 'password'}
                     placeholder="Repeat password"
                     disabled={isLoading}
                     autoComplete="new-password"
-                    className={`w-full pl-10 pr-11 py-3 rounded-xl bg-slate-950/70 border text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all ${
+                    className={`w-full pl-10 pr-11 py-3 rounded-2xl bg-black/30 border text-sm text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all ${
                       errors.confirmPassword ? 'border-rose-500' : 'border-white/10'
                     }`}
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 focus:outline-none"
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-200 focus:outline-none"
                   >
                     {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -293,19 +292,19 @@ export default function RegisterPage() {
 
               {/* Terms Checkbox */}
               <div className="pt-2">
-                <label className="flex items-start gap-2.5 text-xs text-slate-300 cursor-pointer">
+                <label className="flex items-start gap-2.5 text-xs text-stone-300 cursor-pointer">
                   <input
                     {...register('agreeTerms')}
                     type="checkbox"
-                    className="mt-0.5 rounded border-white/20 bg-slate-950 text-indigo-500 focus:ring-indigo-500 cursor-pointer"
+                    className="mt-0.5 rounded border-white/20 bg-black/40 text-amber-500 focus:ring-amber-500 cursor-pointer"
                   />
                   <span>
                     I agree to the{' '}
-                    <Link href="/terms" className="text-cyan-400 hover:underline">
+                    <Link href="/terms" className="text-amber-400 hover:underline">
                       Terms of Service
                     </Link>{' '}
                     and{' '}
-                    <Link href="/privacy" className="text-cyan-400 hover:underline">
+                    <Link href="/privacy" className="text-amber-400 hover:underline">
                       Privacy Policy
                     </Link>
                   </span>
@@ -319,7 +318,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="btn-shimmer w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-500 via-violet-600 to-cyan-500 hover:from-indigo-600 hover:to-cyan-600 active:scale-[0.99] disabled:opacity-60 transition-all text-sm cursor-pointer shadow-lg shadow-indigo-500/25 mt-4"
+                className="btn-ios-primary w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-full font-bold text-white shadow-xl hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 transition-all text-sm cursor-pointer mt-4"
               >
                 {isLoading ? (
                   <span className="flex items-center gap-2">
@@ -336,11 +335,11 @@ export default function RegisterPage() {
             </form>
 
             <div className="mt-8 pt-6 border-t border-white/10 text-center">
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-stone-400">
                 Already registered?{' '}
                 <Link
                   href="/login"
-                  className="text-cyan-400 hover:text-cyan-300 font-bold transition-colors"
+                  className="text-amber-400 hover:text-amber-300 font-bold transition-colors"
                 >
                   Sign in here
                 </Link>

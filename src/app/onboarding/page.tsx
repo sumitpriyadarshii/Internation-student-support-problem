@@ -318,7 +318,7 @@ export default function OnboardingPage() {
           particleCount: 100,
           spread: 80,
           origin: { y: 0.5 },
-          colors: ['#6366f1', '#06b6d4', '#10b981', '#f43f5e'],
+          colors: ['#f97316', '#f59e0b', '#fb7185', '#10b981'],
         });
         toast.success('Welcome aboard! Your personalized journey is live! 🎉');
         if (updateSession) {
@@ -339,20 +339,20 @@ export default function OnboardingPage() {
   const progressPercentage = ((step - 1) / 3) * 100;
 
   return (
-    <div className="min-h-screen bg-[#060913] text-slate-100 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Background Orbs */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-tr from-indigo-600/15 via-violet-600/10 to-cyan-500/15 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute inset-0 bg-grid-cyber opacity-30 pointer-events-none" />
+    <div className="min-h-screen bg-[#0d0a09] text-stone-100 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background Warm Liquid Glass Orbs */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-tr from-amber-500/15 via-orange-500/10 to-rose-500/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute inset-0 bg-grid-warm opacity-40 pointer-events-none" />
 
       {/* Brand Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-2xl text-center mb-8 relative z-10">
-        <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-gradient-to-tr from-indigo-600 via-violet-600 to-cyan-400 text-white shadow-[0_0_25px_rgba(99,102,241,0.5)] mb-4">
+        <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-gradient-to-tr from-amber-500 via-orange-500 to-rose-500 text-white shadow-[0_10px_30px_rgba(249,115,22,0.4)] mb-4">
           <Compass className="h-7 w-7" />
         </div>
         <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
-          Configure Your <span className="text-gradient-aurora">Global Flight Path</span>
+          Configure Your <span className="text-gradient-sunset">Global Journey</span>
         </h1>
-        <p className="mt-2 text-sm text-slate-400">
+        <p className="mt-2 text-sm text-stone-400">
           We use this to auto-generate checklists, match senior peer buddies, and tailor relocation guides.
         </p>
       </div>
@@ -360,25 +360,25 @@ export default function OnboardingPage() {
       <div className="sm:mx-auto sm:w-full sm:max-w-2xl relative z-10">
         {/* Progress Bar & Indicators */}
         <div className="mb-6 px-2">
-          <div className="flex items-center justify-between text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-            <span className={step >= 1 ? 'text-cyan-400' : ''}>1. Identity</span>
-            <span className={step >= 2 ? 'text-cyan-400' : ''}>2. Campus</span>
-            <span className={step >= 3 ? 'text-cyan-400' : ''}>3. Interests</span>
-            <span className={step >= 4 ? 'text-cyan-400' : ''}>4. Launch</span>
+          <div className="flex items-center justify-between text-xs font-bold text-stone-400 uppercase tracking-wider mb-2">
+            <span className={step >= 1 ? 'text-amber-400' : ''}>1. Identity</span>
+            <span className={step >= 2 ? 'text-amber-400' : ''}>2. Campus</span>
+            <span className={step >= 3 ? 'text-amber-400' : ''}>3. Interests</span>
+            <span className={step >= 4 ? 'text-amber-400' : ''}>4. Launch</span>
           </div>
-          <div className="h-2 w-full bg-slate-900 rounded-full overflow-hidden border border-white/10">
+          <div className="h-2 w-full bg-stone-900 rounded-full overflow-hidden border border-white/10">
             <div
-              className="h-full bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-400 transition-all duration-300 ease-in-out shadow-[0_0_15px_rgba(6,182,212,0.6)]"
+              className="h-full bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 transition-all duration-300 ease-in-out shadow-[0_0_15px_rgba(249,115,22,0.6)]"
               style={{ width: `${Math.max(10, progressPercentage + (step === 4 ? 33 : 15))}%` }}
             />
           </div>
-          <p className="text-right text-[11px] text-slate-400 mt-1 font-semibold">
+          <p className="text-right text-[11px] text-stone-400 mt-1 font-semibold">
             Stage {step} of 4
           </p>
         </div>
 
         {/* Wizard Card Container */}
-        <div className="glass-panel glass-card-specular rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl">
+        <div className="ios-glass-prominent rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl">
           <AnimatePresence mode="wait">
             {/* STEP 1: Basic Profile */}
             {step === 1 && (
@@ -648,10 +648,10 @@ export default function OnboardingPage() {
                           <div
                             key={item.id}
                             onClick={() => toggleInterest(item.id)}
-                            className={`flex items-center space-x-2.5 p-2.5 rounded-xl border transition-all cursor-pointer ${
+                            className={`flex items-center space-x-2.5 p-3 rounded-2xl border transition-all cursor-pointer ${
                               isChecked
-                                ? 'bg-indigo-500/20 border-indigo-500/50 text-white shadow-sm'
-                                : 'bg-slate-950/40 border-white/5 text-slate-400 hover:border-white/20'
+                                ? 'bg-amber-500/20 border-amber-500/50 text-white shadow-sm'
+                                : 'ios-glass border-white/5 text-stone-400 hover:border-white/20'
                             }`}
                           >
                             <Checkbox checked={isChecked} onCheckedChange={() => toggleInterest(item.id)} />
@@ -664,7 +664,7 @@ export default function OnboardingPage() {
 
                   {/* Support Needed */}
                   <div className="space-y-2">
-                    <Label className="text-xs font-bold text-slate-300">Areas Where You Need Guidance</Label>
+                    <Label className="text-xs font-bold text-stone-300">Areas Where You Need Guidance</Label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {SUPPORT_OPTIONS.map((item) => {
                         const isChecked = (formValues.supportPreferences || []).includes(item.id);
@@ -672,10 +672,10 @@ export default function OnboardingPage() {
                           <div
                             key={item.id}
                             onClick={() => toggleSupport(item.id)}
-                            className={`flex items-center space-x-2.5 p-2.5 rounded-xl border transition-all cursor-pointer ${
+                            className={`flex items-center space-x-2.5 p-3 rounded-2xl border transition-all cursor-pointer ${
                               isChecked
-                                ? 'bg-cyan-500/20 border-cyan-500/50 text-white shadow-sm'
-                                : 'bg-slate-950/40 border-white/5 text-slate-400 hover:border-white/20'
+                                ? 'bg-orange-500/20 border-orange-500/50 text-white shadow-sm'
+                                : 'ios-glass border-white/5 text-stone-400 hover:border-white/20'
                             }`}
                           >
                             <Checkbox checked={isChecked} onCheckedChange={() => toggleSupport(item.id)} />
@@ -691,14 +691,14 @@ export default function OnboardingPage() {
                   <Button
                     variant="outline"
                     onClick={() => setStep(2)}
-                    className="border-white/10 text-slate-300 hover:text-white rounded-xl text-xs"
+                    className="ios-pill border-white/10 text-stone-300 hover:text-white text-xs"
                   >
                     <ArrowLeft className="mr-1.5 h-4 w-4" /> Back
                   </Button>
                   <Button
                     onClick={() => onSubmitStep(3)}
                     disabled={submitting}
-                    className="btn-shimmer bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow-md cursor-pointer"
+                    className="btn-ios-primary text-xs px-6 py-2.5 shadow-md cursor-pointer"
                   >
                     {submitting ? 'Saving...' : 'Review & Confirm'}
                     <ArrowRight className="ml-1.5 h-4 w-4" />
@@ -717,12 +717,12 @@ export default function OnboardingPage() {
                 transition={{ duration: 0.25 }}
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="h-10 w-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                  <div className="h-10 w-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
                     <Sparkles className="h-5 w-5" />
                   </div>
                   <div>
                     <h2 className="text-xl font-bold text-white">Review & Ready to Launch</h2>
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-stone-400">
                       Confirm your setup to auto-assign checklist milestones and buddy matches.
                     </p>
                   </div>
@@ -731,14 +731,14 @@ export default function OnboardingPage() {
                 <div className="rounded-2xl bg-black/30 border border-white/10 p-5 space-y-4">
                   <div className="flex justify-between items-center pb-3 border-b border-white/10">
                     <div>
-                      <p className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Student</p>
+                      <p className="text-[10px] uppercase font-bold tracking-wider text-stone-400">Student</p>
                       <p className="text-sm font-bold text-white">{formValues.name}</p>
                     </div>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => setStep(1)}
-                      className="text-xs text-cyan-400 hover:text-cyan-300"
+                      className="text-xs text-amber-400 hover:text-amber-300"
                     >
                       Edit
                     </Button>
@@ -746,17 +746,17 @@ export default function OnboardingPage() {
 
                   <div className="flex justify-between items-start pb-3 border-b border-white/10">
                     <div>
-                      <p className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Target University</p>
+                      <p className="text-[10px] uppercase font-bold tracking-wider text-stone-400">Target University</p>
                       <p className="text-sm font-bold text-white">
                         {formValues.countryOfOrigin} ➔ {formValues.destinationCity}, {formValues.destinationCountry}
                       </p>
-                      <p className="text-xs text-indigo-300 font-semibold">{formValues.university}</p>
+                      <p className="text-xs text-amber-300 font-semibold">{formValues.university}</p>
                     </div>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => setStep(2)}
-                      className="text-xs text-cyan-400 hover:text-cyan-300"
+                      className="text-xs text-amber-400 hover:text-amber-300"
                     >
                       Edit
                     </Button>
@@ -764,11 +764,11 @@ export default function OnboardingPage() {
 
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Languages & Support</p>
-                      <p className="text-xs text-slate-300 mt-1">
+                      <p className="text-[10px] uppercase font-bold tracking-wider text-stone-400">Languages & Support</p>
+                      <p className="text-xs text-stone-300 mt-1">
                         Spoken: {(formValues.languagesSpoken || []).join(', ')}
                       </p>
-                      <p className="text-xs text-slate-300 capitalize">
+                      <p className="text-xs text-stone-300 capitalize">
                         Interests: {(formValues.interests || []).join(', ')}
                       </p>
                     </div>
@@ -776,16 +776,16 @@ export default function OnboardingPage() {
                       variant="ghost"
                       size="sm"
                       onClick={() => setStep(3)}
-                      className="text-xs text-cyan-400 hover:text-cyan-300"
+                      className="text-xs text-amber-400 hover:text-amber-300"
                     >
                       Edit
                     </Button>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-start gap-3 mt-5">
-                  <CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0 mt-0.5" />
-                  <p className="text-xs text-slate-300 leading-relaxed">
+                <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-start gap-3 mt-5">
+                  <CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
+                  <p className="text-xs text-stone-300 leading-relaxed">
                     By confirming, Far From Home will automatically generate your personalized relocation checklist, unlock survival handbooks, and run the weighted buddy match algorithm!
                   </p>
                 </div>
@@ -794,14 +794,14 @@ export default function OnboardingPage() {
                   <Button
                     variant="outline"
                     onClick={() => setStep(3)}
-                    className="border-white/10 text-slate-300 hover:text-white rounded-xl text-xs"
+                    className="ios-pill border-white/10 text-stone-300 hover:text-white text-xs"
                   >
                     <ArrowLeft className="mr-1.5 h-4 w-4" /> Back
                   </Button>
                   <Button
                     onClick={() => onSubmitStep(4)}
                     disabled={submitting}
-                    className="btn-shimmer bg-gradient-to-r from-indigo-500 via-violet-600 to-cyan-500 hover:from-indigo-600 hover:to-cyan-600 text-white font-black text-sm px-7 py-3 rounded-xl shadow-lg shadow-indigo-500/40 cursor-pointer"
+                    className="btn-ios-primary text-sm px-8 py-3 shadow-lg shadow-orange-500/30 cursor-pointer"
                   >
                     {submitting ? 'Launching Cockpit...' : 'Launch Student Cockpit 🚀'}
                   </Button>

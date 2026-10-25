@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import {
-  Globe2,
   BookOpen,
   CheckSquare,
   Users,
@@ -25,7 +24,9 @@ import {
   MapPin,
   Clock,
   HelpCircle,
-  TrendingUp,
+  Home,
+  Sun,
+  Coffee,
 } from 'lucide-react';
 
 const DESTINATIONS = [
@@ -105,49 +106,49 @@ export default function HomePage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#060913] text-slate-100 selection:bg-indigo-500 selection:text-white relative">
+    <div className="min-h-screen flex flex-col bg-[#090a0f] text-[#f7f5f0] selection:bg-amber-500 selection:text-white relative">
       <Navbar />
 
       <main className="flex-1 pt-24 sm:pt-28">
         {/* HERO SECTION */}
-        <section className="relative overflow-hidden pt-12 pb-24 lg:pt-20 lg:pb-36">
-          {/* Animated Background Mesh & Orbs */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-gradient-to-tr from-indigo-600/20 via-violet-600/15 to-cyan-500/20 rounded-full blur-[140px] pointer-events-none -z-10" />
-          <div className="absolute top-1/3 -left-32 w-96 h-96 bg-rose-500/10 rounded-full blur-[120px] pointer-events-none -z-10" />
-          <div className="absolute top-1/2 -right-32 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none -z-10" />
-          <div className="absolute inset-0 bg-grid-cyber opacity-40 pointer-events-none -z-10" />
+        <section className="relative overflow-hidden pt-12 pb-20 lg:pt-18 lg:pb-32">
+          {/* Subtle Warm Ambient Glows (Warm Sunset & Golden Hour) */}
+          <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[850px] h-[480px] bg-gradient-to-tr from-amber-600/15 via-orange-600/10 to-rose-600/15 rounded-full blur-[160px] pointer-events-none -z-10" />
+          <div className="absolute top-1/3 -left-32 w-80 h-80 bg-amber-500/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+          <div className="absolute top-1/2 -right-32 w-80 h-80 bg-rose-500/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+          <div className="absolute inset-0 bg-grid-warm opacity-30 pointer-events-none -z-10" />
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Top Pill Alert */}
+            {/* Top Pill Alert: Humanistic & Warm */}
             <motion.div
-              initial={{ opacity: 0, y: -15 }}
+              initial={{ opacity: 0, y: -12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               className="flex justify-center"
             >
-              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/80 border border-white/10 shadow-[0_0_20px_rgba(99,102,241,0.25)] backdrop-blur-xl mb-8">
+              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full ios-pill shadow-lg shadow-black/30 mb-8">
                 <span className="flex h-2 w-2 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
                 </span>
-                <span className="text-xs sm:text-sm font-semibold text-slate-200">
-                  Built for International Students in <span className="text-cyan-400">50+ Countries</span>
+                <span className="text-xs sm:text-sm font-medium text-stone-200">
+                  A home away from home for <span className="text-amber-300 font-semibold">50+ countries</span>
                 </span>
-                <span className="text-xs text-indigo-400 font-bold hidden sm:inline">✦ Semester 2026 Live</span>
+                <span className="text-xs text-orange-400 font-bold hidden sm:inline">✦ Built by Students</span>
               </div>
             </motion.div>
 
-            {/* Main Headline */}
+            {/* Main Headline: Warm & Humanistic */}
             <div className="text-center max-w-4xl mx-auto">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.12]"
+                className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.14]"
               >
-                Step Off The Plane.{' '}
-                <span className="text-gradient-aurora block mt-1 sm:mt-2">
-                  Step Into Your Tribe.
+                You Don&apos;t Have To Do This Alone.{' '}
+                <span className="text-gradient-sunset block mt-1 sm:mt-2">
+                  Welcome to Your Global Family.
                 </span>
               </motion.h1>
 
@@ -155,218 +156,216 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="mt-6 text-base sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed"
+                className="mt-6 text-base sm:text-xl text-stone-300 max-w-2xl mx-auto leading-relaxed"
               >
-                Moving abroad to study shouldn&apos;t feel overwhelming. Get verified visa roadmaps, auto-scheduled arrival checklists, senior student buddies, and welcoming city meetups.
+                Moving abroad for university is a brave leap. We connect you with verified senior peers who walked the exact same path, clear visa roadmaps, and warm friends waiting on campus.
               </motion.p>
 
-              {/* Action Buttons */}
+              {/* Action Buttons: Apple Glass & Warm Sunset */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto"
+                className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-md mx-auto"
               >
                 <Link
                   href="/register"
-                  className="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl font-bold text-white bg-gradient-to-r from-indigo-500 via-violet-600 to-cyan-500 hover:from-indigo-600 hover:to-cyan-600 shadow-[0_0_30px_rgba(99,102,241,0.5)] transition-all hover:scale-105 active:scale-95 text-base"
+                  className="btn-ios-primary w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full font-bold text-white shadow-xl hover:scale-105 active:scale-95 transition-all text-sm sm:text-base cursor-pointer"
                 >
                   <span>Start Your Journey Free</span>
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
                 <a
                   href="#simulator"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-semibold text-slate-200 bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 backdrop-blur-xl transition-all hover:text-white text-base"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-medium text-stone-200 ios-glass hover:bg-white/10 transition-all text-sm sm:text-base cursor-pointer"
                 >
-                  <Compass className="w-5 h-5 text-indigo-400" />
-                  <span>Try Live Simulator</span>
+                  <Coffee className="w-4 h-4 text-amber-400" />
+                  <span>Interactive Preview</span>
                 </a>
               </motion.div>
 
-              {/* Trust badges */}
+              {/* Human Trust badges */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="mt-12 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs sm:text-sm text-slate-400"
+                className="mt-12 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs sm:text-sm text-stone-400"
               >
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <Heart className="w-4 h-4 text-rose-400" />
                   <span>100% Free Forever</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-cyan-400" />
+                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
                   <span>Verified Senior Peer Mentors</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Building className="w-4 h-4 text-indigo-400" />
-                  <span>Personalized to Your Campus</span>
+                  <Home className="w-4 h-4 text-amber-400" />
+                  <span>Tailored to Your Campus & City</span>
                 </div>
               </motion.div>
             </div>
 
-            {/* FLOATING INTERACTIVE HERO SHOWCASE */}
+            {/* FLOATING HERO SHOWCASE: iOS FROSTED GLASS */}
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 35 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.35 }}
-              className="mt-16 lg:mt-24 relative max-w-5xl mx-auto"
+              className="mt-14 lg:mt-20 relative max-w-5xl mx-auto"
             >
-              {/* Outer Glow Frame */}
-              <div className="relative rounded-3xl p-1 bg-gradient-to-b from-indigo-500/30 via-violet-500/10 to-transparent shadow-[0_20px_70px_rgba(0,0,0,0.8)]">
-                <div className="rounded-[22px] bg-slate-950/80 border border-white/10 backdrop-blur-2xl p-6 sm:p-8 lg:p-10 relative overflow-hidden">
-                  
-                  {/* Floating Badges */}
-                  <div className="hidden lg:block absolute -top-5 -left-8 animate-float-slow z-20">
-                    <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-slate-900/90 border border-emerald-500/30 shadow-[0_10px_25px_rgba(16,185,129,0.2)] backdrop-blur-xl">
-                      <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-base">
-                        ✓
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold text-white">Study Permit Approved</p>
-                        <p className="text-[10px] text-slate-400">Toronto, Canada 🇨🇦</p>
-                      </div>
+              {/* Outer Frosted Glass Enclosure */}
+              <div className="ios-glass-prominent rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden">
+                
+                {/* Floating Apple-style Pill Badges */}
+                <div className="hidden lg:block absolute -top-4 -left-6 animate-float-gentle z-20">
+                  <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl ios-glass border-emerald-500/30 shadow-[0_10px_25px_rgba(0,0,0,0.5)]">
+                    <div className="w-7 h-7 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">
+                      ✓
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-white">Study Permit Approved</p>
+                      <p className="text-[10px] text-stone-400">Toronto, Canada 🇨🇦</p>
                     </div>
                   </div>
+                </div>
 
-                  <div className="hidden lg:block absolute -bottom-4 -right-6 animate-float-reverse z-20">
-                    <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-slate-900/90 border border-indigo-500/30 shadow-[0_10px_25px_rgba(99,102,241,0.25)] backdrop-blur-xl">
-                      <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-pink-500 text-white flex items-center justify-center font-bold text-xs shadow-sm">
-                        98%
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold text-white">Buddy Match Found!</p>
-                        <p className="text-[10px] text-indigo-300">Elena (Imperial College)</p>
-                      </div>
+                <div className="hidden lg:block absolute -bottom-4 -right-5 animate-float-gentle-rev z-20">
+                  <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl ios-glass border-amber-500/30 shadow-[0_10px_25px_rgba(0,0,0,0.5)]">
+                    <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-amber-500 to-rose-500 text-white flex items-center justify-center font-black text-xs shadow-sm">
+                      98%
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-white">Senior Buddy Matched</p>
+                      <p className="text-[10px] text-amber-300">Priya (3rd Year Computer Science)</p>
                     </div>
                   </div>
+                </div>
 
-                  {/* Inside Mock Dashboard Preview */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-                    {/* Column 1: Active Checklist */}
-                    <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5 flex flex-col justify-between hover:border-indigo-500/30 transition-all">
-                      <div>
-                        <div className="flex items-center justify-between mb-4">
-                          <span className="text-xs font-bold uppercase tracking-wider text-indigo-400 flex items-center gap-1.5">
-                            <CheckSquare className="w-3.5 h-3.5" />
-                            <span>My Relocation Tasks</span>
-                          </span>
-                          <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md">
-                            4 / 6 Done
-                          </span>
-                        </div>
-
-                        <div className="space-y-2.5">
-                          {[
-                            { title: 'Submit Biometrics Appointment', done: true },
-                            { title: 'Student Banking Account Setup', done: true },
-                            { title: 'Airport Pickup & Transit Card', done: true },
-                            { title: 'Campus Room Key & Move-In', done: false },
-                          ].map((t, idx) => (
-                            <div
-                              key={idx}
-                              className={`flex items-center gap-2.5 p-2 rounded-xl text-xs font-medium transition-colors ${
-                                t.done ? 'bg-emerald-500/10 text-slate-300' : 'bg-white/[0.04] text-white border border-white/5'
-                              }`}
-                            >
-                              <div
-                                className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] ${
-                                  t.done ? 'bg-emerald-500 text-slate-950 font-bold' : 'border border-slate-500'
-                                }`}
-                              >
-                                {t.done ? '✓' : ''}
-                              </div>
-                              <span className={t.done ? 'line-through text-slate-400' : ''}>
-                                {t.title}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="mt-4 pt-3 border-t border-white/5 text-[11px] text-slate-400 flex items-center justify-between">
-                        <span>Overall Progress</span>
-                        <span className="font-bold text-white">67%</span>
-                      </div>
-                    </div>
-
-                    {/* Column 2: Senior Buddy Match */}
-                    <div className="rounded-2xl bg-gradient-to-b from-indigo-950/40 to-slate-900/60 border border-indigo-500/20 p-5 flex flex-col justify-between">
-                      <div>
-                        <div className="flex items-center justify-between mb-4">
-                          <span className="text-xs font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
-                            <Users className="w-3.5 h-3.5" />
-                            <span>Matched Senior Buddy</span>
-                          </span>
-                          <span className="text-xs font-extrabold text-cyan-300 bg-cyan-500/15 px-2.5 py-0.5 rounded-full border border-cyan-500/30">
-                            98% Match
-                          </span>
-                        </div>
-
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center text-white font-black text-lg shadow-md">
-                            A
-                          </div>
-                          <div>
-                            <h4 className="font-bold text-white text-sm">Alex Chen</h4>
-                            <p className="text-xs text-slate-400">3rd Year Software Eng</p>
-                            <p className="text-[11px] text-indigo-300">University of Toronto</p>
-                          </div>
-                        </div>
-
-                        <p className="text-xs text-slate-300 bg-black/20 p-2.5 rounded-xl border border-white/5 italic">
-                          &ldquo;Hey! I moved here from Delhi 2 years ago. Happy to help you with housing and transit passes!&rdquo;
-                        </p>
-                      </div>
-
-                      <div className="mt-4">
-                        <Link
-                          href="/buddies"
-                          className="w-full inline-flex items-center justify-center gap-1.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md transition-all"
-                        >
-                          <span>Connect on FFH</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </Link>
-                      </div>
-                    </div>
-
-                    {/* Column 3: Community Event */}
-                    <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5 flex flex-col justify-between hover:border-violet-500/30 transition-all">
-                      <div>
-                        <div className="flex items-center justify-between mb-4">
-                          <span className="text-xs font-bold uppercase tracking-wider text-violet-400 flex items-center gap-1.5">
-                            <Calendar className="w-3.5 h-3.5" />
-                            <span>Upcoming Campus Event</span>
-                          </span>
-                          <span className="text-[10px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md">
-                            32 RSVP&apos;d
-                          </span>
-                        </div>
-
-                        <h4 className="font-bold text-white text-sm mb-1.5">
-                          International Chai & Chat Mixer ☕
-                        </h4>
-                        <p className="text-xs text-slate-400 mb-3 line-clamp-2">
-                          Meet other incoming freshers and seniors. Free snacks, city tips, and icebreaker games!
-                        </p>
-
-                        <div className="space-y-1.5 text-xs text-slate-300">
-                          <div className="flex items-center gap-2">
-                            <Clock className="w-3.5 h-3.5 text-indigo-400" />
-                            <span>Friday • 5:00 PM EST</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <MapPin className="w-3.5 h-3.5 text-rose-400" />
-                            <span>Student Union Lounge</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="mt-4 pt-3 border-t border-white/5">
-                        <span className="inline-block w-full text-center py-2 rounded-xl bg-white/10 text-white font-semibold text-xs">
-                          Free Entry • Registration Open
+                {/* Inside Cockpit Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
+                  {/* Card 1: Relocation Checkpoints */}
+                  <div className="rounded-2xl ios-glass p-5 flex flex-col justify-between hover:border-amber-500/30 transition-all">
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                          <CheckSquare className="w-3.5 h-3.5" />
+                          <span>Pre-Departure Checklist</span>
+                        </span>
+                        <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
+                          4 / 6 Done
                         </span>
                       </div>
+
+                      <div className="space-y-2.5">
+                        {[
+                          { title: 'Submit Biometrics Appointment', done: true },
+                          { title: 'Student Banking Account Setup', done: true },
+                          { title: 'Airport Pickup & Transit Pass', done: true },
+                          { title: 'Campus Dorm Key & Move-In', done: false },
+                        ].map((t, idx) => (
+                          <div
+                            key={idx}
+                            className={`flex items-center gap-2.5 p-2 rounded-xl text-xs font-medium transition-colors ${
+                              t.done ? 'bg-emerald-500/10 text-stone-300' : 'bg-white/[0.04] text-white border border-white/5'
+                            }`}
+                          >
+                            <div
+                              className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] ${
+                                t.done ? 'bg-emerald-500 text-stone-950 font-bold' : 'border border-stone-500'
+                              }`}
+                            >
+                              {t.done ? '✓' : ''}
+                            </div>
+                            <span className={t.done ? 'line-through text-stone-400' : ''}>
+                              {t.title}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-white/5 text-[11px] text-stone-400 flex items-center justify-between">
+                      <span>Milestones Completed</span>
+                      <span className="font-bold text-amber-300">67% Ready</span>
+                    </div>
+                  </div>
+
+                  {/* Card 2: Senior Buddy Match */}
+                  <div className="rounded-2xl ios-glass border-amber-500/20 p-5 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-xs font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                          <Users className="w-3.5 h-3.5" />
+                          <span>Matched Senior Peer</span>
+                        </span>
+                        <span className="text-xs font-black text-amber-300 bg-amber-500/15 px-2.5 py-0.5 rounded-full border border-amber-500/30">
+                          98% Affinity
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-500 via-orange-500 to-rose-500 flex items-center justify-center text-white font-black text-base shadow-md">
+                          P
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-white text-sm">Priya Sharma</h4>
+                          <p className="text-xs text-stone-400">Senior CS Student</p>
+                          <p className="text-[11px] text-amber-300">University of Toronto</p>
+                        </div>
+                      </div>
+
+                      <p className="text-xs text-stone-300 bg-black/25 p-3 rounded-xl border border-white/5 italic leading-relaxed">
+                        &ldquo;Hey! I moved here from Delhi 2 years ago. Happy to help you with housing contracts and cheap groceries!&rdquo;
+                      </p>
+                    </div>
+
+                    <div className="mt-4">
+                      <Link
+                        href="/buddies"
+                        className="w-full inline-flex items-center justify-center gap-1.5 py-2 rounded-xl btn-ios-primary text-white font-bold text-xs shadow-md transition-all"
+                      >
+                        <span>Say Hello on FFH</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Card 3: Orientation Mixer */}
+                  <div className="rounded-2xl ios-glass p-5 flex flex-col justify-between hover:border-rose-500/30 transition-all">
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-xs font-bold uppercase tracking-wider text-rose-400 flex items-center gap-1.5">
+                          <Calendar className="w-3.5 h-3.5" />
+                          <span>Campus Welcome Event</span>
+                        </span>
+                        <span className="text-[10px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+                          32 RSVP&apos;d
+                        </span>
+                      </div>
+
+                      <h4 className="font-bold text-white text-sm mb-1.5">
+                        International Chai & Chat Mixer ☕
+                      </h4>
+                      <p className="text-xs text-stone-400 mb-3 line-clamp-2 leading-relaxed">
+                        Meet other incoming freshers and seniors. Warm tea, local city advice, and icebreaker games!
+                      </p>
+
+                      <div className="space-y-1.5 text-xs text-stone-300">
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-3.5 h-3.5 text-amber-400" />
+                          <span>Friday • 5:00 PM EST</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <MapPin className="w-3.5 h-3.5 text-rose-400" />
+                          <span>Student Union Lounge</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-white/5">
+                      <span className="inline-block w-full text-center py-2 rounded-xl bg-white/10 text-stone-200 font-semibold text-xs">
+                        Free Entry • Open for All
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -376,35 +375,35 @@ export default function HomePage() {
         </section>
 
         {/* LIVE INTERACTIVE RELOCATION SIMULATOR */}
-        <section id="simulator" className="py-20 bg-slate-950/60 border-y border-white/[0.08] relative">
+        <section id="simulator" className="py-20 border-y border-white/[0.08] relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-12">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-bold uppercase tracking-wider mb-4">
-                <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-                <span>Instant Interactive Preview</span>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full ios-pill text-amber-300 text-xs font-bold uppercase tracking-wider mb-4">
+                <Sun className="w-3.5 h-3.5 text-amber-400" />
+                <span>Personalized Preview</span>
               </div>
               <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-                Where Are You Moving To?
+                Where Are You Heading?
               </h2>
-              <p className="mt-3 text-slate-400 text-base sm:text-lg">
-                Click a country below to see how Far From Home instantly personalizes your roadmaps, buddies, and campus events.
+              <p className="mt-3 text-stone-300 text-base sm:text-lg">
+                Select your destination country to preview how Far From Home customizes your arrival roadmaps and senior peer network.
               </p>
 
-              {/* Country Tabs */}
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
+              {/* Country Tabs: Apple Liquid Glass pills */}
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
                 {DESTINATIONS.map((dest) => {
                   const isSelected = selectedDest.country === dest.country;
                   return (
                     <button
                       key={dest.country}
                       onClick={() => setSelectedDest(dest)}
-                      className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all ${
+                      className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-[0_0_20px_rgba(99,102,241,0.4)] scale-105'
-                          : 'bg-slate-900/80 text-slate-300 hover:text-white hover:bg-slate-800 border border-white/10'
+                          ? 'btn-ios-primary text-white shadow-lg scale-105'
+                          : 'ios-glass text-stone-300 hover:text-white hover:bg-white/10'
                       }`}
                     >
-                      <span className="text-lg">{dest.flag}</span>
+                      <span className="text-base">{dest.flag}</span>
                       <span>{dest.country}</span>
                     </button>
                   );
@@ -418,7 +417,7 @@ export default function HomePage() {
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3 }}
-              className="max-w-5xl mx-auto rounded-3xl bg-slate-900/70 border border-white/10 backdrop-blur-2xl p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden"
+              className="max-w-5xl mx-auto rounded-3xl ios-glass-prominent p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden"
             >
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
                 <div className="flex items-center gap-3">
@@ -427,31 +426,31 @@ export default function HomePage() {
                     <h3 className="text-2xl font-black text-white">
                       Destination: {selectedDest.country}
                     </h3>
-                    <p className="text-xs text-slate-400">
-                      Popular hubs: {selectedDest.cities} • Top campus: {selectedDest.topUni}
+                    <p className="text-xs text-stone-400">
+                      Top hubs: {selectedDest.cities} • Campus: {selectedDest.topUni}
                     </p>
                   </div>
                 </div>
                 <Link
                   href="/register"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition-all shadow-md"
+                  className="btn-ios-primary inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-white shadow-md"
                 >
-                  <span>Get Full Plan For {selectedDest.country}</span>
+                  <span>Get Complete {selectedDest.country} Plan</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
                 {/* 1. Tailored Tasks */}
-                <div className="rounded-2xl bg-white/[0.03] border border-white/5 p-5">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-3 flex items-center gap-2">
+                <div className="rounded-2xl ios-glass p-5">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3 flex items-center gap-2">
                     <CheckSquare className="w-4 h-4" />
-                    <span>Your First 4 Checkpoints</span>
+                    <span>First 4 Checkpoints</span>
                   </h4>
                   <div className="space-y-2.5">
                     {selectedDest.tasks.map((task, i) => (
-                      <div key={i} className="flex items-start gap-2.5 text-xs text-slate-300">
-                        <span className="w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center font-bold shrink-0 mt-0.5">
+                      <div key={i} className="flex items-start gap-2.5 text-xs text-stone-300">
+                        <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold shrink-0 mt-0.5">
                           {i + 1}
                         </span>
                         <span>{task}</span>
@@ -461,52 +460,52 @@ export default function HomePage() {
                 </div>
 
                 {/* 2. Top Buddy Match */}
-                <div className="rounded-2xl bg-white/[0.03] border border-white/5 p-5">
+                <div className="rounded-2xl ios-glass p-5">
                   <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-2">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-orange-300 flex items-center gap-2">
                       <Users className="w-4 h-4" />
-                      <span>Ready Senior Buddy</span>
+                      <span>Ready Senior Mentor</span>
                     </h4>
-                    <span className="text-xs font-extrabold text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-black text-amber-300 bg-amber-500/15 border border-amber-500/30 px-2.5 py-0.5 rounded-full">
                       {selectedDest.sampleBuddy.match}%
                     </span>
                   </div>
-                  <div className="p-3 rounded-xl bg-slate-950/60 border border-white/5 space-y-1.5">
+                  <div className="p-3.5 rounded-2xl bg-black/25 border border-white/5 space-y-1.5">
                     <p className="font-bold text-white text-sm">
                       {selectedDest.sampleBuddy.name}
                     </p>
-                    <p className="text-xs text-indigo-300">
+                    <p className="text-xs text-amber-300">
                       {selectedDest.sampleBuddy.role}
                     </p>
-                    <p className="text-[11px] text-slate-400">
+                    <p className="text-[11px] text-stone-400">
                       📍 {selectedDest.sampleBuddy.uni}
                     </p>
                   </div>
-                  <p className="mt-3 text-[11px] text-slate-400">
-                    Matches your study major, destination city, and spoken language.
+                  <p className="mt-3 text-[11px] text-stone-400">
+                    Matches your study major, destination city, and native language.
                   </p>
                 </div>
 
                 {/* 3. Welcome Event */}
-                <div className="rounded-2xl bg-white/[0.03] border border-white/5 p-5">
+                <div className="rounded-2xl ios-glass p-5">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-rose-400 mb-3 flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
-                    <span>Featured Welcome Event</span>
+                    <span>Campus Welcome Event</span>
                   </h4>
-                  <div className="p-3 rounded-xl bg-slate-950/60 border border-white/5 space-y-1.5">
+                  <div className="p-3.5 rounded-2xl bg-black/25 border border-white/5 space-y-1.5">
                     <p className="font-bold text-white text-sm">
                       {selectedDest.event}
                     </p>
                     <p className="text-xs text-amber-300 flex items-center gap-1.5">
-                      <Clock className="w-3 h-3" />
+                      <Clock className="w-3.5 h-3.5" />
                       <span>{selectedDest.eventTime}</span>
                     </p>
-                    <span className="inline-block px-2 py-0.5 text-[10px] font-bold rounded bg-emerald-500/20 text-emerald-300">
-                      Free RSVP Available
+                    <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      Free RSVP Open
                     </span>
                   </div>
-                  <p className="mt-3 text-[11px] text-slate-400">
-                    Join live virtual or in-person sessions to make friends before classes start.
+                  <p className="mt-3 text-[11px] text-stone-400">
+                    Join live virtual or in-person meetups to make friends before classes start.
                   </p>
                 </div>
               </div>
@@ -518,92 +517,92 @@ export default function HomePage() {
         <section className="py-24 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-500/10 px-3.5 py-1.5 rounded-full border border-cyan-500/20">
+              <span className="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-3.5 py-1.5 rounded-full border border-amber-500/20">
                 Core Superpowers
               </span>
               <h2 className="mt-4 text-3xl sm:text-5xl font-black text-white tracking-tight">
-                Everything You Need In One Cockpit
+                Everything You Need, Thoughtfully Crafted
               </h2>
-              <p className="mt-3 text-slate-400 text-base sm:text-lg">
-                No more confusing WhatsApp groups, outdated Reddit threads, or scary government websites.
+              <p className="mt-3 text-stone-300 text-base sm:text-lg">
+                No more confusing WhatsApp groups, conflicting Reddit rumors, or scary government documents.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Feature 1 */}
-              <div className="glass-panel glass-card-specular rounded-3xl p-8 hover:border-indigo-500/40 transition-all duration-300 group">
-                <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+              <div className="ios-glass rounded-3xl p-8 hover:border-amber-500/40 transition-all duration-300 group">
+                <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <BookOpen className="w-6 h-6" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">
-                  Verified Country Guides
+                  Verified Country Handbooks
                 </h3>
-                <p className="text-sm text-slate-400 leading-relaxed">
-                  Clear, verified instructions for visa applications, health insurance, local SIM cards, opening bank accounts, and grocery saving tips written by real students.
+                <p className="text-sm text-stone-400 leading-relaxed">
+                  Clear, verified instructions for visa applications, health insurance, local SIM cards, opening bank accounts, and grocery saving tips written by real senior students.
                 </p>
               </div>
 
               {/* Feature 2 */}
-              <div className="glass-panel glass-card-specular rounded-3xl p-8 hover:border-cyan-500/40 transition-all duration-300 group">
-                <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-cyan-500 group-hover:text-white transition-all">
+              <div className="ios-glass rounded-3xl p-8 hover:border-orange-500/40 transition-all duration-300 group">
+                <div className="w-12 h-12 rounded-2xl bg-orange-500/20 text-orange-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <CheckSquare className="w-6 h-6" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">
                   Smart Relocation Checklists
                 </h3>
-                <p className="text-sm text-slate-400 leading-relaxed">
+                <p className="text-sm text-stone-400 leading-relaxed">
                   Automatic countdown checklists generated from your departure date. Track packing, biometrics, housing contracts, and airport logistics with zero stress.
                 </p>
               </div>
 
               {/* Feature 3 */}
-              <div className="glass-panel glass-card-specular rounded-3xl p-8 hover:border-violet-500/40 transition-all duration-300 group">
-                <div className="w-12 h-12 rounded-2xl bg-violet-500/20 text-violet-400 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-violet-500 group-hover:text-white transition-all">
+              <div className="ios-glass rounded-3xl p-8 hover:border-rose-500/40 transition-all duration-300 group">
+                <div className="w-12 h-12 rounded-2xl bg-rose-500/20 text-rose-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <Users className="w-6 h-6" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">
-                  Weighted Buddy Matching
+                  Empathetic Senior Buddy Matching
                 </h3>
-                <p className="text-sm text-slate-400 leading-relaxed">
-                  Our algorithm factors in your university, study level, native languages, and support preferences to pair you with high-affinity senior mentors.
+                <p className="text-sm text-stone-400 leading-relaxed">
+                  Our algorithm factors in your university, study level, native languages, and support preferences to pair you with high-affinity senior mentors who care.
                 </p>
               </div>
 
               {/* Feature 4 */}
-              <div className="glass-panel glass-card-specular rounded-3xl p-8 hover:border-rose-500/40 transition-all duration-300 group">
-                <div className="w-12 h-12 rounded-2xl bg-rose-500/20 text-rose-400 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-rose-500 group-hover:text-white transition-all">
+              <div className="ios-glass rounded-3xl p-8 hover:border-rose-500/40 transition-all duration-300 group">
+                <div className="w-12 h-12 rounded-2xl bg-rose-500/20 text-rose-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <Calendar className="w-6 h-6" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">
                   Community & Meetups
                 </h3>
-                <p className="text-sm text-slate-400 leading-relaxed">
+                <p className="text-sm text-stone-400 leading-relaxed">
                   Campus mixers, cultural food festivals, language coffee exchanges, and online pre-arrival sessions with verified capacity guards and instant ticket receipts.
                 </p>
               </div>
 
               {/* Feature 5 */}
-              <div className="glass-panel glass-card-specular rounded-3xl p-8 hover:border-amber-500/40 transition-all duration-300 group">
-                <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition-all">
+              <div className="ios-glass rounded-3xl p-8 hover:border-amber-500/40 transition-all duration-300 group">
+                <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <ShieldCheck className="w-6 h-6" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">
-                  Verified Safety Standards
+                  Anti-Scam Verified Standards
                 </h3>
-                <p className="text-sm text-slate-400 leading-relaxed">
+                <p className="text-sm text-stone-400 leading-relaxed">
                   All mentors and community events are monitored by platform admins to protect incoming students against housing scams, rental frauds, and fake advisory fees.
                 </p>
               </div>
 
               {/* Feature 6 */}
-              <div className="glass-panel glass-card-specular rounded-3xl p-8 hover:border-emerald-500/40 transition-all duration-300 group">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-white transition-all">
-                  <Globe2 className="w-6 h-6" />
+              <div className="ios-glass rounded-3xl p-8 hover:border-emerald-500/40 transition-all duration-300 group">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Home className="w-6 h-6" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">
                   Global Scholar Network
                 </h3>
-                <p className="text-sm text-slate-400 leading-relaxed">
+                <p className="text-sm text-stone-400 leading-relaxed">
                   Connect across borders with alumni who graduated and settled in top tech, medicine, finance, and engineering companies globally.
                 </p>
               </div>
@@ -612,10 +611,10 @@ export default function HomePage() {
         </section>
 
         {/* STEP-BY-STEP JOURNEY */}
-        <section className="py-20 bg-slate-950/70 border-t border-white/[0.08]">
+        <section className="py-20 border-t border-white/[0.08]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold uppercase tracking-wider text-indigo-400 bg-indigo-500/10 px-3.5 py-1.5 rounded-full border border-indigo-500/20">
+              <span className="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-3.5 py-1.5 rounded-full border border-amber-500/20">
                 Simple Roadmap
               </span>
               <h2 className="mt-4 text-3xl sm:text-5xl font-black text-white tracking-tight">
@@ -648,7 +647,7 @@ export default function HomePage() {
               ].map((item, idx) => (
                 <div
                   key={idx}
-                  className="rounded-3xl bg-slate-900/60 border border-white/10 p-6 relative flex flex-col justify-between hover:border-indigo-500/30 transition-all"
+                  className="rounded-3xl ios-glass p-6 relative flex flex-col justify-between hover:border-amber-500/30 transition-all"
                 >
                   <div>
                     <span className="text-4xl font-black text-white/10 block mb-4">
@@ -657,11 +656,11 @@ export default function HomePage() {
                     <h3 className="text-lg font-bold text-white mb-2">
                       {item.title}
                     </h3>
-                    <p className="text-xs text-slate-400 leading-relaxed">
+                    <p className="text-xs text-stone-400 leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
-                  <div className="mt-6 pt-4 border-t border-white/5 flex items-center text-xs font-bold text-indigo-400">
+                  <div className="mt-6 pt-4 border-t border-white/5 flex items-center text-xs font-bold text-amber-400">
                     <span>Explore Stage {item.step}</span>
                     <ChevronRight className="w-3.5 h-3.5 ml-1" />
                   </div>
@@ -675,7 +674,7 @@ export default function HomePage() {
         <section className="py-20 max-w-4xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-black text-white">Frequently Asked Questions</h2>
-            <p className="text-sm text-slate-400 mt-2">
+            <p className="text-sm text-stone-400 mt-2">
               Everything you need to know about joining the Far From Home platform.
             </p>
           </div>
@@ -686,15 +685,15 @@ export default function HomePage() {
               return (
                 <div
                   key={i}
-                  className="rounded-2xl bg-slate-900/80 border border-white/10 overflow-hidden transition-all"
+                  className="rounded-2xl ios-glass overflow-hidden transition-all"
                 >
                   <button
                     onClick={() => setActiveFaq(isOpen ? null : i)}
-                    className="w-full flex items-center justify-between p-5 text-left text-sm font-bold text-white hover:text-indigo-300 transition-colors"
+                    className="w-full flex items-center justify-between p-5 text-left text-sm font-bold text-white hover:text-amber-300 transition-colors cursor-pointer"
                   >
                     <span>{faq.q}</span>
                     <ChevronRight
-                      className={`w-4 h-4 text-indigo-400 transition-transform duration-200 shrink-0 ml-4 ${
+                      className={`w-4 h-4 text-amber-400 transition-transform duration-200 shrink-0 ml-4 ${
                         isOpen ? 'rotate-90' : ''
                       }`}
                     />
@@ -707,7 +706,7 @@ export default function HomePage() {
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }}
                       >
-                        <div className="px-5 pb-5 text-xs text-slate-300 leading-relaxed border-t border-white/5 pt-3">
+                        <div className="px-5 pb-5 text-xs text-stone-300 leading-relaxed border-t border-white/5 pt-3">
                           {faq.a}
                         </div>
                       </motion.div>
@@ -722,26 +721,26 @@ export default function HomePage() {
         {/* FINAL CALL TO ACTION */}
         <section className="py-20 relative overflow-hidden">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
-            <div className="rounded-3xl p-8 sm:p-14 bg-gradient-to-r from-indigo-900/60 via-purple-900/50 to-slate-900/80 border border-indigo-500/30 backdrop-blur-2xl shadow-[0_20px_80px_rgba(99,102,241,0.3)] relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="rounded-3xl p-8 sm:p-14 ios-glass-prominent relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/15 rounded-full blur-3xl pointer-events-none" />
               
               <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight relative z-10">
                 Ready For Your Next Chapter?
               </h2>
-              <p className="mt-4 text-slate-300 text-sm sm:text-base max-w-xl mx-auto relative z-10">
+              <p className="mt-4 text-stone-300 text-sm sm:text-base max-w-xl mx-auto relative z-10">
                 Join thousands of international scholars who made their foreign journey smooth, confident, and joyful.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10">
                 <Link
                   href="/register"
-                  className="btn-shimmer px-8 py-4 rounded-2xl font-bold text-white bg-gradient-to-r from-indigo-500 via-violet-600 to-cyan-500 hover:scale-105 transition-all text-sm sm:text-base shadow-xl"
+                  className="btn-ios-primary px-8 py-3.5 rounded-full font-bold text-white hover:scale-105 transition-all text-sm sm:text-base shadow-xl"
                 >
                   Create Your Free Account
                 </Link>
                 <Link
                   href="/login"
-                  className="px-8 py-4 rounded-2xl font-semibold text-slate-200 bg-white/10 hover:bg-white/15 border border-white/15 transition-all text-sm sm:text-base"
+                  className="px-8 py-3.5 rounded-full font-semibold text-stone-200 ios-glass hover:bg-white/10 transition-all text-sm sm:text-base"
                 >
                   Already A Member? Sign In
                 </Link>

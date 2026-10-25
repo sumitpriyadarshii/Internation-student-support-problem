@@ -230,7 +230,7 @@ export default function BuddiesPage() {
             particleCount: 80,
             spread: 70,
             origin: { y: 0.6 },
-            colors: ['#10b981', '#6366f1'],
+            colors: ['#10b981', '#f59e0b', '#f97316'],
           });
           toast.success('Buddy request accepted! You are now connected! 🎉');
         } else {
@@ -251,26 +251,26 @@ export default function BuddiesPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
-            <Users className="h-7 w-7 text-cyan-400" />
+            <Users className="h-7 w-7 text-amber-400" />
             <span>Senior Peer Network</span>
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-stone-400 mt-1">
             Connect with verified senior students at your university who speak your native language.
           </p>
         </div>
 
         {/* Tab Pills */}
-        <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-900/80 border border-white/10 w-fit">
+        <div className="flex items-center gap-1.5 p-1 rounded-full ios-glass border border-white/10 w-fit">
           <button
             onClick={() => setActiveTab('find')}
-            className={`relative px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'find' ? 'text-white' : 'text-slate-400 hover:text-white'
+            className={`relative px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              activeTab === 'find' ? 'text-white' : 'text-stone-400 hover:text-white'
             }`}
           >
             {activeTab === 'find' && (
               <motion.div
                 layoutId="buddyTabPill"
-                className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 shadow-md"
+                className="absolute inset-0 rounded-full btn-ios-primary shadow-md"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
@@ -282,14 +282,14 @@ export default function BuddiesPage() {
 
           <button
             onClick={() => setActiveTab('requests')}
-            className={`relative px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'requests' ? 'text-white' : 'text-slate-400 hover:text-white'
+            className={`relative px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              activeTab === 'requests' ? 'text-white' : 'text-stone-400 hover:text-white'
             }`}
           >
             {activeTab === 'requests' && (
               <motion.div
                 layoutId="buddyTabPill"
-                className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 shadow-md"
+                className="absolute inset-0 rounded-full btn-ios-primary shadow-md"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
@@ -309,16 +309,16 @@ export default function BuddiesPage() {
       {activeTab === 'find' ? (
         <>
           {/* Filters Bar */}
-          <div className="glass-panel p-4 rounded-2xl border border-white/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="ios-glass p-4 rounded-2xl border border-white/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {/* Search */}
             <div className="relative">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-stone-500" />
               <Input
                 type="text"
                 placeholder="Search name, university, skills..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-10 bg-slate-950/60 border-white/10 text-white text-xs rounded-xl"
+                className="pl-10 bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
               />
             </div>
 
@@ -329,17 +329,17 @@ export default function BuddiesPage() {
                 placeholder="Filter by university..."
                 value={universityFilter}
                 onChange={(e) => setUniversityFilter(e.target.value)}
-                className="bg-slate-950/60 border-white/10 text-white text-xs rounded-xl"
+                className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
               />
             </div>
 
             {/* Support Area */}
             <div>
               <Select value={supportAreaFilter} onValueChange={setSupportAreaFilter}>
-                <SelectTrigger className="bg-slate-950/60 border-white/10 text-white text-xs rounded-xl">
+                <SelectTrigger className="bg-white/[0.04] border-white/10 text-white text-xs rounded-xl">
                   <SelectValue placeholder="Support Area" />
                 </SelectTrigger>
-                <SelectContent className="bg-slate-950 border-white/15 text-white">
+                <SelectContent className="bg-[#1c1613] border-white/15 text-white">
                   {SUPPORT_AREAS.map((area) => (
                     <SelectItem key={area.id} value={area.id} className="text-xs">
                       {area.label}
@@ -359,7 +359,7 @@ export default function BuddiesPage() {
                 setSupportAreaFilter('all');
                 setLanguageFilter('all');
               }}
-              className="border-white/10 text-slate-300 hover:text-white bg-slate-950/60 rounded-xl text-xs"
+              className="ios-pill border-white/10 text-stone-300 hover:text-white bg-white/[0.04] text-xs"
             >
               Reset Filters
             </Button>
@@ -369,7 +369,7 @@ export default function BuddiesPage() {
           {loadingBuddies ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="glass-panel h-64 rounded-2xl animate-pulse" />
+                <div key={i} className="ios-glass h-64 rounded-2xl animate-pulse" />
               ))}
             </div>
           ) : buddies.length > 0 ? (
@@ -378,48 +378,48 @@ export default function BuddiesPage() {
                 <motion.div
                   key={buddy._id}
                   whileHover={{ y: -4 }}
-                  className="glass-panel glass-card-specular rounded-3xl p-6 border border-white/10 flex flex-col justify-between hover:border-cyan-500/40 transition-all duration-300"
+                  className="ios-glass rounded-3xl p-6 border border-white/10 flex flex-col justify-between hover:border-amber-500/40 transition-all duration-300"
                 >
                   <div>
                     {/* Header: Avatar, Name, Compatibility Score */}
                     <div className="flex items-start justify-between gap-3 mb-4">
                       <div className="flex items-center gap-3 min-w-0">
-                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 via-indigo-600 to-violet-600 text-white flex items-center justify-center font-black text-lg shadow-md shrink-0">
+                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-orange-500 to-rose-600 text-white flex items-center justify-center font-black text-lg shadow-md shrink-0">
                           {buddy.userId?.name ? buddy.userId.name.charAt(0).toUpperCase() : 'B'}
                         </div>
                         <div className="min-w-0">
                           <h3 className="text-base font-bold text-white truncate">
                             {buddy.userId?.name || 'Fellow Scholar'}
                           </h3>
-                          <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5 truncate">
-                            <GraduationCap className="h-3.5 w-3.5 text-indigo-400 shrink-0" />
+                          <p className="text-xs text-stone-400 flex items-center gap-1 mt-0.5 truncate">
+                            <GraduationCap className="h-3.5 w-3.5 text-amber-400 shrink-0" />
                             <span className="truncate">{buddy.university}</span>
                           </p>
                         </div>
                       </div>
 
                       {typeof buddy.matchScore === 'number' && (
-                        <span className="text-xs font-black text-cyan-300 bg-cyan-500/15 border border-cyan-500/30 px-2.5 py-1 rounded-full shadow-inner shrink-0">
+                        <span className="text-xs font-black text-amber-300 bg-amber-500/15 border border-amber-500/30 px-2.5 py-1 rounded-full shadow-inner shrink-0">
                           {buddy.matchScore}% Match
                         </span>
                       )}
                     </div>
 
                     {/* Biography */}
-                    <p className="text-xs text-slate-300 leading-relaxed bg-black/20 p-3 rounded-2xl border border-white/5 line-clamp-3 mb-4">
+                    <p className="text-xs text-stone-300 leading-relaxed bg-black/20 p-3 rounded-2xl border border-white/5 line-clamp-3 mb-4">
                       {buddy.biography || 'Eager to assist incoming international scholars settle in with confidence!'}
                     </p>
 
                     {/* Spoken Languages */}
                     <div className="mb-3">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400 block mb-1">
                         Spoken Languages
                       </span>
                       <div className="flex flex-wrap gap-1.5">
                         {(buddy.languages || []).map((lang) => (
                           <span
                             key={lang}
-                            className="text-[11px] bg-white/[0.06] text-slate-300 px-2.5 py-0.5 rounded-lg font-medium"
+                            className="text-[11px] bg-white/[0.06] text-stone-300 px-2.5 py-0.5 rounded-full font-medium"
                           >
                             {lang}
                           </span>
@@ -429,14 +429,14 @@ export default function BuddiesPage() {
 
                     {/* Support Areas */}
                     <div className="mb-4">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400 block mb-1">
                         Can Assist With
                       </span>
                       <div className="flex flex-wrap gap-1">
                         {(buddy.supportAreas || []).slice(0, 3).map((area) => (
                           <span
                             key={area}
-                            className="text-[10px] bg-indigo-500/15 text-indigo-300 border border-indigo-500/25 px-2 py-0.5 rounded-md font-semibold capitalize"
+                            className="text-[10px] bg-amber-500/15 text-amber-300 border border-amber-500/25 px-2.5 py-0.5 rounded-full font-semibold capitalize"
                           >
                             {area.replace('-', ' ')}
                           </span>
@@ -451,14 +451,14 @@ export default function BuddiesPage() {
                       variant="outline"
                       size="sm"
                       asChild
-                      className="border-white/15 bg-white/[0.04] hover:bg-white/10 text-white text-xs rounded-xl"
+                      className="ios-pill border-white/15 bg-white/[0.04] hover:bg-white/10 text-white text-xs"
                     >
                       <Link href={`/buddies/${buddy._id}`}>Full Profile</Link>
                     </Button>
                     <Button
                       size="sm"
                       onClick={() => setSelectedBuddy(buddy)}
-                      className="bg-gradient-to-r from-indigo-500 to-cyan-500 hover:from-indigo-600 hover:to-cyan-600 text-white font-bold text-xs rounded-xl shadow-md cursor-pointer"
+                      className="btn-ios-primary text-xs shadow-md cursor-pointer"
                     >
                       <SendHorizontal className="w-3.5 h-3.5 mr-1" /> Connect
                     </Button>
@@ -468,9 +468,9 @@ export default function BuddiesPage() {
             </div>
           ) : (
             <div className="text-center py-16 bg-white/[0.02] rounded-3xl border border-dashed border-white/10 p-8">
-              <Users className="h-12 w-12 text-slate-500 mx-auto mb-3" />
+              <Users className="h-12 w-12 text-stone-500 mx-auto mb-3" />
               <h3 className="text-base font-bold text-white">No Buddies Match Your Filter</h3>
-              <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
+              <p className="text-xs text-stone-400 mt-1 max-w-sm mx-auto">
                 Try widening your search terms or clearing university filters to see more mentors.
               </p>
             </div>
@@ -482,20 +482,20 @@ export default function BuddiesPage() {
           {/* Received Requests */}
           <div className="space-y-3">
             <h2 className="text-base font-bold text-white flex items-center gap-2">
-              <Inbox className="w-4 h-4 text-cyan-400" />
+              <Inbox className="w-4 h-4 text-amber-400" />
               <span>Incoming Connection Requests</span>
             </h2>
 
             {loadingRequests ? (
               <div className="space-y-2">
-                <div className="glass-panel h-20 rounded-2xl animate-pulse" />
+                <div className="ios-glass h-20 rounded-2xl animate-pulse" />
               </div>
             ) : receivedRequests.length > 0 ? (
               <div className="space-y-3">
                 {receivedRequests.map((req) => (
                   <div
                     key={req._id}
-                    className="glass-panel rounded-2xl p-5 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                    className="ios-glass rounded-2xl p-5 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                   >
                     <div>
                       <div className="flex items-center gap-2.5">
@@ -503,7 +503,7 @@ export default function BuddiesPage() {
                           {req.requesterId?.name}
                         </span>
                         <Badge
-                          className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-md border ${
+                          className={`text-[10px] uppercase font-bold px-2.5 py-0.5 rounded-full border ${
                             req.status === 'accepted'
                               ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
                               : req.status === 'rejected'
@@ -514,12 +514,12 @@ export default function BuddiesPage() {
                           {req.status}
                         </Badge>
                       </div>
-                      <p className="text-xs text-slate-400 mt-0.5">
+                      <p className="text-xs text-stone-400 mt-0.5">
                         {req.requesterId?.profile?.university || 'International Student'} •{' '}
                         {format(new Date(req.createdAt), 'MMM d, yyyy')}
                       </p>
                       {req.message && (
-                        <p className="text-xs text-slate-300 bg-black/20 p-2.5 rounded-xl border border-white/5 mt-2.5">
+                        <p className="text-xs text-stone-300 bg-black/20 p-2.5 rounded-xl border border-white/5 mt-2.5">
                           &ldquo;{req.message}&rdquo;
                         </p>
                       )}
@@ -530,7 +530,7 @@ export default function BuddiesPage() {
                         <Button
                           size="sm"
                           onClick={() => handleUpdateStatus(req._id, 'accepted')}
-                          className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl"
+                          className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-full px-4"
                         >
                           Accept
                         </Button>
@@ -538,7 +538,7 @@ export default function BuddiesPage() {
                           size="sm"
                           variant="outline"
                           onClick={() => handleUpdateStatus(req._id, 'rejected')}
-                          className="border-white/10 text-rose-400 hover:bg-rose-500/10 rounded-xl text-xs"
+                          className="ios-pill border-white/10 text-rose-400 hover:bg-rose-500/10 text-xs"
                         >
                           Decline
                         </Button>
@@ -548,7 +548,7 @@ export default function BuddiesPage() {
                 ))}
               </div>
             ) : (
-              <div className="glass-panel p-6 rounded-2xl border border-white/5 text-center text-xs text-slate-400">
+              <div className="ios-glass p-6 rounded-2xl border border-white/5 text-center text-xs text-stone-400">
                 No incoming connection requests.
               </div>
             )}
@@ -557,18 +557,18 @@ export default function BuddiesPage() {
           {/* Sent Requests */}
           <div className="space-y-3">
             <h2 className="text-base font-bold text-white flex items-center gap-2">
-              <SendHorizontal className="w-4 h-4 text-indigo-400" />
+              <SendHorizontal className="w-4 h-4 text-orange-400" />
               <span>Sent Connection Requests</span>
             </h2>
 
             {loadingRequests ? (
-              <div className="glass-panel h-20 rounded-2xl animate-pulse" />
+              <div className="ios-glass h-20 rounded-2xl animate-pulse" />
             ) : sentRequests.length > 0 ? (
               <div className="space-y-3">
                 {sentRequests.map((req) => (
                   <div
                     key={req._id}
-                    className="glass-panel rounded-2xl p-5 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                    className="ios-glass rounded-2xl p-5 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                   >
                     <div>
                       <div className="flex items-center gap-2.5">
@@ -576,7 +576,7 @@ export default function BuddiesPage() {
                           {req.recipientId?.name}
                         </span>
                         <Badge
-                          className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-md border ${
+                          className={`text-[10px] uppercase font-bold px-2.5 py-0.5 rounded-full border ${
                             req.status === 'accepted'
                               ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
                               : req.status === 'rejected'
@@ -587,12 +587,12 @@ export default function BuddiesPage() {
                           {req.status}
                         </Badge>
                       </div>
-                      <p className="text-xs text-slate-400 mt-0.5">
+                      <p className="text-xs text-stone-400 mt-0.5">
                         {req.recipientId?.profile?.university || 'Senior Peer'} •{' '}
                         {format(new Date(req.createdAt), 'MMM d, yyyy')}
                       </p>
                       {req.message && (
-                        <p className="text-xs text-slate-300 bg-black/20 p-2.5 rounded-xl border border-white/5 mt-2.5">
+                        <p className="text-xs text-stone-300 bg-black/20 p-2.5 rounded-xl border border-white/5 mt-2.5">
                           &ldquo;{req.message}&rdquo;
                         </p>
                       )}
@@ -603,7 +603,7 @@ export default function BuddiesPage() {
                         size="sm"
                         variant="outline"
                         onClick={() => handleUpdateStatus(req._id, 'cancelled')}
-                        className="border-white/10 text-slate-400 hover:text-white rounded-xl text-xs"
+                        className="ios-pill border-white/10 text-stone-400 hover:text-white text-xs"
                       >
                         Cancel Request
                       </Button>
@@ -612,7 +612,7 @@ export default function BuddiesPage() {
                 ))}
               </div>
             ) : (
-              <div className="glass-panel p-6 rounded-2xl border border-white/5 text-center text-xs text-slate-400">
+              <div className="ios-glass p-6 rounded-2xl border border-white/5 text-center text-xs text-stone-400">
                 You haven&apos;t sent any connection requests yet.
               </div>
             )}
@@ -622,19 +622,19 @@ export default function BuddiesPage() {
 
       {/* Send Connect Request Dialog */}
       <Dialog open={Boolean(selectedBuddy)} onOpenChange={() => setSelectedBuddy(null)}>
-        <DialogContent className="sm:max-w-md bg-slate-950/95 border-white/15 text-white backdrop-blur-2xl">
+        <DialogContent className="sm:max-w-md ios-glass-prominent border-white/15 text-white backdrop-blur-3xl bg-[#171311]/95">
           <DialogHeader>
             <DialogTitle className="text-lg font-black text-white">
               Connect with {selectedBuddy?.userId?.name}
             </DialogTitle>
-            <DialogDescription className="text-xs text-slate-400">
+            <DialogDescription className="text-xs text-stone-400">
               Send a friendly introduction message to start chatting and getting guidance.
             </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleSendRequest} className="space-y-4 pt-2">
             <div className="space-y-2">
-              <Label className="text-xs font-bold text-slate-300">Quick Icebreaker</Label>
+              <Label className="text-xs font-bold text-stone-300">Quick Icebreaker</Label>
               <div className="flex flex-wrap gap-1.5">
                 {[
                   'Hi! I’m arriving this semester, would love some housing advice!',
@@ -645,7 +645,7 @@ export default function BuddiesPage() {
                     key={idx}
                     type="button"
                     onClick={() => setRequestMessage(preset)}
-                    className="text-[11px] text-left p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-slate-300 transition-colors"
+                    className="text-[11px] text-left p-2.5 rounded-xl ios-glass hover:bg-white/[0.08] border border-white/10 text-stone-300 transition-colors"
                   >
                     💡 {preset}
                   </button>
@@ -654,7 +654,7 @@ export default function BuddiesPage() {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="reqMsg" className="text-xs font-bold text-slate-300">
+              <Label htmlFor="reqMsg" className="text-xs font-bold text-stone-300">
                 Personalized Message
               </Label>
               <Textarea
@@ -663,7 +663,7 @@ export default function BuddiesPage() {
                 onChange={(e) => setRequestMessage(e.target.value)}
                 placeholder="Write your note here..."
                 rows={3}
-                className="bg-slate-900 border-white/10 text-white text-xs rounded-xl"
+                className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
               />
             </div>
 
@@ -672,14 +672,14 @@ export default function BuddiesPage() {
                 type="button"
                 variant="outline"
                 onClick={() => setSelectedBuddy(null)}
-                className="border-white/15 text-slate-300 hover:text-white rounded-xl text-xs"
+                className="ios-pill border-white/15 text-stone-300 hover:text-white text-xs"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={sendingRequest}
-                className="bg-gradient-to-r from-indigo-500 to-cyan-500 hover:from-indigo-600 hover:to-cyan-600 text-white font-bold text-xs rounded-xl shadow-md"
+                className="btn-ios-primary text-xs shadow-md"
               >
                 {sendingRequest ? 'Sending...' : 'Send Request 🚀'}
               </Button>

@@ -27,23 +27,23 @@ export const metadata = {
 
 export default function FeaturesPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#060913] text-slate-100">
+    <div className="min-h-screen flex flex-col bg-[#0d0a09] text-stone-100">
       <Navbar />
 
       <main className="flex-1 pt-24 sm:pt-28">
         {/* HERO */}
         <section className="relative py-16 sm:py-24 overflow-hidden border-b border-white/[0.08]">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-indigo-600/15 via-violet-600/10 to-cyan-500/15 rounded-full blur-[140px] pointer-events-none" />
-          <div className="absolute inset-0 bg-grid-cyber opacity-30 pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-amber-500/15 via-orange-500/10 to-rose-500/10 rounded-full blur-[140px] pointer-events-none" />
+          <div className="absolute inset-0 bg-grid-warm opacity-40 pointer-events-none" />
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span className="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-500/10 border border-cyan-500/20">
+            <span className="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-amber-300 bg-amber-500/10 border border-amber-500/20">
               Platform Modules
             </span>
             <h1 className="mt-4 text-4xl sm:text-6xl font-black text-white tracking-tight">
-              Engineered for Global <span className="text-gradient-aurora">Student Success</span>
+              Engineered for Global <span className="text-gradient-sunset">Student Success</span>
             </h1>
-            <p className="mt-6 text-base sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="mt-6 text-base sm:text-xl text-stone-300 max-w-3xl mx-auto leading-relaxed">
               Every feature in Far From Home addresses a real hurdle international scholars experience: from visa confusion and social isolation to housing leases and bank accounts.
             </p>
           </div>
@@ -387,25 +387,26 @@ export default function FeaturesPage() {
         </div>
 
         {/* BOTTOM CTA */}
-        <section className="py-20 bg-slate-900 border-t border-slate-800">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+        <section className="py-20 relative overflow-hidden border-t border-white/10">
+          <div className="absolute inset-0 bg-gradient-to-t from-orange-950/20 to-transparent pointer-events-none" />
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
             <h2 className="text-3xl sm:text-4xl font-bold text-white">
               Experience the Complete Toolkit Today
             </h2>
-            <p className="text-slate-300 max-w-xl mx-auto text-base">
+            <p className="text-stone-300 max-w-xl mx-auto text-base">
               Set up your profile in 2 minutes and explore custom roadmaps built for your university.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
               <Link
                 href="/register"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-slate-950 bg-teal-400 hover:bg-teal-300 shadow-lg text-sm transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 btn-ios-primary text-sm shadow-lg shadow-orange-500/20"
               >
                 Sign Up for Free
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/about"
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl font-medium text-slate-300 hover:text-white bg-slate-800 border border-slate-700 text-sm transition-colors"
+                className="w-full sm:w-auto px-6 py-3.5 ios-pill text-stone-300 hover:text-white text-sm"
               >
                 Read Our Story
               </Link>

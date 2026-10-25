@@ -113,13 +113,13 @@ export default function NotificationsPage() {
       case 'task-reminder':
         return <CheckSquare className="h-5 w-5 text-amber-400" />;
       case 'buddy-request':
-        return <Users className="h-5 w-5 text-cyan-400" />;
+        return <Users className="h-5 w-5 text-orange-400" />;
       case 'event-update':
         return <Calendar className="h-5 w-5 text-rose-400" />;
       case 'guide-update':
-        return <BookOpen className="h-5 w-5 text-purple-400" />;
+        return <BookOpen className="h-5 w-5 text-amber-300" />;
       default:
-        return <Info className="h-5 w-5 text-indigo-400" />;
+        return <Info className="h-5 w-5 text-amber-400" />;
     }
   };
 
@@ -138,10 +138,10 @@ export default function NotificationsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
-            <Bell className="h-7 w-7 text-indigo-400" />
+            <Bell className="h-7 w-7 text-amber-400" />
             <span>Alerts & Notifications</span>
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-stone-400 mt-1">
             Stay up to date with task deadlines, senior buddy messages, and campus event changes.
           </p>
         </div>
@@ -152,7 +152,7 @@ export default function NotificationsPage() {
             size="sm"
             onClick={handleMarkAllAsRead}
             disabled={markingAll}
-            className="border-white/10 text-cyan-400 hover:text-cyan-300 hover:bg-white/5 rounded-xl text-xs cursor-pointer w-fit"
+            className="ios-pill border-white/10 text-amber-400 hover:text-amber-300 hover:bg-white/5 text-xs cursor-pointer w-fit"
           >
             <CheckCheck className="h-4 w-4 mr-1.5" />
             {markingAll ? 'Updating...' : 'Mark all as read'}
@@ -161,24 +161,24 @@ export default function NotificationsPage() {
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center justify-between glass-panel p-3 rounded-2xl border border-white/10">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between ios-glass p-2 rounded-full border border-white/10">
+        <div className="flex items-center gap-1.5">
           <button
             onClick={() => setUnreadOnly(false)}
-            className={`text-xs px-3.5 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
+            className={`text-xs px-4 py-1.5 rounded-full font-bold transition-all cursor-pointer ${
               !unreadOnly
-                ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'btn-ios-primary shadow-md'
+                : 'text-stone-400 hover:text-white'
             }`}
           >
             All Alerts
           </button>
           <button
             onClick={() => setUnreadOnly(true)}
-            className={`text-xs px-3.5 py-1.5 rounded-xl font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={`text-xs px-4 py-1.5 rounded-full font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               unreadOnly
-                ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'btn-ios-primary shadow-md'
+                : 'text-stone-400 hover:text-white'
             }`}
           >
             <span>Unread Only</span>
@@ -190,7 +190,7 @@ export default function NotificationsPage() {
           </button>
         </div>
 
-        <span className="text-xs text-slate-400 pr-2">
+        <span className="text-xs text-stone-400 pr-3">
           {notifications.length} notification{notifications.length !== 1 ? 's' : ''}
         </span>
       </div>
@@ -199,7 +199,7 @@ export default function NotificationsPage() {
       {loading ? (
         <div className="space-y-3">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="glass-panel h-24 rounded-2xl animate-pulse" />
+            <div key={i} className="ios-glass h-24 rounded-2xl animate-pulse" />
           ))}
         </div>
       ) : notifications.length > 0 ? (
@@ -212,10 +212,10 @@ export default function NotificationsPage() {
               <motion.div
                 key={item._id}
                 whileHover={{ y: -2 }}
-                className={`glass-panel glass-card-specular rounded-2xl p-4 sm:p-5 border transition-all ${
+                className={`ios-glass rounded-2xl p-4 sm:p-5 border transition-all ${
                   isUnread
-                    ? 'border-indigo-500/40 bg-indigo-950/20'
-                    : 'border-white/10 bg-slate-900/60 opacity-80'
+                    ? 'border-amber-500/40 bg-amber-950/20 shadow-[0_0_25px_rgba(245,158,11,0.1)]'
+                    : 'border-white/10 bg-white/[0.02] opacity-80'
                 }`}
               >
                 <div className="flex items-start justify-between gap-4">
@@ -223,7 +223,7 @@ export default function NotificationsPage() {
                     <div
                       className={`h-11 w-11 rounded-2xl flex items-center justify-center shrink-0 border ${
                         isUnread
-                          ? 'bg-indigo-500/20 border-indigo-500/40 shadow-sm'
+                          ? 'bg-amber-500/20 border-amber-500/40 shadow-sm'
                           : 'bg-white/[0.04] border-white/10'
                       }`}
                     >
@@ -234,26 +234,26 @@ export default function NotificationsPage() {
                       <div className="flex items-center gap-2">
                         <h3
                           className={`text-sm ${
-                            isUnread ? 'font-black text-white' : 'font-semibold text-slate-300'
+                            isUnread ? 'font-black text-white' : 'font-semibold text-stone-300'
                           }`}
                         >
                           {item.title}
                         </h3>
                         {isUnread && (
-                          <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse shrink-0" />
+                          <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse shrink-0" />
                         )}
                       </div>
 
-                      <p className="text-xs text-slate-400 leading-relaxed">{item.message}</p>
+                      <p className="text-xs text-stone-400 leading-relaxed">{item.message}</p>
 
-                      <div className="flex items-center gap-3 pt-1 text-[11px] text-slate-500">
+                      <div className="flex items-center gap-3 pt-1 text-[11px] text-stone-500">
                         <span>{formatDistanceToNow(new Date(item.createdAt), { addSuffix: true })}</span>
                         {actionLink && (
                           <>
                             <span>•</span>
                             <Link
                               href={actionLink}
-                              className="text-cyan-400 hover:text-cyan-300 font-bold flex items-center gap-0.5"
+                              className="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-0.5"
                             >
                               View Resource <ExternalLink className="h-3 w-3" />
                             </Link>
@@ -268,7 +268,7 @@ export default function NotificationsPage() {
                       variant="ghost"
                       size="sm"
                       onClick={() => handleMarkAsRead(item._id)}
-                      className="text-xs text-slate-400 hover:text-white shrink-0 rounded-xl"
+                      className="text-xs text-stone-400 hover:text-white shrink-0 rounded-xl"
                     >
                       Mark read
                     </Button>
@@ -280,9 +280,9 @@ export default function NotificationsPage() {
         </div>
       ) : (
         <div className="text-center py-16 bg-white/[0.02] rounded-3xl border border-dashed border-white/10 p-8">
-          <Bell className="h-12 w-12 text-slate-500 mx-auto mb-3" />
+          <Bell className="h-12 w-12 text-stone-500 mx-auto mb-3" />
           <h3 className="text-base font-bold text-white">No Notifications</h3>
-          <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
+          <p className="text-xs text-stone-400 mt-1 max-w-sm mx-auto">
             {unreadOnly
               ? 'You have zero unread alerts. You are fully up to date!'
               : 'You do not have any notifications at the moment.'}

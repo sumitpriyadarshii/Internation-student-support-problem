@@ -177,7 +177,7 @@ export default function TasksPage() {
             particleCount: 60,
             spread: 55,
             origin: { y: 0.6 },
-            colors: ['#6366f1', '#10b981', '#06b6d4'],
+            colors: ['#f97316', '#f59e0b', '#fb7185', '#10b981'],
           });
           toast.success('Task marked completed! Outstanding work! 🎉');
         } else {
@@ -238,17 +238,17 @@ export default function TasksPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
-            <CheckSquare className="h-7 w-7 text-cyan-400" />
+            <CheckSquare className="h-7 w-7 text-amber-400" />
             <span>Relocation Milestones</span>
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-stone-400 mt-1">
             Organize visas, banking, accommodation, flights, and campus registration.
           </p>
         </div>
 
         <Button
           onClick={() => setIsAddOpen(true)}
-          className="btn-shimmer bg-gradient-to-r from-indigo-500 via-violet-600 to-cyan-500 hover:from-indigo-600 hover:to-cyan-600 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-500/30 cursor-pointer w-fit"
+          className="btn-ios-primary text-xs px-5 py-2.5 cursor-pointer shadow-lg shadow-orange-500/20 w-fit"
         >
           <Plus className="mr-1.5 h-4 w-4" /> Add Milestone
         </Button>
@@ -260,13 +260,13 @@ export default function TasksPage() {
           onClick={() => setStatusFilter('all')}
           className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
             statusFilter === 'all'
-              ? 'bg-gradient-to-r from-indigo-600/30 to-violet-600/30 text-white border-indigo-500 shadow-[0_0_20px_rgba(99,102,241,0.25)]'
-              : 'glass-panel text-slate-300 hover:border-white/20'
+              ? 'bg-gradient-to-br from-amber-500/25 via-orange-500/20 to-transparent text-white border-amber-500/50 shadow-[0_0_25px_rgba(245,158,11,0.2)] backdrop-blur-xl'
+              : 'ios-glass text-stone-300 hover:border-white/20'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-[11px] uppercase font-bold tracking-wider text-slate-400">Total Milestones</span>
-            <ListTodo className="h-4 w-4 text-indigo-400" />
+            <span className="text-[11px] uppercase font-bold tracking-wider text-stone-400">Total Milestones</span>
+            <ListTodo className="h-4 w-4 text-amber-400" />
           </div>
           <p className="text-2xl font-black text-white mt-1">{stats.total}</p>
         </button>
@@ -275,8 +275,8 @@ export default function TasksPage() {
           onClick={() => setStatusFilter('completed')}
           className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
             statusFilter === 'completed'
-              ? 'bg-gradient-to-r from-emerald-600/30 to-teal-600/30 text-white border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.25)]'
-              : 'glass-panel text-slate-300 hover:border-white/20'
+              ? 'bg-gradient-to-br from-emerald-500/25 via-teal-500/20 to-transparent text-white border-emerald-500/50 shadow-[0_0_25px_rgba(16,185,129,0.2)] backdrop-blur-xl'
+              : 'ios-glass text-stone-300 hover:border-white/20'
           }`}
         >
           <div className="flex items-center justify-between">
@@ -290,8 +290,8 @@ export default function TasksPage() {
           onClick={() => setStatusFilter('not-started')}
           className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
             statusFilter === 'not-started' || statusFilter === 'in-progress'
-              ? 'bg-gradient-to-r from-amber-600/30 to-yellow-600/30 text-white border-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.25)]'
-              : 'glass-panel text-slate-300 hover:border-white/20'
+              ? 'bg-gradient-to-br from-amber-500/25 via-orange-500/20 to-transparent text-white border-amber-500/50 shadow-[0_0_25px_rgba(245,158,11,0.2)] backdrop-blur-xl'
+              : 'ios-glass text-stone-300 hover:border-white/20'
           }`}
         >
           <div className="flex items-center justify-between">
@@ -305,8 +305,8 @@ export default function TasksPage() {
           onClick={() => setStatusFilter('overdue')}
           className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
             statusFilter === 'overdue'
-              ? 'bg-gradient-to-r from-rose-600/30 to-red-600/30 text-white border-rose-500 shadow-[0_0_20px_rgba(244,63,94,0.25)]'
-              : 'glass-panel text-slate-300 hover:border-white/20'
+              ? 'bg-gradient-to-br from-rose-500/25 via-red-500/20 to-transparent text-white border-rose-500/50 shadow-[0_0_25px_rgba(244,63,94,0.2)] backdrop-blur-xl'
+              : 'ios-glass text-stone-300 hover:border-white/20'
           }`}
         >
           <div className="flex items-center justify-between">
@@ -318,35 +318,35 @@ export default function TasksPage() {
       </div>
 
       {/* Progress Bar Container */}
-      <div className="glass-panel glass-card-specular p-5 rounded-2xl border border-white/10">
-        <div className="flex items-center justify-between text-xs font-bold text-slate-300 mb-2">
+      <div className="ios-glass p-5 rounded-2xl border border-white/10">
+        <div className="flex items-center justify-between text-xs font-bold text-stone-300 mb-2">
           <span>Overall Preparation Journey</span>
-          <span className="text-cyan-400">{stats.completionPercentage}% Complete</span>
+          <span className="text-amber-400">{stats.completionPercentage}% Complete</span>
         </div>
-        <Progress value={stats.completionPercentage} className="h-2.5 bg-slate-900" />
+        <Progress value={stats.completionPercentage} className="h-2.5 bg-stone-900" />
       </div>
 
       {/* Filters Row */}
-      <div className="glass-panel p-4 rounded-2xl border border-white/10 flex flex-col md:flex-row items-center gap-3">
+      <div className="ios-glass p-4 rounded-2xl border border-white/10 flex flex-col md:flex-row items-center gap-3">
         {/* Search */}
         <div className="relative flex-1 w-full">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-stone-500" />
           <Input
             type="text"
             placeholder="Search checklists (e.g. visa, biometrics, housing)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-slate-950/60 border-white/10 text-white text-xs rounded-xl"
+            className="pl-10 bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
           />
         </div>
 
         {/* Category */}
         <div className="w-full md:w-52">
           <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-            <SelectTrigger className="bg-slate-950/60 border-white/10 text-white text-xs rounded-xl">
+            <SelectTrigger className="bg-white/[0.04] border-white/10 text-white text-xs rounded-xl">
               <SelectValue placeholder="Category" />
             </SelectTrigger>
-            <SelectContent className="bg-slate-950 border-white/15 text-white">
+            <SelectContent className="bg-[#1c1613] border-white/15 text-white">
               {CATEGORIES.map((c) => (
                 <SelectItem key={c.id} value={c.id} className="text-xs">
                   {c.label}
@@ -359,10 +359,10 @@ export default function TasksPage() {
         {/* Priority */}
         <div className="w-full md:w-40">
           <Select value={priorityFilter} onValueChange={setPriorityFilter}>
-            <SelectTrigger className="bg-slate-950/60 border-white/10 text-white text-xs rounded-xl">
+            <SelectTrigger className="bg-white/[0.04] border-white/10 text-white text-xs rounded-xl">
               <SelectValue placeholder="Priority" />
             </SelectTrigger>
-            <SelectContent className="bg-slate-950 border-white/15 text-white">
+            <SelectContent className="bg-[#1c1613] border-white/15 text-white">
               <SelectItem value="all" className="text-xs">All Priorities</SelectItem>
               <SelectItem value="urgent" className="text-xs">Urgent</SelectItem>
               <SelectItem value="high" className="text-xs">High</SelectItem>
@@ -377,9 +377,9 @@ export default function TasksPage() {
           variant="outline"
           size="sm"
           onClick={() => setSortAscending(!sortAscending)}
-          className="w-full md:w-auto text-xs border-white/10 text-slate-300 hover:text-white bg-slate-950/60 rounded-xl shrink-0"
+          className="w-full md:w-auto text-xs ios-pill border-white/10 text-stone-300 hover:text-white bg-white/[0.04] shrink-0"
         >
-          <ArrowUpDown className="h-3.5 w-3.5 mr-1 text-cyan-400" />
+          <ArrowUpDown className="h-3.5 w-3.5 mr-1 text-amber-400" />
           {sortAscending ? 'Soonest Due' : 'Latest Due'}
         </Button>
       </div>
@@ -388,7 +388,7 @@ export default function TasksPage() {
       {loading ? (
         <div className="space-y-3">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="glass-panel h-20 rounded-2xl animate-pulse" />
+            <div key={i} className="ios-glass h-20 rounded-2xl animate-pulse" />
           ))}
         </div>
       ) : tasks.length > 0 ? (
@@ -401,12 +401,12 @@ export default function TasksPage() {
               <motion.div
                 key={task._id}
                 whileHover={{ y: -2 }}
-                className={`glass-panel glass-card-specular rounded-2xl p-4 sm:p-5 border transition-all ${
+                className={`ios-glass rounded-2xl p-4 sm:p-5 border transition-all ${
                   isCompleted
                     ? 'border-emerald-500/20 bg-emerald-950/10 opacity-75'
                     : task.isOverdue
                     ? 'border-rose-500/40 bg-rose-950/10'
-                    : 'border-white/10 hover:border-indigo-500/40'
+                    : 'border-white/10 hover:border-amber-500/40'
                 }`}
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -415,38 +415,38 @@ export default function TasksPage() {
                     <div className="flex items-center gap-2 flex-wrap">
                       <Link
                         href={`/tasks/${task._id}`}
-                        className={`text-sm sm:text-base font-bold hover:text-cyan-300 transition-colors ${
-                          isCompleted ? 'line-through text-slate-400' : 'text-white'
+                        className={`text-sm sm:text-base font-bold hover:text-amber-300 transition-colors ${
+                          isCompleted ? 'line-through text-stone-400' : 'text-white'
                         }`}
                       >
                         {task.title}
                       </Link>
 
                       <Badge
-                        className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-md border ${
+                        className={`text-[10px] uppercase font-bold px-2.5 py-0.5 rounded-full border ${
                           task.priority === 'urgent'
-                            ? 'bg-rose-500/20 text-rose-300 border-rose-500/30'
+                            ? 'bg-rose-500/15 text-rose-300 border-rose-500/30'
                             : task.priority === 'high'
-                            ? 'bg-amber-500/20 text-amber-300 border-amber-500/30'
-                            : 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30'
+                            ? 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+                            : 'bg-orange-500/15 text-orange-300 border-orange-500/30'
                         }`}
                       >
                         {task.priority}
                       </Badge>
 
                       {task.isOverdue && !isCompleted && (
-                        <span className="text-[10px] px-2 py-0.5 font-bold rounded-md bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                        <span className="text-[10px] px-2.5 py-0.5 font-bold rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30">
                           Overdue
                         </span>
                       )}
                     </div>
 
                     {task.description && (
-                      <p className="text-xs text-slate-400 line-clamp-1">{task.description}</p>
+                      <p className="text-xs text-stone-400 line-clamp-1">{task.description}</p>
                     )}
 
-                    <div className="flex items-center gap-3 text-xs text-slate-400 flex-wrap pt-0.5">
-                      <span className="capitalize font-medium text-slate-300">
+                    <div className="flex items-center gap-3 text-xs text-stone-400 flex-wrap pt-0.5">
+                      <span className="capitalize font-medium text-stone-300">
                         {task.category.replace('-', ' ')}
                       </span>
 
@@ -469,7 +469,7 @@ export default function TasksPage() {
                           <span>•</span>
                           <Link
                             href={`/guides/${task.relatedGuideId._id}`}
-                            className="text-cyan-400 hover:text-cyan-300 font-bold flex items-center gap-0.5"
+                            className="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-0.5"
                           >
                             Linked Handbook <ExternalLink className="h-3 w-3" />
                           </Link>
@@ -490,12 +490,12 @@ export default function TasksPage() {
                             ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
                             : task.status === 'in-progress'
                             ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-                            : 'bg-slate-900 text-slate-300 border-white/10'
+                            : 'bg-white/[0.04] text-stone-300 border-white/10'
                         }`}
                       >
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-slate-950 border-white/15 text-white">
+                      <SelectContent className="bg-[#1c1613] border-white/15 text-white">
                         <SelectItem value="not-started">Not Started</SelectItem>
                         <SelectItem value="in-progress">In Progress</SelectItem>
                         <SelectItem value="completed">Completed</SelectItem>
@@ -506,7 +506,7 @@ export default function TasksPage() {
                       variant="ghost"
                       size="sm"
                       asChild
-                      className="h-9 px-2.5 text-xs text-slate-400 hover:text-white hover:bg-white/5 rounded-xl"
+                      className="h-9 px-2.5 text-xs text-stone-400 hover:text-white hover:bg-white/5 rounded-xl"
                     >
                       <Link href={`/tasks/${task._id}`}>Details &rarr;</Link>
                     </Button>
@@ -518,15 +518,15 @@ export default function TasksPage() {
         </div>
       ) : (
         <div className="text-center py-12 bg-white/[0.02] rounded-3xl border border-dashed border-white/10 p-8">
-          <ListTodo className="h-12 w-12 text-slate-500 mx-auto mb-3" />
+          <ListTodo className="h-12 w-12 text-stone-500 mx-auto mb-3" />
           <h3 className="text-base font-bold text-white">No tasks match these filters</h3>
-          <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
+          <p className="text-xs text-stone-400 mt-1 max-w-sm mx-auto">
             Try resetting your filters or add a new custom milestone for your journey.
           </p>
           <Button
             onClick={() => setIsAddOpen(true)}
             size="sm"
-            className="mt-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl"
+            className="mt-4 btn-ios-primary text-xs rounded-full px-5 py-2.5"
           >
             <Plus className="mr-1.5 h-3.5 w-3.5" /> Create Task
           </Button>
@@ -535,47 +535,47 @@ export default function TasksPage() {
 
       {/* Add Task Modal */}
       <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-        <DialogContent className="sm:max-w-md bg-slate-950/95 border-white/15 text-white backdrop-blur-2xl">
+        <DialogContent className="sm:max-w-md ios-glass-prominent border-white/15 text-white backdrop-blur-3xl bg-[#171311]/95">
           <DialogHeader>
             <DialogTitle className="text-lg font-black text-white">
               Add Relocation Milestone
             </DialogTitle>
-            <DialogDescription className="text-xs text-slate-400">
+            <DialogDescription className="text-xs text-stone-400">
               Track visa biometrics, flight baggage, SIM cards, or university payments.
             </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleCreateTask} className="space-y-4 pt-2">
             <div className="space-y-1.5">
-              <Label className="text-xs font-bold text-slate-300">Milestone Title *</Label>
+              <Label className="text-xs font-bold text-stone-300">Milestone Title *</Label>
               <Input
                 placeholder="e.g. Open Student Bank Account"
                 value={formTitle}
                 onChange={(e) => setFormTitle(e.target.value)}
                 required
-                className="bg-slate-900 border-white/10 text-white text-xs rounded-xl"
+                className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
               />
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-xs font-bold text-slate-300">Notes & Checklist</Label>
+              <Label className="text-xs font-bold text-stone-300">Notes & Checklist</Label>
               <Textarea
                 placeholder="Bring original passport, I-20 or CAS letter, bank draft..."
                 value={formDesc}
                 onChange={(e) => setFormDesc(e.target.value)}
                 rows={3}
-                className="bg-slate-900 border-white/10 text-white text-xs rounded-xl"
+                className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <Label className="text-xs font-bold text-slate-300">Category</Label>
+                <Label className="text-xs font-bold text-stone-300">Category</Label>
                 <Select value={formCategory} onValueChange={setFormCategory}>
-                  <SelectTrigger className="bg-slate-900 border-white/10 text-white text-xs rounded-xl">
+                  <SelectTrigger className="bg-white/[0.04] border-white/10 text-white text-xs rounded-xl">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-950 border-white/15 text-white">
+                  <SelectContent className="bg-[#1c1613] border-white/15 text-white">
                     {CATEGORIES.filter((c) => c.id !== 'all').map((c) => (
                       <SelectItem key={c.id} value={c.id} className="text-xs">
                         {c.label}
@@ -586,15 +586,15 @@ export default function TasksPage() {
               </div>
 
               <div className="space-y-1.5">
-                <Label className="text-xs font-bold text-slate-300">Priority</Label>
+                <Label className="text-xs font-bold text-stone-300">Priority</Label>
                 <Select
                   value={formPriority}
                   onValueChange={(val: any) => setFormPriority(val)}
                 >
-                  <SelectTrigger className="bg-slate-900 border-white/10 text-white text-xs rounded-xl">
+                  <SelectTrigger className="bg-white/[0.04] border-white/10 text-white text-xs rounded-xl">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-950 border-white/15 text-white">
+                  <SelectContent className="bg-[#1c1613] border-white/15 text-white">
                     <SelectItem value="low">Low</SelectItem>
                     <SelectItem value="medium">Medium</SelectItem>
                     <SelectItem value="high">High</SelectItem>
@@ -605,12 +605,12 @@ export default function TasksPage() {
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-xs font-bold text-slate-300">Target Due Date</Label>
+              <Label className="text-xs font-bold text-stone-300">Target Due Date</Label>
               <Input
                 type="date"
                 value={formDueDate}
                 onChange={(e) => setFormDueDate(e.target.value)}
-                className="bg-slate-900 border-white/10 text-white text-xs rounded-xl"
+                className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
               />
             </div>
 
@@ -619,14 +619,14 @@ export default function TasksPage() {
                 type="button"
                 variant="outline"
                 onClick={() => setIsAddOpen(false)}
-                className="border-white/15 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl text-xs"
+                className="ios-pill border-white/15 text-stone-300 hover:text-white hover:bg-white/5 text-xs"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={submitting}
-                className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow-md"
+                className="btn-ios-primary text-xs shadow-md"
               >
                 {submitting ? 'Creating...' : 'Add Milestone'}
               </Button>

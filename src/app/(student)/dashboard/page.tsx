@@ -107,7 +107,7 @@ interface EventItem {
   capacity?: number;
 }
 
-const PIE_COLORS = ['#10b981', '#f59e0b', '#f43f5e'];
+const PIE_COLORS = ['#10b981', '#f59e0b', '#fb7185'];
 
 export default function StudentDashboardPage() {
   const { data: session } = useSession();
@@ -234,7 +234,7 @@ export default function StudentDashboardPage() {
           particleCount: 70,
           spread: 60,
           origin: { y: 0.6 },
-          colors: ['#6366f1', '#06b6d4', '#10b981', '#f43f5e'],
+          colors: ['#f97316', '#f59e0b', '#fb7185', '#10b981'],
         });
 
         toast.success('Task marked completed! Great job! 🎉');
@@ -313,31 +313,32 @@ export default function StudentDashboardPage() {
 
   return (
     <div className="space-y-8 pb-16">
-      {/* WELCOME BANNER WITH AURORA GLASS */}
+      {/* WELCOME BANNER WITH APPLE LIQUID GLASS */}
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-slate-900/90 via-indigo-950/70 to-slate-900/90 border border-white/10 shadow-[0_15px_45px_rgba(0,0,0,0.5)] backdrop-blur-2xl"
+        className="relative overflow-hidden rounded-3xl p-6 sm:p-8 ios-glass-prominent border border-amber-500/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
       >
-        <div className="absolute top-0 right-1/4 w-72 h-72 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-60 h-60 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
+        {/* Warm ambient liquid glass glows */}
+        <div className="absolute top-0 right-1/4 w-80 h-80 bg-gradient-to-br from-amber-500/15 via-orange-500/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-72 h-72 bg-gradient-to-tl from-rose-500/15 via-amber-500/10 to-transparent rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="space-y-2.5 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
+          <div className="space-y-3 max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full ios-glass border border-amber-500/30 text-amber-200 text-xs font-semibold tracking-wide">
+              <Sparkles className="h-3.5 w-3.5 text-amber-400" />
               <span>International Student Cockpit</span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             </div>
 
             <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-white">
-              Welcome back, <span className="text-gradient-aurora">{userName}</span>! 👋
+              Welcome back, <span className="text-gradient-sunset">{userName}</span>! 👋
             </h1>
 
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
               Your flight control center for{' '}
-              <span className="text-cyan-300 font-bold underline decoration-indigo-500 underline-offset-4">
+              <span className="text-amber-300 font-bold underline decoration-amber-500/60 underline-offset-4">
                 {destination}
               </span>
               . Keep checking off your arrival milestones!
@@ -346,52 +347,52 @@ export default function StudentDashboardPage() {
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <Button
                 onClick={() => setIsAddTaskOpen(true)}
-                className="btn-shimmer bg-gradient-to-r from-indigo-500 via-violet-600 to-cyan-500 hover:from-indigo-600 hover:to-cyan-600 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-500/30 cursor-pointer"
+                className="btn-ios-primary text-xs px-5 py-2.5 cursor-pointer shadow-lg shadow-orange-500/20"
               >
                 <Plus className="mr-1.5 h-4 w-4" /> Add Milestone Task
               </Button>
               <Button
                 asChild
                 variant="outline"
-                className="border-white/15 bg-white/[0.05] hover:bg-white/10 text-white text-xs rounded-xl"
+                className="ios-pill border-white/15 bg-white/[0.04] hover:bg-white/10 text-white text-xs hover:border-amber-400/30"
               >
                 <Link href="/buddies">
-                  <Users className="mr-1.5 h-4 w-4 text-cyan-400" /> Connect Senior Buddies
+                  <Users className="mr-1.5 h-4 w-4 text-amber-400" /> Connect Senior Buddies
                 </Link>
               </Button>
               <Button
                 asChild
                 variant="outline"
-                className="border-white/15 bg-white/[0.05] hover:bg-white/10 text-white text-xs rounded-xl"
+                className="ios-pill border-white/15 bg-white/[0.04] hover:bg-white/10 text-white text-xs hover:border-amber-400/30"
               >
                 <Link href="/guides">
-                  <BookOpen className="mr-1.5 h-4 w-4 text-indigo-400" /> Destination Guides
+                  <BookOpen className="mr-1.5 h-4 w-4 text-orange-400" /> Destination Guides
                 </Link>
               </Button>
             </div>
           </div>
 
           {/* Profile Readiness Glass Card */}
-          <div className="rounded-2xl bg-slate-950/70 border border-white/10 p-5 lg:w-80 shrink-0 backdrop-blur-xl shadow-inner">
+          <div className="rounded-2xl ios-glass border border-white/10 p-5 lg:w-80 shrink-0 shadow-inner">
             <div className="flex items-center justify-between text-xs font-bold mb-2">
-              <span className="text-slate-300 flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-cyan-400" />
+              <span className="text-stone-300 flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-amber-400" />
                 <span>Profile Readiness</span>
               </span>
-              <span className="text-cyan-400 font-black text-sm">
+              <span className="text-amber-400 font-black text-sm">
                 {calculateProfileCompletion()}%
               </span>
             </div>
-            <Progress value={calculateProfileCompletion()} className="h-2.5 bg-slate-800" />
+            <Progress value={calculateProfileCompletion()} className="h-2.5 bg-stone-900" />
             <div className="mt-3.5 flex justify-between items-center text-[11px]">
-              <span className="text-slate-400">
+              <span className="text-stone-400">
                 {calculateProfileCompletion() === 100
                   ? 'All details complete!'
                   : 'Add city & study details'}
               </span>
               <Link
                 href="/profile"
-                className="text-indigo-400 hover:text-indigo-300 font-bold flex items-center gap-1"
+                className="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1 transition-colors"
               >
                 <span>Edit Profile</span>
                 <ChevronRight className="w-3 h-3" />
@@ -405,7 +406,7 @@ export default function StudentDashboardPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
         {loading ? (
           Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="glass-panel rounded-2xl p-5 space-y-2 animate-pulse">
+            <div key={i} className="ios-glass rounded-2xl p-5 space-y-2 animate-pulse">
               <div className="h-3 w-16 bg-white/10 rounded" />
               <div className="h-7 w-12 bg-white/15 rounded" />
             </div>
@@ -415,18 +416,18 @@ export default function StudentDashboardPage() {
             {/* 1. Total Tasks */}
             <motion.div
               whileHover={{ y: -3 }}
-              className="glass-panel glass-card-specular rounded-2xl p-5 border border-white/10 flex items-center justify-between hover:border-indigo-500/40 transition-all"
+              className="ios-glass rounded-2xl p-5 border border-white/10 flex items-center justify-between hover:border-amber-500/40 transition-all"
             >
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-stone-400">
                   Total Milestones
                 </p>
                 <p className="text-2xl sm:text-3xl font-black text-white mt-1">
                   {taskStats.total}
                 </p>
-                <p className="text-[10px] text-indigo-400 mt-0.5">Pre-departure roadmap</p>
+                <p className="text-[10px] text-amber-400 mt-0.5">Pre-departure roadmap</p>
               </div>
-              <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-400 flex items-center justify-center font-bold border border-amber-500/20">
                 <ListTodo className="h-6 w-6" />
               </div>
             </motion.div>
@@ -434,7 +435,7 @@ export default function StudentDashboardPage() {
             {/* 2. Completed */}
             <motion.div
               whileHover={{ y: -3 }}
-              className="glass-panel glass-card-specular rounded-2xl p-5 border border-white/10 flex items-center justify-between hover:border-emerald-500/40 transition-all"
+              className="ios-glass rounded-2xl p-5 border border-white/10 flex items-center justify-between hover:border-emerald-500/40 transition-all"
             >
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-wider text-emerald-400">
@@ -443,11 +444,11 @@ export default function StudentDashboardPage() {
                 <p className="text-2xl sm:text-3xl font-black text-emerald-400 mt-1">
                   {taskStats.completed}
                 </p>
-                <p className="text-[10px] text-slate-400 mt-0.5">
+                <p className="text-[10px] text-stone-400 mt-0.5">
                   {taskStats.completionPercentage}% of roadmap done
                 </p>
               </div>
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center font-bold border border-emerald-500/20">
                 <CheckCircle2 className="h-6 w-6" />
               </div>
             </motion.div>
@@ -455,7 +456,7 @@ export default function StudentDashboardPage() {
             {/* 3. Pending */}
             <motion.div
               whileHover={{ y: -3 }}
-              className="glass-panel glass-card-specular rounded-2xl p-5 border border-white/10 flex items-center justify-between hover:border-amber-500/40 transition-all"
+              className="ios-glass rounded-2xl p-5 border border-white/10 flex items-center justify-between hover:border-amber-500/40 transition-all"
             >
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-wider text-amber-400">
@@ -464,9 +465,9 @@ export default function StudentDashboardPage() {
                 <p className="text-2xl sm:text-3xl font-black text-amber-400 mt-1">
                   {taskStats.pending}
                 </p>
-                <p className="text-[10px] text-slate-400 mt-0.5">Ready for action</p>
+                <p className="text-[10px] text-stone-400 mt-0.5">Ready for action</p>
               </div>
-              <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-400 flex items-center justify-center font-bold border border-amber-500/20">
                 <Clock className="h-6 w-6" />
               </div>
             </motion.div>
@@ -474,7 +475,7 @@ export default function StudentDashboardPage() {
             {/* 4. Overdue */}
             <motion.div
               whileHover={{ y: -3 }}
-              className="glass-panel glass-card-specular rounded-2xl p-5 border border-white/10 flex items-center justify-between hover:border-rose-500/40 transition-all"
+              className="ios-glass rounded-2xl p-5 border border-white/10 flex items-center justify-between hover:border-rose-500/40 transition-all"
             >
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-wider text-rose-400">
@@ -483,9 +484,9 @@ export default function StudentDashboardPage() {
                 <p className="text-2xl sm:text-3xl font-black text-rose-400 mt-1">
                   {taskStats.overdue}
                 </p>
-                <p className="text-[10px] text-slate-400 mt-0.5">Overdue deadlines</p>
+                <p className="text-[10px] text-stone-400 mt-0.5">Overdue deadlines</p>
               </div>
-              <div className="w-12 h-12 rounded-2xl bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold">
+              <div className="w-12 h-12 rounded-2xl bg-rose-500/15 text-rose-400 flex items-center justify-center font-bold border border-rose-500/20">
                 <AlertCircle className="h-6 w-6" />
               </div>
             </motion.div>
@@ -496,21 +497,21 @@ export default function StudentDashboardPage() {
       {/* MAIN BENTO SECTION: UPCOMING DEADLINES & PROGRESS RING */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Upcoming Deadlines (2 cols) */}
-        <div className="lg:col-span-2 glass-panel glass-card-specular rounded-3xl p-6 sm:p-7 border border-white/10 flex flex-col justify-between">
+        <div className="lg:col-span-2 ios-glass rounded-3xl p-6 sm:p-7 border border-white/10 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-4">
               <div>
                 <h3 className="text-base sm:text-lg font-black text-white flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-indigo-400" />
+                  <Clock className="h-5 w-5 text-amber-400" />
                   <span>Next Priority Milestones</span>
                 </h3>
-                <p className="text-xs text-slate-400 mt-0.5">
+                <p className="text-xs text-stone-400 mt-0.5">
                   Tasks scheduled or requiring your attention
                 </p>
               </div>
               <Link
                 href="/tasks"
-                className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
+                className="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 transition-colors"
               >
                 <span>Full Checklist</span>
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -528,14 +529,14 @@ export default function StudentDashboardPage() {
                 {taskStats.upcomingDeadlines.map((task) => (
                   <div
                     key={task._id}
-                    className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-900/60 border border-white/5 hover:border-indigo-500/40 transition-all group"
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-amber-500/40 transition-all group"
                   >
                     <div className="flex items-center gap-3 min-w-0 pr-3">
                       {/* Interactive Complete Button */}
                       <button
                         onClick={(e) => handleQuickCompleteTask(task._id, e)}
                         title="Mark Completed"
-                        className="w-7 h-7 rounded-full border border-slate-600 hover:border-emerald-400 hover:bg-emerald-500/20 text-emerald-400 flex items-center justify-center transition-all shrink-0 cursor-pointer"
+                        className="w-7 h-7 rounded-full border border-stone-600 hover:border-emerald-400 hover:bg-emerald-500/20 text-emerald-400 flex items-center justify-center transition-all shrink-0 cursor-pointer"
                       >
                         <Check className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </button>
@@ -543,11 +544,11 @@ export default function StudentDashboardPage() {
                       <div className="min-w-0">
                         <Link
                           href={`/tasks/${task._id}`}
-                          className="text-xs sm:text-sm font-bold text-white hover:text-cyan-300 transition-colors truncate block"
+                          className="text-xs sm:text-sm font-bold text-white hover:text-amber-300 transition-colors truncate block"
                         >
                           {task.title}
                         </Link>
-                        <div className="flex items-center gap-2 text-[11px] text-slate-400 mt-0.5">
+                        <div className="flex items-center gap-2 text-[11px] text-stone-400 mt-0.5">
                           <span className="capitalize">{task.category}</span>
                           <span>•</span>
                           <span className="capitalize text-amber-300 font-semibold">
@@ -558,12 +559,12 @@ export default function StudentDashboardPage() {
                     </div>
 
                     <Badge
-                      className={`capitalize text-[10px] shrink-0 font-bold px-2 py-0.5 rounded-lg border ${
+                      className={`capitalize text-[10px] shrink-0 font-bold px-2.5 py-0.5 rounded-full border ${
                         task.priority === 'urgent'
-                          ? 'bg-rose-500/20 text-rose-300 border-rose-500/30'
+                          ? 'bg-rose-500/15 text-rose-300 border-rose-500/30'
                           : task.priority === 'high'
-                          ? 'bg-amber-500/20 text-amber-300 border-amber-500/30'
-                          : 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30'
+                          ? 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+                          : 'bg-orange-500/15 text-orange-300 border-orange-500/30'
                       }`}
                     >
                       {task.priority}
@@ -575,13 +576,13 @@ export default function StudentDashboardPage() {
               <div className="py-12 flex flex-col items-center justify-center text-center p-6 bg-white/[0.02] rounded-2xl border border-dashed border-white/10">
                 <CheckCircle2 className="h-10 w-10 text-emerald-400 mb-2" />
                 <p className="text-sm font-bold text-white">All caught up!</p>
-                <p className="text-xs text-slate-400 mt-0.5">
+                <p className="text-xs text-stone-400 mt-0.5">
                   No urgent deadlines for the upcoming week.
                 </p>
                 <Button
                   onClick={() => setIsAddTaskOpen(true)}
                   size="sm"
-                  className="mt-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl"
+                  className="mt-4 btn-ios-primary text-xs rounded-full px-4"
                 >
                   <Plus className="w-3.5 h-3.5 mr-1" /> Add Custom Task
                 </Button>
@@ -591,10 +592,10 @@ export default function StudentDashboardPage() {
         </div>
 
         {/* Task Completion Progress Wheel */}
-        <div className="glass-panel glass-card-specular rounded-3xl p-6 sm:p-7 border border-white/10 flex flex-col justify-between">
+        <div className="ios-glass rounded-3xl p-6 sm:p-7 border border-white/10 flex flex-col justify-between">
           <div>
             <h3 className="text-base font-black text-white">Relocation Progress</h3>
-            <p className="text-xs text-slate-400 mt-0.5">Journey readiness breakdown</p>
+            <p className="text-xs text-stone-400 mt-0.5">Journey readiness breakdown</p>
           </div>
 
           <div className="flex flex-col items-center justify-center my-4">
@@ -620,7 +621,7 @@ export default function StudentDashboardPage() {
                                 ? '#10b981'
                                 : entry.name === 'Pending'
                                 ? '#f59e0b'
-                                : '#f43f5e'
+                                : '#fb7185'
                             }
                           />
                         ))}
@@ -632,7 +633,7 @@ export default function StudentDashboardPage() {
                     <span className="text-3xl font-black text-white">
                       {taskStats.completionPercentage}%
                     </span>
-                    <span className="text-[10px] uppercase font-bold text-cyan-400 tracking-wider">
+                    <span className="text-[10px] uppercase font-bold text-amber-400 tracking-wider">
                       Completed
                     </span>
                   </div>
@@ -641,26 +642,26 @@ export default function StudentDashboardPage() {
                 <div className="w-full grid grid-cols-3 gap-2 mt-4 text-center">
                   <div className="bg-emerald-500/10 p-2.5 rounded-xl border border-emerald-500/20">
                     <p className="text-xs text-emerald-400 font-black">{taskStats.completed}</p>
-                    <p className="text-[10px] text-slate-400">Done</p>
+                    <p className="text-[10px] text-stone-400">Done</p>
                   </div>
                   <div className="bg-amber-500/10 p-2.5 rounded-xl border border-amber-500/20">
                     <p className="text-xs text-amber-400 font-black">{taskStats.pending}</p>
-                    <p className="text-[10px] text-slate-400">Active</p>
+                    <p className="text-[10px] text-stone-400">Active</p>
                   </div>
                   <div className="bg-rose-500/10 p-2.5 rounded-xl border border-rose-500/20">
                     <p className="text-xs text-rose-400 font-black">{taskStats.overdue}</p>
-                    <p className="text-[10px] text-slate-400">Overdue</p>
+                    <p className="text-[10px] text-stone-400">Overdue</p>
                   </div>
                 </div>
               </div>
             ) : (
               <div className="text-center py-8">
-                <ListTodo className="h-10 w-10 text-slate-500 mx-auto mb-2" />
-                <p className="text-sm font-semibold text-slate-300">No tasks generated yet</p>
+                <ListTodo className="h-10 w-10 text-stone-500 mx-auto mb-2" />
+                <p className="text-sm font-semibold text-stone-300">No tasks generated yet</p>
                 <Button
                   size="sm"
                   onClick={() => setIsAddTaskOpen(true)}
-                  className="mt-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl"
+                  className="mt-3 btn-ios-primary text-xs rounded-full px-4"
                 >
                   Create First Milestone
                 </Button>
@@ -669,7 +670,7 @@ export default function StudentDashboardPage() {
           </div>
 
           <div className="pt-3 border-t border-white/5 text-center">
-            <p className="text-[11px] text-slate-400">
+            <p className="text-[11px] text-stone-400">
               Completed items automatically unlock next-stage guides.
             </p>
           </div>
@@ -681,16 +682,16 @@ export default function StudentDashboardPage() {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg sm:text-xl font-black text-white flex items-center gap-2">
-              <Users className="h-5 w-5 text-cyan-400" />
+              <Users className="h-5 w-5 text-amber-400" />
               <span>Recommended Senior Buddies</span>
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-stone-400">
               Seniors matched based on your university, major, and native languages
             </p>
           </div>
           <Link
             href="/buddies"
-            className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
+            className="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 transition-colors"
           >
             <span>Explore All Buddies</span>
             <ChevronRight className="h-4 w-4" />
@@ -700,7 +701,7 @@ export default function StudentDashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {loading ? (
             Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="glass-panel rounded-2xl p-5 space-y-3 animate-pulse">
+              <div key={i} className="ios-glass rounded-2xl p-5 space-y-3 animate-pulse">
                 <div className="h-10 w-10 bg-white/10 rounded-xl" />
                 <div className="h-4 w-3/4 bg-white/10 rounded" />
                 <div className="h-4 w-1/2 bg-white/10 rounded" />
@@ -711,32 +712,32 @@ export default function StudentDashboardPage() {
               <motion.div
                 key={buddy._id}
                 whileHover={{ y: -4 }}
-                className="glass-panel glass-card-specular rounded-2xl p-5 border border-white/10 flex flex-col justify-between hover:border-cyan-500/40 transition-all"
+                className="ios-glass rounded-2xl p-5 border border-white/10 flex flex-col justify-between hover:border-amber-500/40 transition-all"
               >
                 <div>
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-cyan-500 to-indigo-600 text-white flex items-center justify-center font-black text-base shrink-0 shadow-md">
+                      <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-500 to-rose-600 text-white flex items-center justify-center font-black text-base shrink-0 shadow-md">
                         {buddy.userId?.name ? buddy.userId.name.charAt(0).toUpperCase() : 'B'}
                       </div>
                       <div className="min-w-0">
                         <p className="text-sm font-bold text-white truncate">
                           {buddy.userId?.name || 'Fellow Student'}
                         </p>
-                        <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5 truncate">
-                          <GraduationCap className="h-3.5 w-3.5 text-indigo-400 shrink-0" />
+                        <p className="text-xs text-stone-400 flex items-center gap-1 mt-0.5 truncate">
+                          <GraduationCap className="h-3.5 w-3.5 text-amber-400 shrink-0" />
                           <span>{buddy.university}</span>
                         </p>
                       </div>
                     </div>
                     {typeof buddy.matchScore === 'number' && (
-                      <span className="text-xs font-extrabold text-cyan-300 bg-cyan-500/15 border border-cyan-500/30 px-2.5 py-0.5 rounded-full shrink-0">
+                      <span className="text-xs font-extrabold text-amber-300 bg-amber-500/15 border border-amber-500/30 px-2.5 py-0.5 rounded-full shrink-0">
                         {buddy.matchScore}%
                       </span>
                     )}
                   </div>
 
-                  <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed bg-black/20 p-2.5 rounded-xl border border-white/5 mb-3">
+                  <p className="text-xs text-stone-300 line-clamp-2 leading-relaxed bg-black/20 p-2.5 rounded-xl border border-white/5 mb-3">
                     {buddy.biography || 'Eager to assist incoming international students settle in!'}
                   </p>
 
@@ -744,7 +745,7 @@ export default function StudentDashboardPage() {
                     {(buddy.languages || []).slice(0, 3).map((lang) => (
                       <span
                         key={lang}
-                        className="text-[10px] bg-white/[0.06] text-slate-300 px-2 py-0.5 rounded-md font-medium"
+                        className="text-[10px] bg-white/[0.06] text-stone-300 px-2.5 py-0.5 rounded-full font-medium"
                       >
                         {lang}
                       </span>
@@ -757,14 +758,14 @@ export default function StudentDashboardPage() {
                     variant="outline"
                     size="sm"
                     asChild
-                    className="border-white/15 bg-white/[0.04] hover:bg-white/10 text-white text-xs rounded-xl"
+                    className="ios-pill border-white/15 bg-white/[0.04] hover:bg-white/10 text-white text-xs"
                   >
                     <Link href={`/buddies/${buddy._id}`}>Profile</Link>
                   </Button>
                   <Button
                     size="sm"
                     asChild
-                    className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow-md"
+                    className="btn-ios-primary text-xs shadow-md"
                   >
                     <Link href={`/buddies/${buddy._id}`}>Connect</Link>
                   </Button>
@@ -773,9 +774,9 @@ export default function StudentDashboardPage() {
             ))
           ) : (
             <div className="col-span-3 text-center py-8 bg-white/[0.02] rounded-2xl border border-dashed border-white/10">
-              <Users className="h-8 w-8 text-slate-500 mx-auto mb-2" />
+              <Users className="h-8 w-8 text-stone-500 mx-auto mb-2" />
               <p className="text-sm font-bold text-white">No buddies matched right now</p>
-              <Link href="/buddies" className="text-xs text-indigo-400 font-bold mt-1 inline-block">
+              <Link href="/buddies" className="text-xs text-amber-400 font-bold mt-1 inline-block">
                 Browse full directory &rarr;
               </Link>
             </div>
@@ -788,16 +789,16 @@ export default function StudentDashboardPage() {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg sm:text-xl font-black text-white flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-indigo-400" />
+              <BookOpen className="h-5 w-5 text-amber-400" />
               <span>Recommended Relocation Handbooks</span>
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-stone-400">
               Step-by-step verified procedures for your destination country
             </p>
           </div>
           <Link
             href="/guides"
-            className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
+            className="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 transition-colors"
           >
             <span>All Guides</span>
             <ChevronRight className="h-4 w-4" />
@@ -807,7 +808,7 @@ export default function StudentDashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {loading ? (
             Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="glass-panel rounded-2xl p-5 space-y-3 animate-pulse">
+              <div key={i} className="ios-glass rounded-2xl p-5 space-y-3 animate-pulse">
                 <div className="h-4 w-1/2 bg-white/10 rounded" />
                 <div className="h-6 w-3/4 bg-white/15 rounded" />
                 <div className="h-10 w-full bg-white/5 rounded" />
@@ -817,10 +818,10 @@ export default function StudentDashboardPage() {
             guides.map((guide) => (
               <motion.div key={guide._id} whileHover={{ y: -4 }}>
                 <Link href={`/guides/${guide._id}`} className="group block h-full">
-                  <div className="glass-panel glass-card-specular rounded-2xl p-5 border border-white/10 flex flex-col justify-between h-full hover:border-indigo-500/40 transition-all">
+                  <div className="ios-glass rounded-2xl p-5 border border-white/10 flex flex-col justify-between h-full hover:border-amber-500/40 transition-all">
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-2.5">
-                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-indigo-500/15 text-indigo-300 border border-indigo-500/25">
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/25">
                           {guide.category.replace('-', ' ')}
                         </span>
                         {guide.verificationStatus === 'verified' && (
@@ -830,18 +831,18 @@ export default function StudentDashboardPage() {
                         )}
                       </div>
 
-                      <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-cyan-300 transition-colors line-clamp-2 mb-1.5">
+                      <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-2 mb-1.5">
                         {guide.title}
                       </h3>
 
-                      <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-4">
+                      <p className="text-xs text-stone-400 line-clamp-2 leading-relaxed mb-4">
                         {guide.summary}
                       </p>
                     </div>
 
-                    <div className="flex items-center justify-between text-xs text-slate-400 border-t border-white/10 pt-3 mt-2">
+                    <div className="flex items-center justify-between text-xs text-stone-400 border-t border-white/10 pt-3 mt-2">
                       <span>{guide.applicableCountries?.join(', ') || 'Global'}</span>
-                      <span className="text-cyan-400 font-bold group-hover:translate-x-1 transition-transform flex items-center">
+                      <span className="text-amber-400 font-bold group-hover:translate-x-1 transition-transform flex items-center">
                         Read Guide &rarr;
                       </span>
                     </div>
@@ -851,9 +852,9 @@ export default function StudentDashboardPage() {
             ))
           ) : (
             <div className="col-span-3 text-center py-8 bg-white/[0.02] rounded-2xl border border-dashed border-white/10">
-              <BookOpen className="h-8 w-8 text-slate-500 mx-auto mb-2" />
+              <BookOpen className="h-8 w-8 text-stone-500 mx-auto mb-2" />
               <p className="text-sm font-bold text-white">No guides matching destination</p>
-              <Link href="/guides" className="text-xs text-indigo-400 font-bold mt-1 inline-block">
+              <Link href="/guides" className="text-xs text-amber-400 font-bold mt-1 inline-block">
                 View library &rarr;
               </Link>
             </div>
@@ -869,13 +870,13 @@ export default function StudentDashboardPage() {
               <Calendar className="h-5 w-5 text-rose-400" />
               <span>Campus & Orientation Meetups</span>
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-stone-400">
               Meet fellow international scholars at online and local city events
             </p>
           </div>
           <Link
             href="/community"
-            className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
+            className="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 transition-colors"
           >
             <span>Community Board</span>
             <ChevronRight className="h-4 w-4" />
@@ -885,7 +886,7 @@ export default function StudentDashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {loading ? (
             Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="glass-panel rounded-2xl p-5 space-y-3 animate-pulse">
+              <div key={i} className="ios-glass rounded-2xl p-5 space-y-3 animate-pulse">
                 <div className="h-4 w-1/3 bg-white/10 rounded" />
                 <div className="h-6 w-3/4 bg-white/15 rounded" />
                 <div className="h-8 w-full bg-white/5 rounded" />
@@ -895,25 +896,25 @@ export default function StudentDashboardPage() {
             events.map((event) => (
               <motion.div key={event._id} whileHover={{ y: -4 }}>
                 <Link href={`/community/${event._id}`} className="group block h-full">
-                  <div className="glass-panel glass-card-specular rounded-2xl p-5 border border-white/10 flex flex-col justify-between h-full hover:border-rose-500/40 transition-all">
+                  <div className="ios-glass rounded-2xl p-5 border border-white/10 flex flex-col justify-between h-full hover:border-rose-500/40 transition-all">
                     <div>
-                      <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-rose-300 bg-rose-500/15 border border-rose-500/25 px-2 py-0.5 rounded-md mb-2">
+                      <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-rose-300 bg-rose-500/15 border border-rose-500/25 px-2.5 py-0.5 rounded-full mb-2">
                         {event.category.replace('-', ' ')}
                       </span>
                       <h3 className="text-sm font-bold text-white group-hover:text-rose-300 transition-colors line-clamp-1 mb-1">
                         {event.title}
                       </h3>
-                      <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-4">
+                      <p className="text-xs text-stone-400 line-clamp-2 leading-relaxed mb-4">
                         {event.description}
                       </p>
                     </div>
 
-                    <div className="space-y-1.5 text-xs text-slate-300 border-t border-white/10 pt-3">
+                    <div className="space-y-1.5 text-xs text-stone-300 border-t border-white/10 pt-3">
                       <div className="flex items-center gap-1.5 font-semibold text-white">
                         <Clock className="h-3.5 w-3.5 text-amber-400 shrink-0" />
                         <span>{format(new Date(event.startDate), 'EEE, MMM d • h:mm a')}</span>
                       </div>
-                      <div className="flex items-center gap-1.5 text-slate-400 truncate">
+                      <div className="flex items-center gap-1.5 text-stone-400 truncate">
                         <MapPin className="h-3.5 w-3.5 text-rose-400 shrink-0" />
                         <span className="truncate">{event.location}</span>
                       </div>
@@ -924,9 +925,9 @@ export default function StudentDashboardPage() {
             ))
           ) : (
             <div className="col-span-3 text-center py-8 bg-white/[0.02] rounded-2xl border border-dashed border-white/10">
-              <Calendar className="h-8 w-8 text-slate-500 mx-auto mb-2" />
+              <Calendar className="h-8 w-8 text-stone-500 mx-auto mb-2" />
               <p className="text-sm font-bold text-white">No upcoming events scheduled</p>
-              <Link href="/community" className="text-xs text-indigo-400 font-bold mt-1 inline-block">
+              <Link href="/community" className="text-xs text-amber-400 font-bold mt-1 inline-block">
                 View community board &rarr;
               </Link>
             </div>
@@ -936,19 +937,19 @@ export default function StudentDashboardPage() {
 
       {/* CREATE TASK MODAL */}
       <Dialog open={isAddTaskOpen} onOpenChange={setIsAddTaskOpen}>
-        <DialogContent className="sm:max-w-md bg-slate-950/95 border-white/15 text-white backdrop-blur-2xl">
+        <DialogContent className="sm:max-w-md ios-glass-prominent border-white/15 text-white backdrop-blur-3xl bg-[#171311]/95">
           <DialogHeader>
             <DialogTitle className="text-lg font-black text-white">
               Add New Relocation Milestone
             </DialogTitle>
-            <DialogDescription className="text-xs text-slate-400">
+            <DialogDescription className="text-xs text-stone-400">
               Create a custom reminder or checkpoint for your visa, packing, or university journey.
             </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleCreateTask} className="space-y-4 pt-2">
             <div className="space-y-1.5">
-              <Label htmlFor="taskTitle" className="text-xs font-bold text-slate-300">
+              <Label htmlFor="taskTitle" className="text-xs font-bold text-stone-300">
                 Task Title *
               </Label>
               <Input
@@ -957,12 +958,12 @@ export default function StudentDashboardPage() {
                 value={newTaskTitle}
                 onChange={(e) => setNewTaskTitle(e.target.value)}
                 required
-                className="bg-slate-900 border-white/10 text-white text-xs rounded-xl"
+                className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
               />
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="taskDesc" className="text-xs font-bold text-slate-300">
+              <Label htmlFor="taskDesc" className="text-xs font-bold text-stone-300">
                 Description / Notes
               </Label>
               <Textarea
@@ -971,18 +972,18 @@ export default function StudentDashboardPage() {
                 value={newTaskDescription}
                 onChange={(e) => setNewTaskDescription(e.target.value)}
                 rows={3}
-                className="bg-slate-900 border-white/10 text-white text-xs rounded-xl"
+                className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <Label className="text-xs font-bold text-slate-300">Category</Label>
+                <Label className="text-xs font-bold text-stone-300">Category</Label>
                 <Select value={newTaskCategory} onValueChange={setNewTaskCategory}>
-                  <SelectTrigger className="bg-slate-900 border-white/10 text-white text-xs rounded-xl">
+                  <SelectTrigger className="bg-white/[0.04] border-white/10 text-white text-xs rounded-xl">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-900 border-white/15 text-white">
+                  <SelectContent className="bg-[#1c1613] border-white/15 text-white">
                     <SelectItem value="documentation-immigration">Visa & Immigration</SelectItem>
                     <SelectItem value="banking-financial">Banking & Money</SelectItem>
                     <SelectItem value="sim-mobile">SIM & Mobile</SelectItem>
@@ -995,12 +996,12 @@ export default function StudentDashboardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <Label className="text-xs font-bold text-slate-300">Priority</Label>
+                <Label className="text-xs font-bold text-stone-300">Priority</Label>
                 <Select value={newTaskPriority} onValueChange={setNewTaskPriority}>
-                  <SelectTrigger className="bg-slate-900 border-white/10 text-white text-xs rounded-xl">
+                  <SelectTrigger className="bg-white/[0.04] border-white/10 text-white text-xs rounded-xl">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-900 border-white/15 text-white">
+                  <SelectContent className="bg-[#1c1613] border-white/15 text-white">
                     <SelectItem value="low">Low Priority</SelectItem>
                     <SelectItem value="medium">Medium Priority</SelectItem>
                     <SelectItem value="high">High Priority</SelectItem>
@@ -1011,7 +1012,7 @@ export default function StudentDashboardPage() {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="taskDueDate" className="text-xs font-bold text-slate-300">
+              <Label htmlFor="taskDueDate" className="text-xs font-bold text-stone-300">
                 Target Due Date
               </Label>
               <Input
@@ -1019,7 +1020,7 @@ export default function StudentDashboardPage() {
                 type="date"
                 value={newTaskDueDate}
                 onChange={(e) => setNewTaskDueDate(e.target.value)}
-                className="bg-slate-900 border-white/10 text-white text-xs rounded-xl"
+                className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
               />
             </div>
 
@@ -1028,14 +1029,14 @@ export default function StudentDashboardPage() {
                 type="button"
                 variant="outline"
                 onClick={() => setIsAddTaskOpen(false)}
-                className="border-white/15 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl text-xs"
+                className="ios-pill border-white/15 text-stone-300 hover:text-white hover:bg-white/5 text-xs"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={creatingTask}
-                className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow-md"
+                className="btn-ios-primary text-xs shadow-md"
               >
                 {creatingTask ? 'Saving...' : 'Add Milestone'}
               </Button>

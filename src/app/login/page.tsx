@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import GoogleIcon from '@/components/ui/GoogleIcon';
 import {
   Compass,
   Lock,
@@ -87,8 +88,18 @@ function LoginForm() {
       });
 
       if (res?.error) {
-        setErrorMessage('Invalid email or password. Please check your credentials.');
-        toast.error('Invalid credentials. Please try again.');
+        const errorMessages: Record<string, string> = {
+          USER_NOT_FOUND:
+            'We could not find an account with that email. Create a free account to get started.',
+          GOOGLE_ACCOUNT:
+            'This email is connected to Google sign-in. Please use “Continue with Google”.',
+          INVALID_PASSWORD: 'That password is incorrect. Please try again or reset it.',
+        };
+        const message =
+          errorMessages[res.code || ''] ||
+          'We could not sign you in. Please check your details and try again.';
+        setErrorMessage(message);
+        toast.error(message);
         setIsLoading(false);
       } else {
         toast.success('Welcome back to Far From Home!');
@@ -102,6 +113,11 @@ function LoginForm() {
       toast.error('Sign-in failed. Please try again.');
       setIsLoading(false);
     }
+  };
+
+  const signInWithGoogle = async () => {
+    setIsLoading(true);
+    await signIn('google', { callbackUrl });
   };
 
   return (
@@ -251,6 +267,23 @@ function LoginForm() {
             )}
           </button>
         </form>
+
+        <div className="relative my-6">
+          <div className="border-t border-white/10" />
+          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#15151b] px-3 text-xs text-stone-500">
+            OR
+          </span>
+        </div>
+
+        <button
+          type="button"
+          onClick={signInWithGoogle}
+          disabled={isLoading}
+          className="w-full inline-flex items-center justify-center gap-3 py-3 rounded-full border border-white/15 bg-white/[0.06] text-sm font-bold text-white hover:bg-white/[0.12] disabled:opacity-60 transition-all cursor-pointer"
+        >
+          <GoogleIcon />
+          Continue with Google
+        </button>
 
         {/* Register Link */}
         <div className="mt-8 pt-6 border-t border-white/10 text-center">

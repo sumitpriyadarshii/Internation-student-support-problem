@@ -20,7 +20,7 @@ export interface IUser extends Document {
   _id: Types.ObjectId;
   name: string;
   email: string;
-  passwordHash: string;
+  passwordHash?: string;
   role: UserRole;
   profile: IUserProfile;
   onboardingCompleted: boolean;
@@ -61,7 +61,6 @@ const UserSchema = new Schema<IUser>(
     },
     passwordHash: {
       type: String,
-      required: [true, 'Password hash is required'],
     },
     role: {
       type: String,

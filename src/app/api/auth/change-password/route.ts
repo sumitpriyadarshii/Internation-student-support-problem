@@ -33,6 +33,9 @@ export async function POST(req: NextRequest) {
     if (!user) {
       return errorResponse('User not found', 404);
     }
+    if (!user.passwordHash) {
+      return errorResponse('Set a password before changing it', 400);
+    }
 
     const isMatch = await bcrypt.compare(currentPassword, user.passwordHash);
     if (!isMatch) {

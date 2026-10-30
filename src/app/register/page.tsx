@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import GoogleIcon from '@/components/ui/GoogleIcon';
 import {
   Compass,
   Lock,
@@ -129,6 +130,11 @@ export default function RegisterPage() {
       toast.error('An error occurred during registration.');
       setIsLoading(false);
     }
+  };
+
+  const signUpWithGoogle = async () => {
+    setIsLoading(true);
+    await signIn('google', { callbackUrl: '/onboarding' });
   };
 
   return (
@@ -289,6 +295,23 @@ export default function RegisterPage() {
                   <p className="text-xs text-rose-400 mt-1">{errors.confirmPassword.message}</p>
                 )}
               </div>
+
+              <div className="relative my-6">
+                <div className="border-t border-white/10" />
+                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#15151b] px-3 text-xs text-stone-500">
+                  OR
+                </span>
+              </div>
+
+              <button
+                type="button"
+                onClick={signUpWithGoogle}
+                disabled={isLoading}
+                className="w-full inline-flex items-center justify-center gap-3 py-3 rounded-full border border-white/15 bg-white/[0.06] text-sm font-bold text-white hover:bg-white/[0.12] disabled:opacity-60 transition-all cursor-pointer"
+              >
+                <GoogleIcon />
+                Sign up with Google
+              </button>
 
               {/* Terms Checkbox */}
               <div className="pt-2">

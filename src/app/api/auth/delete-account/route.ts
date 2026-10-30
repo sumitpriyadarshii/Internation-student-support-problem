@@ -26,6 +26,9 @@ export async function POST(req: NextRequest) {
     if (!user) {
       return errorResponse('User not found', 404);
     }
+    if (!user.passwordHash) {
+      return errorResponse('Google accounts cannot be deactivated with a password', 400);
+    }
 
     const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) {

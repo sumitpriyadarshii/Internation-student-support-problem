@@ -215,7 +215,14 @@ export default function HomePage() {
             >
               {/* Outer Frosted Glass Enclosure */}
               <div className="ios-glass-prominent rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden">
-                
+                {/* Warm ambient glow orbs — the "paint" that backdropblur smears into glass */}
+                <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl" aria-hidden="true">
+                  <div className="absolute -top-16 -left-16 w-72 h-72 rounded-full bg-amber-500/25 blur-3xl" />
+                  <div className="absolute top-10 right-10 w-56 h-56 rounded-full bg-orange-500/20 blur-3xl" />
+                  <div className="absolute -bottom-12 left-1/3 w-64 h-64 rounded-full bg-rose-500/20 blur-3xl" />
+                  <div className="absolute bottom-0 right-0 w-48 h-48 rounded-full bg-amber-600/15 blur-2xl" />
+                </div>
+
                 {/* Floating Apple-style Pill Badges */}
                 <div className="hidden lg:block absolute -top-4 -left-6 animate-float-gentle z-20">
                   <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl ios-glass border-emerald-500/30 shadow-[0_10px_25px_rgba(0,0,0,0.5)]">
@@ -242,9 +249,9 @@ export default function HomePage() {
                 </div>
 
                 {/* Inside Cockpit Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch relative z-10">
                   {/* Card 1: Relocation Checkpoints */}
-                  <div className="rounded-2xl ios-glass p-5 flex flex-col justify-between hover:border-amber-500/30 transition-all">
+                  <div className="rounded-2xl p-5 flex flex-col justify-between transition-all hover:-translate-y-1" style={{background: 'linear-gradient(145deg, rgba(245,158,11,0.13) 0%, rgba(28,22,16,0.55) 100%)', backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', border: '1px solid rgba(245,158,11,0.22)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,220,150,0.2)'}}>
                     <div>
                       <div className="flex items-center justify-between mb-4">
                         <span className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
@@ -291,7 +298,7 @@ export default function HomePage() {
                   </div>
 
                   {/* Card 2: Senior Buddy Match */}
-                  <div className="rounded-2xl ios-glass border-amber-500/20 p-5 flex flex-col justify-between">
+                  <div className="rounded-2xl p-5 flex flex-col justify-between" style={{background: 'linear-gradient(145deg, rgba(249,115,22,0.15) 0%, rgba(28,18,14,0.6) 100%)', backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', border: '1px solid rgba(249,115,22,0.28)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,180,100,0.22)'}}>
                     <div>
                       <div className="flex items-center justify-between mb-4">
                         <span className="text-xs font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
@@ -331,7 +338,7 @@ export default function HomePage() {
                   </div>
 
                   {/* Card 3: Orientation Mixer */}
-                  <div className="rounded-2xl ios-glass p-5 flex flex-col justify-between hover:border-rose-500/30 transition-all">
+                  <div className="rounded-2xl p-5 flex flex-col justify-between transition-all hover:-translate-y-1" style={{background: 'linear-gradient(145deg, rgba(251,113,133,0.13) 0%, rgba(28,18,20,0.55) 100%)', backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', border: '1px solid rgba(251,113,133,0.22)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,150,160,0.2)'}}>
                     <div>
                       <div className="flex items-center justify-between mb-4">
                         <span className="text-xs font-bold uppercase tracking-wider text-rose-400 flex items-center gap-1.5">

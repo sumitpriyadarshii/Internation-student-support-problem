@@ -214,7 +214,7 @@ export default function HomePage() {
               className="mt-14 lg:mt-20 relative max-w-5xl mx-auto"
             >
               {/* Outer Frosted Glass Enclosure */}
-              <div className="ios-glass-prominent rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden">
+              <div className="ios-glass-prominent rounded-3xl p-6 sm:p-8 lg:p-10 relative">
                 {/* Warm ambient glow orbs — the "paint" that backdropblur smears into glass */}
                 <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl" aria-hidden="true">
                   <div className="absolute -top-16 -left-16 w-72 h-72 rounded-full bg-amber-500/25 blur-3xl" />

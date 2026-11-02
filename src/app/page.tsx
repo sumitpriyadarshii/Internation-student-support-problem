@@ -223,31 +223,6 @@ export default function HomePage() {
                   <div className="absolute bottom-0 right-0 w-48 h-48 rounded-full bg-amber-600/15 blur-2xl" />
                 </div>
 
-                {/* Floating Apple-style Pill Badges */}
-                <div className="hidden lg:block absolute -top-4 -left-6 animate-float-gentle z-20">
-                  <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl ios-glass border-emerald-500/30 shadow-[0_10px_25px_rgba(0,0,0,0.5)]">
-                    <div className="w-7 h-7 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">
-                      ✓
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-white">Study Permit Approved</p>
-                      <p className="text-[10px] text-stone-400">Toronto, Canada 🇨🇦</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="hidden lg:block absolute -bottom-4 -right-5 animate-float-gentle-rev z-20">
-                  <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl ios-glass border-amber-500/30 shadow-[0_10px_25px_rgba(0,0,0,0.5)]">
-                    <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-amber-500 to-rose-500 text-white flex items-center justify-center font-black text-xs shadow-sm">
-                      98%
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-white">Senior Buddy Matched</p>
-                      <p className="text-[10px] text-amber-300">Priya (3rd Year Computer Science)</p>
-                    </div>
-                  </div>
-                </div>
-
                 {/* Inside Cockpit Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch relative z-10">
                   {/* Card 1: Relocation Checkpoints */}

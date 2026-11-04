@@ -26,6 +26,8 @@ export interface IUser extends Document {
   onboardingCompleted: boolean;
   onboardingStep: number;
   accountStatus: AccountStatus;
+  failedLoginAttempts: number;
+  lockoutUntil?: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -90,6 +92,15 @@ const UserSchema = new Schema<IUser>(
         message: '{VALUE} is not a valid account status',
       },
       default: 'active',
+    },
+    failedLoginAttempts: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    lockoutUntil: {
+      type: Date,
+      default: null,
     },
   },
   {

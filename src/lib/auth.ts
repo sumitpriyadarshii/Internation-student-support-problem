@@ -6,6 +6,13 @@ import { authConfig } from './auth.config';
 import { connectDB } from './db';
 import User from '@/models/User';
 import './auth-types';
+import {
+  SECURITY_CONFIG,
+  extractClientIp,
+  checkIpRateLimit,
+  recordFailedIpAttempt,
+  resetIpAttempt,
+} from './security';
 
 class UserNotFoundError extends CredentialsSignin {
   code = 'USER_NOT_FOUND';
@@ -19,6 +26,18 @@ class InvalidPasswordError extends CredentialsSignin {
   code = 'INVALID_PASSWORD';
 }
 
+class WarningLastAttemptError extends CredentialsSignin {
+  code = 'WARNING_LAST_ATTEMPT';
+}
+
+class AccountLockedError extends CredentialsSignin {
+  code = 'ACCOUNT_LOCKED';
+}
+
+class IpBlockedError extends CredentialsSignin {
+  code = 'IP_BLOCKED';
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
@@ -28,17 +47,73 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.password) return null;
+
+        const clientIp = extractClientIp(req);
+        const ipStatus = checkIpRateLimit(clientIp);
+        if (ipStatus.isBlocked) {
+          throw new IpBlockedError();
+        }
+
         await connectDB();
+        const email = (credentials.email as string).toLowerCase().trim();
         const user = await User.findOne({
-          email: (credentials.email as string).toLowerCase(),
+          email,
           accountStatus: 'active',
         });
-        if (!user) throw new UserNotFoundError();
-        if (!user.passwordHash) throw new GoogleAccountError();
+
+        if (!user) {
+          recordFailedIpAttempt(clientIp);
+          throw new UserNotFoundError();
+        }
+
+        if (!user.passwordHash) {
+          throw new GoogleAccountError();
+        }
+
+        const now = new Date();
+
+        // Check if account is currently locked
+        if (user.lockoutUntil && user.lockoutUntil > now) {
+          throw new AccountLockedError();
+        }
+
+        // If lockout expired, reset counters
+        if (user.lockoutUntil && user.lockoutUntil <= now) {
+          user.failedLoginAttempts = 0;
+          user.lockoutUntil = null;
+          await user.save();
+        }
+
         const isValid = await bcrypt.compare(credentials.password as string, user.passwordHash);
-        if (!isValid) throw new InvalidPasswordError();
+
+        if (!isValid) {
+          recordFailedIpAttempt(clientIp);
+          const currentAttempts = (user.failedLoginAttempts || 0) + 1;
+          user.failedLoginAttempts = currentAttempts;
+
+          if (currentAttempts >= SECURITY_CONFIG.MAX_FAILED_LOGIN_ATTEMPTS) {
+            user.lockoutUntil = new Date(Date.now() + SECURITY_CONFIG.ACCOUNT_LOCKOUT_DURATION_MS);
+            await user.save();
+            throw new AccountLockedError();
+          } else {
+            await user.save();
+            if (currentAttempts === SECURITY_CONFIG.MAX_FAILED_LOGIN_ATTEMPTS - 1) {
+              throw new WarningLastAttemptError();
+            }
+            throw new InvalidPasswordError();
+          }
+        }
+
+        // Successful password authentication: reset IP and account failed attempts
+        resetIpAttempt(clientIp);
+        if ((user.failedLoginAttempts && user.failedLoginAttempts > 0) || user.lockoutUntil) {
+          user.failedLoginAttempts = 0;
+          user.lockoutUntil = null;
+          await user.save();
+        }
+
         return {
           id: user._id.toString(),
           name: user.name,
@@ -119,5 +194,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
   },
-  session: { strategy: 'jwt' },
+  session: {
+    strategy: 'jwt',
+    maxAge: SECURITY_CONFIG.SESSION_MAX_AGE_SECONDS, // 15 minutes session expiry
+  },
 });

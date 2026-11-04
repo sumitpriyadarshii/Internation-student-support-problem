@@ -55,13 +55,18 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
       return errorResponse('You cannot demote or suspend your own admin account', 400);
     }
 
-    const allowedUpdates = ['role', 'accountStatus', 'onboardingCompleted'];
+    const allowedUpdates = ['role', 'accountStatus', 'onboardingCompleted', 'failedLoginAttempts', 'lockoutUntil'];
     const updateData: Record<string, unknown> = {};
 
     for (const key of allowedUpdates) {
       if (body[key] !== undefined) {
         updateData[key] = body[key];
       }
+    }
+
+    if (body.unlockAccount === true) {
+      updateData.failedLoginAttempts = 0;
+      updateData.lockoutUntil = null;
     }
 
     const updatedUser = await User.findByIdAndUpdate(

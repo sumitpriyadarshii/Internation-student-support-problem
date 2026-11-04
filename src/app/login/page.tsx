@@ -22,6 +22,8 @@ import {
   AlertCircle,
   Sparkles,
   ShieldCheck,
+  ShieldAlert,
+  Clock,
   KeyRound,
   CheckCircle2,
 } from 'lucide-react';
@@ -56,6 +58,8 @@ function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorCode, setErrorCode] = useState<string | null>(null);
+  const sessionExpired = searchParams.get('reason') === 'session_expired';
 
   const {
     register,
@@ -73,12 +77,15 @@ function LoginForm() {
   const fillCredentials = (email: string, pass: string) => {
     setValue('email', email, { shouldValidate: true });
     setValue('password', pass, { shouldValidate: true });
+    setErrorMessage(null);
+    setErrorCode(null);
     toast.info(`Filled credentials for ${email}`);
   };
 
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
     setErrorMessage(null);
+    setErrorCode(null);
 
     try {
       const res = await signIn('credentials', {
@@ -88,16 +95,31 @@ function LoginForm() {
       });
 
       if (res?.error) {
+        const parsedCode =
+          res.code ||
+          (res.url ? new URL(res.url, window.location.origin).searchParams.get('code') : null) ||
+          '';
+
+        setErrorCode(parsedCode);
+
         const errorMessages: Record<string, string> = {
           USER_NOT_FOUND:
             'We could not find an account with that email. Create a free account to get started.',
           GOOGLE_ACCOUNT:
             'This email is connected to Google sign-in. Please use “Continue with Google”.',
-          INVALID_PASSWORD: 'That password is incorrect. Please try again or reset it.',
+          INVALID_PASSWORD:
+            'That password is incorrect. Please try again. (Security note: 5 failed attempts will lock your account for 15 minutes).',
+          WARNING_LAST_ATTEMPT:
+            '⚠️ Warning: 4 incorrect attempts recorded! One more incorrect password will temporarily lock your account for 15 minutes.',
+          ACCOUNT_LOCKED:
+            '🔒 Account Temporarily Locked: 5 consecutive failed login attempts detected. For your protection, this account has been locked for 15 minutes. Please try again later or contact support.',
+          IP_BLOCKED:
+            '🛡️ Network Restricted: Too many failed login attempts detected from your network/device. Access is temporarily suspended for 15 minutes.',
         };
+
         const message =
-          errorMessages[res.code || ''] ||
-          'We could not sign you in. Please check your details and try again.';
+          errorMessages[parsedCode] ||
+          'We could not sign you in. Please check your credentials and try again.';
         setErrorMessage(message);
         toast.error(message);
         setIsLoading(false);
@@ -142,6 +164,19 @@ function LoginForm() {
         </p>
       </div>
 
+      {/* Inactivity Session Expiry Banner */}
+      {sessionExpired && (
+        <div className="mb-6 p-4 rounded-3xl bg-amber-500/15 border border-amber-500/30 flex items-start gap-3.5 text-amber-200 shadow-xl backdrop-blur-md">
+          <Clock className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+          <div>
+            <p className="text-xs sm:text-sm font-bold text-white">Session Timed Out for Security</p>
+            <p className="text-xs text-stone-300 mt-1 leading-relaxed">
+              You were away or inactive for 15+ minutes. To protect your student account, you must log in again to continue.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Card Wrapper with iOS Frosted Glass */}
       <div className="ios-glass-prominent rounded-3xl p-6 sm:p-8 shadow-2xl relative">
         
@@ -175,9 +210,34 @@ function LoginForm() {
         </div>
 
         {errorMessage && (
-          <div className="mb-6 p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-start gap-3 text-rose-300">
-            <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
-            <p className="text-xs sm:text-sm leading-relaxed">{errorMessage}</p>
+          <div
+            className={`mb-6 p-4 rounded-2xl flex items-start gap-3 text-xs sm:text-sm leading-relaxed ${
+              errorCode === 'WARNING_LAST_ATTEMPT'
+                ? 'bg-amber-500/15 border border-amber-500/40 text-amber-200'
+                : errorCode === 'ACCOUNT_LOCKED' || errorCode === 'IP_BLOCKED'
+                ? 'bg-rose-500/20 border border-rose-500/50 text-rose-200'
+                : 'bg-rose-500/10 border border-rose-500/30 text-rose-300'
+            }`}
+          >
+            {errorCode === 'ACCOUNT_LOCKED' || errorCode === 'IP_BLOCKED' ? (
+              <ShieldAlert className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+            ) : errorCode === 'WARNING_LAST_ATTEMPT' ? (
+              <AlertCircle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+            ) : (
+              <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+            )}
+            <div>
+              <p className="font-bold text-white mb-0.5">
+                {errorCode === 'ACCOUNT_LOCKED'
+                  ? 'Account Temporarily Locked'
+                  : errorCode === 'IP_BLOCKED'
+                  ? 'Network Security Notice'
+                  : errorCode === 'WARNING_LAST_ATTEMPT'
+                  ? 'Security Warning (1 Attempt Remaining)'
+                  : 'Sign In Failed'}
+              </p>
+              <p className="text-stone-300">{errorMessage}</p>
+            </div>
           </div>
         )}
 

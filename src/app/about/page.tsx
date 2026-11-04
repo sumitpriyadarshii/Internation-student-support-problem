@@ -195,6 +195,34 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
+
+        {/* BOTTOM CALL TO ACTION */}
+        <section className="py-20 relative overflow-hidden border-t border-white/10">
+          <div className="absolute inset-0 bg-gradient-to-t from-orange-950/20 to-transparent pointer-events-none" />
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
+            <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+              Ready to Begin Your Journey?
+            </h2>
+            <p className="text-stone-300 max-w-xl mx-auto text-base">
+              Join thousands of international scholars feeling confident, informed, and connected with Far From Home.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+              <Link
+                href="/register"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 btn-ios-primary text-sm shadow-lg font-bold"
+              >
+                <span>Get Started Free</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/features"
+                className="w-full sm:w-auto px-6 py-3.5 ios-pill text-stone-300 hover:text-white text-sm font-medium"
+              >
+                Explore All Features
+              </Link>
+            </div>
+          </div>
+        </section>
       </main>
 
       <Footer />

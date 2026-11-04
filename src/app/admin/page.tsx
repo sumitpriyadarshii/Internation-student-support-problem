@@ -593,59 +593,95 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Quick Action Navigation Panels */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-2">
         <Link
           href="/admin/users"
-          className="group p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-900/60 border border-slate-800 hover:border-teal-500/40 transition shadow-lg flex items-center justify-between"
+          className="group p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-900/60 border border-slate-800 hover:border-teal-500/40 transition shadow-lg flex flex-col justify-between"
         >
-          <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400 group-hover:scale-105 transition">
-              <Users className="w-5 h-5" />
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-9 h-9 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400 group-hover:scale-105 transition">
+              <Users className="w-4 h-4" />
             </div>
-            <div>
-              <h3 className="text-sm font-semibold text-white group-hover:text-teal-300 transition">
-                Manage Users
-              </h3>
-              <p className="text-xs text-slate-400">Suspend, activate, or adjust roles</p>
-            </div>
+            <h3 className="text-sm font-semibold text-white group-hover:text-teal-300 transition">
+              Users
+            </h3>
           </div>
-          <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-teal-400 group-hover:translate-x-1 transition" />
+          <p className="text-[11px] text-slate-400">Suspend, activate, or adjust roles</p>
+          <div className="flex items-center justify-end mt-2 text-teal-400 text-xs font-semibold">
+            <span>Manage &rarr;</span>
+          </div>
         </Link>
 
         <Link
-          href="/admin/buddies"
-          className="group p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-900/60 border border-slate-800 hover:border-rose-500/40 transition shadow-lg flex items-center justify-between"
+          href="/admin/guides"
+          className="group p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-900/60 border border-slate-800 hover:border-emerald-500/40 transition shadow-lg flex flex-col justify-between"
         >
-          <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 group-hover:scale-105 transition">
-              <UserCheck className="w-5 h-5" />
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition">
+              <BookOpen className="w-4 h-4" />
             </div>
-            <div>
-              <h3 className="text-sm font-semibold text-white group-hover:text-rose-300 transition">
-                Buddy Oversight
-              </h3>
-              <p className="text-xs text-slate-400">Review and approve senior mentors</p>
-            </div>
+            <h3 className="text-sm font-semibold text-white group-hover:text-emerald-300 transition">
+              Guides
+            </h3>
           </div>
-          <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-rose-400 group-hover:translate-x-1 transition" />
+          <p className="text-[11px] text-slate-400">Create, edit & verify survival docs</p>
+          <div className="flex items-center justify-end mt-2 text-emerald-400 text-xs font-semibold">
+            <span>Manage &rarr;</span>
+          </div>
         </Link>
 
         <Link
           href="/admin/templates"
-          className="group p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-900/60 border border-slate-800 hover:border-amber-500/40 transition shadow-lg flex items-center justify-between"
+          className="group p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-900/60 border border-slate-800 hover:border-amber-500/40 transition shadow-lg flex flex-col justify-between"
         >
-          <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-105 transition">
-              <CheckCircle2 className="w-5 h-5" />
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-105 transition">
+              <CheckCircle2 className="w-4 h-4" />
             </div>
-            <div>
-              <h3 className="text-sm font-semibold text-white group-hover:text-amber-300 transition">
-                Task Automation
-              </h3>
-              <p className="text-xs text-slate-400">Configure pre-arrival & arrival templates</p>
-            </div>
+            <h3 className="text-sm font-semibold text-white group-hover:text-amber-300 transition">
+              Templates
+            </h3>
           </div>
-          <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-1 transition" />
+          <p className="text-[11px] text-slate-400">Configure pre-arrival checklist templates</p>
+          <div className="flex items-center justify-end mt-2 text-amber-400 text-xs font-semibold">
+            <span>Manage &rarr;</span>
+          </div>
+        </Link>
+
+        <Link
+          href="/admin/events"
+          className="group p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-900/60 border border-slate-800 hover:border-purple-500/40 transition shadow-lg flex flex-col justify-between"
+        >
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition">
+              <Calendar className="w-4 h-4" />
+            </div>
+            <h3 className="text-sm font-semibold text-white group-hover:text-purple-300 transition">
+              Events
+            </h3>
+          </div>
+          <p className="text-[11px] text-slate-400">Publish mixers, orientations & RSVPs</p>
+          <div className="flex items-center justify-end mt-2 text-purple-400 text-xs font-semibold">
+            <span>Manage &rarr;</span>
+          </div>
+        </Link>
+
+        <Link
+          href="/admin/buddies"
+          className="group p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-900/60 border border-slate-800 hover:border-rose-500/40 transition shadow-lg flex flex-col justify-between"
+        >
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-9 h-9 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 group-hover:scale-105 transition">
+              <UserCheck className="w-4 h-4" />
+            </div>
+            <h3 className="text-sm font-semibold text-white group-hover:text-rose-300 transition">
+              Buddies
+            </h3>
+          </div>
+          <p className="text-[11px] text-slate-400">Review & approve senior mentors</p>
+          <div className="flex items-center justify-end mt-2 text-rose-400 text-xs font-semibold">
+            <span>Manage &rarr;</span>
+          </div>
         </Link>
       </div>
     </div>

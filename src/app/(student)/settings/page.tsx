@@ -37,6 +37,7 @@ interface ChangePasswordForm {
 
 export default function SettingsPage() {
   const { data: session } = useSession();
+  const [settingsTab, setSettingsTab] = useState<'all' | 'security' | 'notifications' | 'privacy'>('all');
 
   // Change Password Form
   const {
@@ -135,243 +136,303 @@ export default function SettingsPage() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-8 pb-16">
-      {/* Page Header */}
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
-          <Settings className="h-7 w-7 text-amber-400" />
-          <span>Account & Security Settings</span>
-        </h1>
-        <p className="text-xs sm:text-sm text-stone-400 mt-1">
-          Manage your credentials, alerts, privacy visibility, and platform security.
-        </p>
+      {/* Page Header & Tab Segmented Controller */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
+            <Settings className="h-7 w-7 text-amber-400" />
+            <span>Account & Security Settings</span>
+          </h1>
+          <p className="text-xs sm:text-sm text-stone-400 mt-1">
+            Manage your credentials, alerts, privacy visibility, and platform security.
+          </p>
+        </div>
+
+        {/* Tab Pills */}
+        <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-full ios-glass border border-white/10 w-fit">
+          <button
+            type="button"
+            onClick={() => setSettingsTab('all')}
+            className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              settingsTab === 'all'
+                ? 'btn-ios-primary text-white shadow-md'
+                : 'text-stone-400 hover:text-white'
+            }`}
+          >
+            All
+          </button>
+          <button
+            type="button"
+            onClick={() => setSettingsTab('security')}
+            className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              settingsTab === 'security'
+                ? 'btn-ios-primary text-white shadow-md'
+                : 'text-stone-400 hover:text-white'
+            }`}
+          >
+            Security
+          </button>
+          <button
+            type="button"
+            onClick={() => setSettingsTab('notifications')}
+            className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              settingsTab === 'notifications'
+                ? 'btn-ios-primary text-white shadow-md'
+                : 'text-stone-400 hover:text-white'
+            }`}
+          >
+            Alerts
+          </button>
+          <button
+            type="button"
+            onClick={() => setSettingsTab('privacy')}
+            className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              settingsTab === 'privacy'
+                ? 'btn-ios-primary text-white shadow-md'
+                : 'text-stone-400 hover:text-white'
+            }`}
+          >
+            Privacy
+          </button>
+        </div>
       </div>
 
-      {/* Account Info Card */}
-      <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
-        <div className="p-6 pb-4 border-b border-white/10">
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <User className="h-4 w-4 text-amber-400" /> Account Identity
-          </h2>
-          <p className="text-xs text-stone-400 mt-0.5">Your registered login credentials</p>
-        </div>
-        <div className="p-6 space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <Label className="text-xs text-stone-400">Name</Label>
-              <p className="text-sm font-semibold text-white mt-0.5">
-                {session?.user?.name || 'Student'}
-              </p>
-            </div>
-            <div>
-              <Label className="text-xs text-stone-400">Email Address</Label>
-              <p className="text-sm font-semibold text-white mt-0.5">
-                {session?.user?.email || 'N/A'}
-              </p>
+      {/* Account Info Card (Always shown or on 'all' / 'security') */}
+      {(settingsTab === 'all' || settingsTab === 'security') && (
+        <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
+          <div className="p-6 pb-4 border-b border-white/10">
+            <h2 className="text-base font-bold text-white flex items-center gap-2">
+              <User className="h-4 w-4 text-amber-400" /> Account Identity
+            </h2>
+            <p className="text-xs text-stone-400 mt-0.5">Your registered login credentials</p>
+          </div>
+          <div className="p-6 space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <Label className="text-xs text-stone-400">Name</Label>
+                <p className="text-sm font-semibold text-white mt-0.5">
+                  {session?.user?.name || 'Student'}
+                </p>
+              </div>
+              <div>
+                <Label className="text-xs text-stone-400">Email Address</Label>
+                <p className="text-sm font-semibold text-white mt-0.5">
+                  {session?.user?.email || 'N/A'}
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Security: Change Password Card */}
-      <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
-        <div className="p-6 pb-4 border-b border-white/10">
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <Lock className="h-4 w-4 text-amber-400" /> Change Password
-          </h2>
-          <p className="text-xs text-stone-400 mt-0.5">Update your secret password for secure logins</p>
+      {(settingsTab === 'all' || settingsTab === 'security') && (
+        <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
+          <div className="p-6 pb-4 border-b border-white/10">
+            <h2 className="text-base font-bold text-white flex items-center gap-2">
+              <Lock className="h-4 w-4 text-amber-400" /> Change Password
+            </h2>
+            <p className="text-xs text-stone-400 mt-0.5">Update your secret password for secure logins</p>
+          </div>
+          <form onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
+            <div className="p-6 space-y-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="currPass" className="text-xs font-bold text-stone-300">Current Password *</Label>
+                <Input
+                  id="currPass"
+                  type="password"
+                  placeholder="••••••••"
+                  {...regPassword('currentPassword', { required: true })}
+                  className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <Label htmlFor="newPass" className="text-xs font-bold text-stone-300">New Password *</Label>
+                  <Input
+                    id="newPass"
+                    type="password"
+                    placeholder="Min 8 chars, uppercase, lowercase, number"
+                    {...regPassword('newPassword', { required: true })}
+                    className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <Label htmlFor="confPass" className="text-xs font-bold text-stone-300">Confirm New Password *</Label>
+                  <Input
+                    id="confPass"
+                    type="password"
+                    placeholder="Confirm new password"
+                    {...regPassword('confirmPassword', { required: true })}
+                    className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="p-6 border-t border-white/10 flex justify-end">
+              <Button
+                type="submit"
+                disabled={changingPassword}
+                className="btn-ios-primary text-xs px-6 py-2.5 cursor-pointer shadow-md"
+              >
+                {changingPassword ? 'Updating...' : 'Update Password'}
+              </Button>
+            </div>
+          </form>
         </div>
-        <form onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
-          <div className="p-6 space-y-4">
-            <div className="space-y-1.5">
-              <Label htmlFor="currPass" className="text-xs font-bold text-stone-300">Current Password *</Label>
-              <Input
-                id="currPass"
-                type="password"
-                placeholder="••••••••"
-                {...regPassword('currentPassword', { required: true })}
-                className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
-              />
+      )}
+
+      {/* Notification Preferences */}
+      {(settingsTab === 'all' || settingsTab === 'notifications') && (
+        <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
+          <div className="p-6 pb-4 border-b border-white/10">
+            <h2 className="text-base font-bold text-white flex items-center gap-2">
+              <Bell className="h-4 w-4 text-orange-400" /> Notifications & Reminders
+            </h2>
+            <p className="text-xs text-stone-400 mt-0.5">Control which in-app updates and alerts you receive</p>
+          </div>
+          <div className="p-6 space-y-4 divide-y divide-white/5">
+            <div className="flex items-center justify-between pt-1">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-semibold text-white">Checklist Task Reminders</Label>
+                <p className="text-xs text-stone-400">
+                  Receive notifications when visa, flight, and registration deadlines approach.
+                </p>
+              </div>
+              <Switch checked={prefTaskReminders} onCheckedChange={setPrefTaskReminders} />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="newPass" className="text-xs font-bold text-stone-300">New Password *</Label>
-                <Input
-                  id="newPass"
-                  type="password"
-                  placeholder="Min 8 chars, uppercase, lowercase, number"
-                  {...regPassword('newPassword', { required: true })}
-                  className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
-                />
+            <div className="flex items-center justify-between pt-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-semibold text-white">Buddy Request Alerts</Label>
+                <p className="text-xs text-stone-400">
+                  Get notified when another student sends or accepts a connection request.
+                </p>
               </div>
+              <Switch checked={prefBuddyRequests} onCheckedChange={setPrefBuddyRequests} />
+            </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="confPass" className="text-xs font-bold text-stone-300">Confirm New Password *</Label>
-                <Input
-                  id="confPass"
-                  type="password"
-                  placeholder="Confirm new password"
-                  {...regPassword('confirmPassword', { required: true })}
-                  className="bg-white/[0.04] border-white/10 focus:border-amber-500 text-white text-xs rounded-xl"
-                />
+            <div className="flex items-center justify-between pt-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-semibold text-white">Campus Events & Workshops</Label>
+                <p className="text-xs text-stone-400">
+                  Receive reminders about gatherings and orientations you have registered for.
+                </p>
               </div>
+              <Switch checked={prefEventUpdates} onCheckedChange={setPrefEventUpdates} />
+            </div>
+
+            <div className="flex items-center justify-between pt-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-semibold text-white">Weekly Pre-Departure Digest</Label>
+                <p className="text-xs text-stone-400">
+                  Receive a weekly summary email of tips and newly published destination handbooks.
+                </p>
+              </div>
+              <Switch checked={prefWeeklyDigest} onCheckedChange={setPrefWeeklyDigest} />
             </div>
           </div>
           <div className="p-6 border-t border-white/10 flex justify-end">
             <Button
-              type="submit"
-              disabled={changingPassword}
-              className="btn-ios-primary text-xs px-6 py-2.5 cursor-pointer shadow-md"
+              type="button"
+              onClick={handleSavePreferences}
+              className="ios-pill text-xs px-5 py-2 cursor-pointer bg-white/[0.04] text-white hover:bg-white/10"
             >
-              {changingPassword ? 'Updating...' : 'Update Password'}
+              Save Alert Preferences
             </Button>
           </div>
-        </form>
-      </div>
-
-      {/* Notification Preferences */}
-      <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
-        <div className="p-6 pb-4 border-b border-white/10">
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <Bell className="h-4 w-4 text-orange-400" /> Notifications & Reminders
-          </h2>
-          <p className="text-xs text-stone-400 mt-0.5">Control which in-app updates and alerts you receive</p>
         </div>
-        <div className="p-6 space-y-4 divide-y divide-white/5">
-          <div className="flex items-center justify-between pt-1">
-            <div className="space-y-0.5">
-              <Label className="text-sm font-semibold text-white">Checklist Task Reminders</Label>
-              <p className="text-xs text-stone-400">
-                Receive notifications when visa, flight, and registration deadlines approach.
-              </p>
-            </div>
-            <Switch checked={prefTaskReminders} onCheckedChange={setPrefTaskReminders} />
-          </div>
-
-          <div className="flex items-center justify-between pt-4">
-            <div className="space-y-0.5">
-              <Label className="text-sm font-semibold text-white">Buddy Request Alerts</Label>
-              <p className="text-xs text-stone-400">
-                Get notified when another student sends or accepts a connection request.
-              </p>
-            </div>
-            <Switch checked={prefBuddyRequests} onCheckedChange={setPrefBuddyRequests} />
-          </div>
-
-          <div className="flex items-center justify-between pt-4">
-            <div className="space-y-0.5">
-              <Label className="text-sm font-semibold text-white">Campus Events & Workshops</Label>
-              <p className="text-xs text-stone-400">
-                Receive reminders about gatherings and orientations you have registered for.
-              </p>
-            </div>
-            <Switch checked={prefEventUpdates} onCheckedChange={setPrefEventUpdates} />
-          </div>
-
-          <div className="flex items-center justify-between pt-4">
-            <div className="space-y-0.5">
-              <Label className="text-sm font-semibold text-white">Weekly Pre-Departure Digest</Label>
-              <p className="text-xs text-stone-400">
-                Receive a weekly summary email of tips and newly published destination handbooks.
-              </p>
-            </div>
-            <Switch checked={prefWeeklyDigest} onCheckedChange={setPrefWeeklyDigest} />
-          </div>
-        </div>
-        <div className="p-6 border-t border-white/10 flex justify-end">
-          <Button
-            type="button"
-            onClick={handleSavePreferences}
-            className="ios-pill text-xs px-5 py-2 cursor-pointer bg-white/[0.04] text-white hover:bg-white/10"
-          >
-            Save Alert Preferences
-          </Button>
-        </div>
-      </div>
+      )}
 
       {/* Privacy Settings */}
-      <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
-        <div className="p-6 pb-4 border-b border-white/10">
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <Eye className="h-4 w-4 text-amber-400" /> Privacy & Student Visibility
+      {(settingsTab === 'all' || settingsTab === 'privacy') && (
+        <div className="ios-glass-prominent rounded-3xl border border-white/10 shadow-xl overflow-hidden">
+          <div className="p-6 pb-4 border-b border-white/10">
+            <h2 className="text-base font-bold text-white flex items-center gap-2">
+              <Eye className="h-4 w-4 text-amber-400" /> Privacy & Student Visibility
+            </h2>
+            <p className="text-xs text-stone-400 mt-0.5">Choose how you appear to fellow campus international students</p>
+          </div>
+          <div className="p-6 space-y-4 divide-y divide-white/5">
+            <div className="flex items-center justify-between pt-1">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-semibold text-white">
+                  Show in Peer Buddy Search Directory
+                </Label>
+                <p className="text-xs text-stone-400">
+                  Allow peers from your destination university to find and connect with you.
+                </p>
+              </div>
+              <Switch
+                checked={privacyVisibleInDirectory}
+                onCheckedChange={setPrivacyVisibleInDirectory}
+              />
+            </div>
+
+            <div className="flex items-center justify-between pt-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-semibold text-white">
+                  Display Enrolled Institution
+                </Label>
+                <p className="text-xs text-stone-400">
+                  Show your university and destination city on your public buddy card.
+                </p>
+              </div>
+              <Switch
+                checked={privacyShowUniversity}
+                onCheckedChange={setPrivacyShowUniversity}
+              />
+            </div>
+
+            <div className="flex items-center justify-between pt-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-semibold text-white">
+                  Allow Direct Peer Inquiries
+                </Label>
+                <p className="text-xs text-stone-400">
+                  Allow students to send you intro messages when requesting buddy connections.
+                </p>
+              </div>
+              <Switch
+                checked={privacyAllowMessages}
+                onCheckedChange={setPrivacyAllowMessages}
+              />
+            </div>
+          </div>
+          <div className="p-6 border-t border-white/10 flex justify-end">
+            <Button
+              type="button"
+              onClick={handleSavePreferences}
+              className="ios-pill text-xs px-5 py-2 cursor-pointer bg-white/[0.04] text-white hover:bg-white/10"
+            >
+              Save Privacy Settings
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Danger Zone: Account Deactivation (Shown on 'all' or 'privacy') */}
+      {(settingsTab === 'all' || settingsTab === 'privacy') && (
+        <div className="ios-glass rounded-3xl border border-rose-500/30 bg-rose-950/20 shadow-sm overflow-hidden p-6 space-y-3">
+          <h2 className="text-base font-bold text-rose-400 flex items-center gap-2">
+            <ShieldAlert className="h-5 w-5 text-rose-400" /> Danger Zone
           </h2>
-          <p className="text-xs text-stone-400 mt-0.5">Choose how you appear to fellow campus international students</p>
-        </div>
-        <div className="p-6 space-y-4 divide-y divide-white/5">
-          <div className="flex items-center justify-between pt-1">
-            <div className="space-y-0.5">
-              <Label className="text-sm font-semibold text-white">
-                Show in Peer Buddy Search Directory
-              </Label>
-              <p className="text-xs text-stone-400">
-                Allow peers from your destination university to find and connect with you.
-              </p>
-            </div>
-            <Switch
-              checked={privacyVisibleInDirectory}
-              onCheckedChange={setPrivacyVisibleInDirectory}
-            />
-          </div>
-
-          <div className="flex items-center justify-between pt-4">
-            <div className="space-y-0.5">
-              <Label className="text-sm font-semibold text-white">
-                Display Enrolled Institution
-              </Label>
-              <p className="text-xs text-stone-400">
-                Show your university and destination city on your public buddy card.
-              </p>
-            </div>
-            <Switch
-              checked={privacyShowUniversity}
-              onCheckedChange={setPrivacyShowUniversity}
-            />
-          </div>
-
-          <div className="flex items-center justify-between pt-4">
-            <div className="space-y-0.5">
-              <Label className="text-sm font-semibold text-white">
-                Allow Direct Peer Inquiries
-              </Label>
-              <p className="text-xs text-stone-400">
-                Allow students to send you intro messages when requesting buddy connections.
-              </p>
-            </div>
-            <Switch
-              checked={privacyAllowMessages}
-              onCheckedChange={setPrivacyAllowMessages}
-            />
-          </div>
-        </div>
-        <div className="p-6 border-t border-white/10 flex justify-end">
+          <p className="text-xs text-stone-400 leading-relaxed">
+            Deactivating your account will remove your buddy listing, cancel active event RSVPs, and
+            archive your pre-departure checklist.
+          </p>
           <Button
-            type="button"
-            onClick={handleSavePreferences}
-            className="ios-pill text-xs px-5 py-2 cursor-pointer bg-white/[0.04] text-white hover:bg-white/10"
+            variant="destructive"
+            size="sm"
+            onClick={() => setIsDeleteOpen(true)}
+            className="text-xs rounded-full px-4 cursor-pointer"
           >
-            Save Privacy Settings
+            Deactivate My Account
           </Button>
         </div>
-      </div>
-
-      {/* Danger Zone: Account Deactivation */}
-      <div className="ios-glass rounded-3xl border border-rose-500/30 bg-rose-950/20 shadow-sm overflow-hidden p-6 space-y-3">
-        <h2 className="text-base font-bold text-rose-400 flex items-center gap-2">
-          <ShieldAlert className="h-5 w-5 text-rose-400" /> Danger Zone
-        </h2>
-        <p className="text-xs text-stone-400 leading-relaxed">
-          Deactivating your account will remove your buddy listing, cancel active event RSVPs, and
-          archive your pre-departure checklist.
-        </p>
-        <Button
-          variant="destructive"
-          size="sm"
-          onClick={() => setIsDeleteOpen(true)}
-          className="text-xs rounded-full px-4 cursor-pointer"
-        >
-          Deactivate My Account
-        </Button>
-      </div>
+      )}
 
       {/* Account Deletion Dialog */}
       <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>

@@ -53,22 +53,22 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/features" className="hover:text-amber-400 transition-colors">
+                <Link href="/guides" className="hover:text-amber-400 transition-colors">
                   Personalized Guides
                 </Link>
               </li>
               <li>
-                <Link href="/features" className="hover:text-amber-400 transition-colors">
+                <Link href="/tasks" className="hover:text-amber-400 transition-colors">
                   Relocation Checklist
                 </Link>
               </li>
               <li>
-                <Link href="/features" className="hover:text-amber-400 transition-colors">
+                <Link href="/buddies" className="hover:text-amber-400 transition-colors">
                   Peer Buddy Matching
                 </Link>
               </li>
               <li>
-                <Link href="/features" className="hover:text-amber-400 transition-colors">
+                <Link href="/community" className="hover:text-amber-400 transition-colors">
                   Community Events
                 </Link>
               </li>

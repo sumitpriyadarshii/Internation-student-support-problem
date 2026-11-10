@@ -24,7 +24,6 @@ import {
   ShieldCheck,
   ShieldAlert,
   Clock,
-  KeyRound,
   CheckCircle2,
 } from 'lucide-react';
 
@@ -64,7 +63,6 @@ function LoginForm() {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -73,14 +71,6 @@ function LoginForm() {
       password: '',
     },
   });
-
-  const fillCredentials = (email: string, pass: string) => {
-    setValue('email', email, { shouldValidate: true });
-    setValue('password', pass, { shouldValidate: true });
-    setErrorMessage(null);
-    setErrorCode(null);
-    toast.info(`Filled credentials for ${email}`);
-  };
 
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
@@ -180,35 +170,6 @@ function LoginForm() {
       {/* Card Wrapper with iOS Frosted Glass */}
       <div className="ios-glass-prominent rounded-3xl p-6 sm:p-8 shadow-2xl relative">
         
-        {/* Quick Demo Login Pills */}
-        <div className="mb-6 p-3 rounded-2xl bg-white/[0.04] border border-white/10">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-stone-400 flex items-center gap-1.5">
-              <KeyRound className="w-3 h-3 text-amber-400" />
-              <span>Instant 1-Click Demo</span>
-            </span>
-            <span className="text-[10px] text-stone-400">Testing credentials</span>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => fillCredentials('priya@example.com', 'Student123!')}
-              className="px-3 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-200 border border-amber-500/30 text-xs font-semibold transition-all text-left truncate flex items-center gap-1.5 cursor-pointer"
-            >
-              <span className="w-2 h-2 rounded-full bg-amber-400" />
-              <span className="truncate">Student: Priya</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => fillCredentials('admin@farfromhome.com', 'Admin123!')}
-              className="px-3 py-2 rounded-xl bg-orange-500/15 hover:bg-orange-500/25 text-orange-200 border border-orange-500/30 text-xs font-semibold transition-all text-left truncate flex items-center gap-1.5 cursor-pointer"
-            >
-              <span className="w-2 h-2 rounded-full bg-rose-400" />
-              <span className="truncate">Admin Console</span>
-            </button>
-          </div>
-        </div>
-
         {errorMessage && (
           <div
             className={`mb-6 p-4 rounded-2xl flex items-start gap-3 text-xs sm:text-sm leading-relaxed ${

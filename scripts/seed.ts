@@ -92,10 +92,10 @@ async function seed() {
     // 1. Create Admin User
     // -------------------------------------------------------------
     console.log('Creating Admin User...');
-    const adminPasswordHash = await bcrypt.hash('Admin123!', 10);
+    const adminPasswordHash = await bcrypt.hash('@Sumit20', 10);
     const adminUser = await User.create({
       name: 'System Administrator',
-      email: 'admin@farfromhome.com',
+      email: 'sumit@admin.com',
       passwordHash: adminPasswordHash,
       role: 'admin',
       onboardingCompleted: true,
@@ -112,7 +112,7 @@ async function seed() {
         supportPreferences: ['Administration'],
       },
     });
-    console.log(`Admin created: admin@farfromhome.com (ID: ${adminUser._id})`);
+    console.log(`Admin created: sumit@admin.com (ID: ${adminUser._id})`);
 
     // -------------------------------------------------------------
     // 2. Create Sample Students (5)
@@ -1150,7 +1150,7 @@ Canadians are renowned for politeness and apologizing ("Sorry!"). Holding doors 
     console.log('✅ DATABASE SEEDING COMPLETED SUCCESSFULLY!');
     console.log('========================================');
     console.log('Summary of Seeded Data:');
-    console.log(`  👤 Admin Account:        1 (admin@farfromhome.com / Admin123!)`);
+    console.log(`  👤 Admin Account:        1 (sumit@admin.com / [protected])`);
     console.log(`  🎓 Student Accounts:     ${students.length} (Password: Student123!)`);
     console.log(`  📖 Survival Guides:      ${guides.length} (Published & Verified)`);
     console.log(`  📋 Task Templates:       ${templates.length} (Automated Rules)`);

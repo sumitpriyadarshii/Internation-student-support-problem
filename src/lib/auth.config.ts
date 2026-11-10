@@ -39,6 +39,12 @@ export const authConfig = {
         return Response.redirect(new URL('/dashboard', nextUrl));
       }
 
+      // Admin login page — redirect if already logged in
+      if (pathname === '/admin-login' && isLoggedIn) {
+        if (isAdmin) return Response.redirect(new URL('/admin', nextUrl));
+        return Response.redirect(new URL('/dashboard', nextUrl));
+      }
+
       if (pathname.startsWith('/onboarding') && !isLoggedIn) {
         return false;
       }

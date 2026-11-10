@@ -1,7 +1,14 @@
 import fs from 'fs';
 import path from 'path';
+import dns from 'dns';
+import crypto from 'crypto';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+
+// Improve SRV resolution reliability on Windows / restrictive local resolvers
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+} catch {}
 
 // -------------------------------------------------------------
 // 1. Environment Variable Loader (Robust fallback for tsx/node)
@@ -54,7 +61,8 @@ async function seed() {
   console.log('🌍 Far From Home - Database Seeder');
   console.log('========================================');
   const isForce = process.argv.includes('--force') || process.argv.includes('-f');
-  console.log(`Connecting to MongoDB: ${MONGODB_URI}`);
+  const maskedUri = MONGODB_URI.replace(/\/\/([^:]+):([^@]+)@/, '//***:***@');
+  console.log(`Connecting to MongoDB: ${maskedUri}`);
 
   try {
     await mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 5000 });
@@ -89,13 +97,15 @@ async function seed() {
     console.log('Existing collections cleared.\n');
 
     // -------------------------------------------------------------
-    // 1. Create Admin User
+    // 1. Create Admin User (from env vars to avoid hardcoded secrets)
     // -------------------------------------------------------------
     console.log('Creating Admin User...');
-    const adminPasswordHash = await bcrypt.hash('@Sumit20', 10);
+    const adminEmail = (process.env.ADMIN_EMAIL || 'admin@example.com').toLowerCase().trim();
+    const rawAdminPassword = process.env.ADMIN_PASSWORD || crypto.randomBytes(12).toString('base64url');
+    const adminPasswordHash = await bcrypt.hash(rawAdminPassword, 10);
     const adminUser = await User.create({
       name: 'System Administrator',
-      email: 'sumit@admin.com',
+      email: adminEmail,
       passwordHash: adminPasswordHash,
       role: 'admin',
       onboardingCompleted: true,
@@ -112,7 +122,7 @@ async function seed() {
         supportPreferences: ['Administration'],
       },
     });
-    console.log(`Admin created: sumit@admin.com (ID: ${adminUser._id})`);
+    console.log(`Admin created: ${adminEmail} (ID: ${adminUser._id})`);
 
     // -------------------------------------------------------------
     // 2. Create Sample Students (5)
@@ -1150,7 +1160,7 @@ Canadians are renowned for politeness and apologizing ("Sorry!"). Holding doors 
     console.log('✅ DATABASE SEEDING COMPLETED SUCCESSFULLY!');
     console.log('========================================');
     console.log('Summary of Seeded Data:');
-    console.log(`  👤 Admin Account:        1 (sumit@admin.com / [protected])`);
+    console.log(`  👤 Admin Account:        1 (${adminEmail} / ${process.env.ADMIN_PASSWORD ? '[from env]' : '[generated locally]'})`);
     console.log(`  🎓 Student Accounts:     ${students.length} (Password: Student123!)`);
     console.log(`  📖 Survival Guides:      ${guides.length} (Published & Verified)`);
     console.log(`  📋 Task Templates:       ${templates.length} (Automated Rules)`);

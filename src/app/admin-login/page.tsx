@@ -1,11 +1,10 @@
 'use client';
 
 import React, { useState, Suspense } from 'react';
-import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { signIn } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 import {
@@ -30,7 +29,6 @@ const adminLoginSchema = z.object({
 type AdminLoginFormData = z.infer<typeof adminLoginSchema>;
 
 function AdminLoginForm() {
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -69,7 +67,11 @@ function AdminLoginForm() {
 
         const errorMessages: Record<string, string> = {
           USER_NOT_FOUND: 'No administrator account found with that email.',
+          GOOGLE_ACCOUNT:
+            'This account uses Google sign-in and cannot log in with an administrator password.',
           INVALID_PASSWORD: 'Incorrect password. Please try again.',
+          WARNING_LAST_ATTEMPT:
+            'Warning: 4 incorrect attempts recorded. One more failed attempt will lock this account for 15 minutes.',
           ACCOUNT_LOCKED:
             'Account temporarily locked due to multiple failed attempts. Try again in 15 minutes.',
           IP_BLOCKED:
@@ -83,14 +85,13 @@ function AdminLoginForm() {
         setIsLoading(false);
       } else {
         // After sign-in, verify the user is actually admin
-        // Fetch the session to check role
         const sessionRes = await fetch('/api/auth/session');
         const session = await sessionRes.json();
         const role = (session?.user as { role?: string })?.role;
 
         if (role !== 'admin') {
-          // Signed in but not admin — sign them out and show error
-          await fetch('/api/auth/signout', { method: 'POST' });
+          // Signed in but not admin — sign them out properly and show error
+          await signOut({ redirect: false });
           setErrorMessage(
             'Access denied. This portal is restricted to administrators only.'
           );
@@ -100,7 +101,7 @@ function AdminLoginForm() {
         }
 
         toast.success('Welcome, Administrator!');
-        router.push('/admin');
+        window.location.href = '/admin';
       }
     } catch (err: any) {
       console.error('Admin sign-in error:', err);

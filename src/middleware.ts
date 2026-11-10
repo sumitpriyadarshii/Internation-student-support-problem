@@ -15,6 +15,7 @@ export const config = {
     '/notifications/:path*',
     '/onboarding/:path*',
     '/admin/:path*',
+    '/admin-login',
     '/login',
     '/register',
   ],

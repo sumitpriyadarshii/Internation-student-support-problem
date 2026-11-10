@@ -105,7 +105,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
               </Link>
             </Button>
             <Button asChild className="bg-teal-600 hover:bg-teal-500 text-white">
-              <Link href="/login">Sign In As Admin</Link>
+              <Link href="/login">Sign In With Another Account</Link>
             </Button>
           </div>
         </div>
@@ -245,7 +245,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => signOut({ callbackUrl: '/login' })}
+              onClick={() => signOut({ callbackUrl: '/admin-login' })}
               className="text-slate-400 hover:text-red-400 hover:bg-red-500/10 h-8 w-8 rounded-lg"
               title="Sign Out"
             >

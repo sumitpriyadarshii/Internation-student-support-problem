@@ -30,7 +30,8 @@ export const authConfig = {
         return false;
       }
 
-      if (pathname.startsWith('/admin') && !isAdmin) {
+      const isAdminRoute = pathname === '/admin' || pathname.startsWith('/admin/');
+      if (isAdminRoute && !isAdmin) {
         if (!isLoggedIn) return false;
         return Response.redirect(new URL('/dashboard', nextUrl));
       }

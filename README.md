@@ -199,9 +199,9 @@ AUTH_SECRET=your-32-character-random-secret-key-here
 AUTH_URL=http://localhost:3000
 AUTH_TRUST_HOST=true
 
-# Optional: Seed configuration overrides
-ADMIN_EMAIL=admin@farfromhome.com
-ADMIN_PASSWORD=Admin123!
+# Optional: Seed configuration overrides (never commit real credentials)
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=<your-secure-admin-password>
 ```
 
 > [!NOTE]
@@ -223,7 +223,7 @@ npm run seed
 
 | Role | Email | Password | Details |
 |------|-------|----------|---------|
-| **Admin** | `admin@farfromhome.com` | `Admin123!` | Full administrative access to `/admin` |
+| **Admin** | *Set via `ADMIN_EMAIL` env* | *Set via `ADMIN_PASSWORD` env* | Full administrative access via `/admin-login` -> `/admin` |
 | **Student** | `priya@example.com` | `Student123!` | India ➔ USA (Stanford University), Computer Science |
 | **Student** | `carlos@example.com` | `Student123!` | Mexico ➔ UK (Oxford University), International Relations |
 | **Student** | `yuki@example.com` | `Student123!` | Japan ➔ Australia (University of Melbourne), Design |

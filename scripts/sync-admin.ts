@@ -35,17 +35,61 @@ function loadEnv() {
   }
 }
 
-function promptQuestion(question: string): Promise<string> {
+function getArgValue(flag: string): string {
+  const prefix = `${flag}=`;
+  const inline = process.argv.find((arg) => arg.startsWith(prefix));
+  if (inline) return inline.slice(prefix.length);
+  const idx = process.argv.indexOf(flag);
+  if (idx !== -1 && idx + 1 < process.argv.length) {
+    return process.argv[idx + 1];
+  }
+  return '';
+}
+
+function createPrompter() {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
-  return new Promise((resolve) => {
-    rl.question(question, (answer) => {
-      rl.close();
-      resolve(answer);
-    });
+
+  const queuedLines: string[] = [];
+  let pendingResolver: ((line: string | null) => void) | null = null;
+  let closed = false;
+
+  rl.on('line', (line) => {
+    if (pendingResolver) {
+      const resolve = pendingResolver;
+      pendingResolver = null;
+      resolve(line);
+    } else {
+      queuedLines.push(line);
+    }
   });
+
+  rl.on('close', () => {
+    closed = true;
+    if (pendingResolver) {
+      const resolve = pendingResolver;
+      pendingResolver = null;
+      resolve(null);
+    }
+  });
+
+  return {
+    async ask(prompt: string): Promise<string> {
+      process.stdout.write(prompt);
+      if (queuedLines.length > 0) {
+        return queuedLines.shift() ?? '';
+      }
+      if (closed) return '';
+      return new Promise<string>((resolve) => {
+        pendingResolver = (val) => resolve(val ?? '');
+      });
+    },
+    close() {
+      rl.close();
+    },
+  };
 }
 
 async function syncAdmin() {
@@ -57,15 +101,22 @@ async function syncAdmin() {
     process.exit(1);
   }
 
-  let adminEmail = process.env.ADMIN_EMAIL?.toLowerCase().trim() || '';
-  let adminPassword = process.env.ADMIN_PASSWORD || '';
-  const adminName = process.env.ADMIN_NAME?.trim() || 'System Administrator';
+  let adminEmail = (getArgValue('--email') || process.env.ADMIN_EMAIL || '').toLowerCase().trim();
+  let adminPassword = getArgValue('--password') || process.env.ADMIN_PASSWORD || '';
+  const adminName = (getArgValue('--name') || process.env.ADMIN_NAME || 'System Administrator').trim();
 
-  if (!adminEmail) {
-    adminEmail = (await promptQuestion('Enter admin email: ')).toLowerCase().trim();
-  }
-  if (!adminPassword) {
-    adminPassword = (await promptQuestion('Enter new admin password: ')).trim();
+  if (!adminEmail || !adminPassword) {
+    const prompter = createPrompter();
+    try {
+      if (!adminEmail) {
+        adminEmail = (await prompter.ask('Enter admin email: ')).toLowerCase().trim();
+      }
+      if (!adminPassword) {
+        adminPassword = (await prompter.ask('Enter new admin password: ')).trim();
+      }
+    } finally {
+      prompter.close();
+    }
   }
 
   if (!adminEmail || !adminPassword) {
@@ -111,7 +162,11 @@ async function syncAdmin() {
       console.log(`Created admin account: ${adminEmail}`);
     }
 
-    const verifiedUser = await User.findOne({ email: adminEmail, role: 'admin', accountStatus: 'active' });
+    const verifiedUser = await User.findOne({
+      email: adminEmail,
+      role: 'admin',
+      accountStatus: 'active',
+    });
     const matches = verifiedUser?.passwordHash
       ? await bcrypt.compare(adminPassword, verifiedUser.passwordHash)
       : false;

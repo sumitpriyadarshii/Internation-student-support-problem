@@ -1,4 +1,5 @@
 import type { NextAuthConfig } from 'next-auth';
+import './auth-types';
 
 export const authConfig = {
   trustHost: true,
@@ -6,6 +7,32 @@ export const authConfig = {
     signIn: '/login',
   },
   callbacks: {
+    async jwt({ token, user, trigger, session }) {
+      if (user) {
+        token.id = user.id as string;
+        if (user.role) {
+          token.role = user.role;
+        }
+        if (typeof user.onboardingCompleted === 'boolean') {
+          token.onboardingCompleted = user.onboardingCompleted;
+        }
+      }
+      if (trigger === 'update' && session) {
+        if (typeof session.onboardingCompleted === 'boolean') {
+          token.onboardingCompleted = session.onboardingCompleted;
+        }
+        if (session.name) token.name = session.name;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.role = (token.role as 'student' | 'admin') || 'student';
+        session.user.onboardingCompleted = Boolean(token.onboardingCompleted);
+      }
+      return session;
+    },
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isAdmin = (auth?.user as { role?: string })?.role === 'admin';

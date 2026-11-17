@@ -273,7 +273,12 @@ export default function HomePage() {
                   </div>
 
                   {/* Card 2: Senior Buddy Match */}
-                  <div className="rounded-2xl p-5 flex flex-col justify-between" style={{background: 'linear-gradient(145deg, rgba(249,115,22,0.15) 0%, rgba(28,18,14,0.6) 100%)', backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', border: '1px solid rgba(249,115,22,0.28)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,180,100,0.22)'}}>
+                  <Link
+                    href="/buddies"
+                    aria-label="Meet your senior buddy"
+                    className="group rounded-2xl p-5 flex flex-col justify-between transition-all hover:-translate-y-1 hover:border-orange-400/60 hover:shadow-[0_14px_38px_rgba(249,115,22,0.2)] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+                    style={{background: 'linear-gradient(145deg, rgba(249,115,22,0.15) 0%, rgba(28,18,14,0.6) 100%)', backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', border: '1px solid rgba(249,115,22,0.28)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,180,100,0.22)'}}
+                  >
                     <div>
                       <div className="flex items-center justify-between mb-4">
                         <span className="text-xs font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
@@ -302,15 +307,12 @@ export default function HomePage() {
                     </div>
 
                     <div className="mt-4">
-                      <Link
-                        href="/buddies"
-                        className="w-full inline-flex items-center justify-center gap-1.5 py-2 rounded-xl btn-ios-primary text-white font-bold text-xs shadow-md transition-all"
-                      >
+                      <span className="w-full inline-flex items-center justify-center gap-1.5 py-2 rounded-xl btn-ios-primary text-white font-bold text-xs shadow-md transition-all group-hover:shadow-[0_8px_24px_rgba(249,115,22,0.35)]">
                         <span>Say Hello on FFH</span>
                         <ArrowRight className="w-3.5 h-3.5" />
-                      </Link>
+                      </span>
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Card 3: Orientation Mixer */}
                   <div className="rounded-2xl p-5 flex flex-col justify-between transition-all hover:-translate-y-1" style={{background: 'linear-gradient(145deg, rgba(251,113,133,0.13) 0%, rgba(28,18,20,0.55) 100%)', backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', border: '1px solid rgba(251,113,133,0.22)', boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,150,160,0.2)'}}>

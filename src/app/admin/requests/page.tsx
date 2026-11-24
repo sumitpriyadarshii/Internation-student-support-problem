@@ -19,6 +19,8 @@ import {
   Sparkles,
   ArrowRight,
   Trash2,
+  ExternalLink,
+  Flame,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -46,9 +48,12 @@ interface AdminRequestItem {
   };
   userEmail: string;
   userName: string;
-  type: 'activation' | 'permission' | 'role_upgrade' | 'account_issue';
+  type: 'activation' | 'permission' | 'document_review' | 'role_upgrade' | 'account_issue';
   title: string;
   message: string;
+  documentType?: string;
+  documentUrl?: string;
+  urgency?: 'normal' | 'urgent';
   status: 'pending' | 'approved' | 'rejected';
   adminNotes?: string;
   createdAt: string;
@@ -168,11 +173,19 @@ export default function AdminRequestsPage() {
   const openReviewDialog = (req: AdminRequestItem, action: 'approve' | 'reject') => {
     setSelectedRequest(req);
     setDialogAction(action);
-    setAdminNotes(
-      action === 'approve'
-        ? 'Account reviewed and reactivated. Verified by administrator.'
-        : 'Request declined after administrative review.'
-    );
+    if (action === 'approve') {
+      const defaultNote =
+        req.type === 'document_review'
+          ? 'Document verified and approved by administration.'
+          : req.type === 'permission'
+          ? 'Permission request approved by administrator.'
+          : req.type === 'activation'
+          ? 'Account reviewed and reactivated. Verified by administrator.'
+          : 'Request approved by administrator.';
+      setAdminNotes(defaultNote);
+    } else {
+      setAdminNotes('Request declined after administrative review.');
+    }
     setDialogOpen(true);
   };
 
@@ -248,9 +261,11 @@ export default function AdminRequestsPage() {
                 className="h-9 px-3 rounded-md bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer"
               >
                 <option value="all">All Types</option>
+                <option value="document_review">Document Review</option>
                 <option value="activation">Account Reactivation</option>
                 <option value="permission">Permissions</option>
                 <option value="role_upgrade">Role Upgrade</option>
+                <option value="account_issue">Account Support</option>
               </select>
             </div>
           </div>
@@ -309,18 +324,55 @@ export default function AdminRequestsPage() {
                         {/* Status Badge */}
                         {isPending ? (
                           <Badge className="bg-amber-500/20 text-amber-300 border-amber-500/40 text-[10px] font-bold">
-                            <Clock className="w-3 h-3 mr-1" />
+                            <Clock className="w-3 h-3 mr-1 animate-spin" />
                             Pending Review
                           </Badge>
                         ) : isApproved ? (
                           <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/40 text-[10px] font-bold">
                             <CheckCircle2 className="w-3 h-3 mr-1" />
-                            Approved & Active
+                            Approved
                           </Badge>
                         ) : (
                           <Badge className="bg-red-500/20 text-red-300 border-red-500/40 text-[10px] font-bold">
                             <XCircle className="w-3 h-3 mr-1" />
                             Rejected
+                          </Badge>
+                        )}
+
+                        {/* Type Badge */}
+                        <Badge variant="outline" className="border-slate-700 bg-slate-800/60 text-slate-300 text-[10px]">
+                          {req.type === 'document_review' ? (
+                            <span className="flex items-center gap-1 text-teal-300">
+                              <FileText className="w-3 h-3 text-teal-400" />
+                              Document Review
+                            </span>
+                          ) : req.type === 'permission' ? (
+                            <span className="flex items-center gap-1 text-sky-300">
+                              <ShieldCheck className="w-3 h-3 text-sky-400" />
+                              Permission
+                            </span>
+                          ) : req.type === 'activation' ? (
+                            <span className="flex items-center gap-1 text-amber-300">
+                              <UserCheck className="w-3 h-3 text-amber-400" />
+                              Activation Appeal
+                            </span>
+                          ) : (
+                            req.type
+                          )}
+                        </Badge>
+
+                        {/* Document Type Badge */}
+                        {req.documentType && (
+                          <Badge className="bg-teal-500/15 text-teal-300 border-teal-500/30 text-[10px] font-medium">
+                            {req.documentType}
+                          </Badge>
+                        )}
+
+                        {/* Urgency Badge */}
+                        {req.urgency === 'urgent' && (
+                          <Badge className="bg-rose-500/20 text-rose-300 border-rose-500/40 text-[10px] font-bold animate-pulse">
+                            <Flame className="w-3 h-3 mr-1 text-rose-400" />
+                            Urgent
                           </Badge>
                         )}
 
@@ -342,9 +394,24 @@ export default function AdminRequestsPage() {
                       </div>
 
                       {/* Request Message */}
-                      <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs text-slate-300 leading-relaxed">
-                        <p className="font-semibold text-teal-300 mb-0.5">{req.title}</p>
+                      <div className="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs text-slate-300 leading-relaxed space-y-1.5">
+                        <p className="font-semibold text-teal-300">{req.title}</p>
                         <p>{req.message}</p>
+
+                        {/* Document Link */}
+                        {req.documentUrl && (
+                          <div className="pt-2">
+                            <a
+                              href={req.documentUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-500/15 border border-teal-500/30 text-teal-300 hover:text-white hover:bg-teal-500/25 text-xs font-semibold transition-all shadow-sm"
+                            >
+                              <ExternalLink className="w-3.5 h-3.5" />
+                              View Submitted Document ↗
+                            </a>
+                          </div>
+                        )}
                       </div>
 
                       {/* Admin Notes if reviewed */}
@@ -377,7 +444,11 @@ export default function AdminRequestsPage() {
                             className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg shadow-emerald-600/20 cursor-pointer"
                           >
                             <UserCheck className="w-3.5 h-3.5 mr-1.5" />
-                            Approve & Activate ID
+                            {req.type === 'activation'
+                              ? 'Approve & Activate ID'
+                              : req.type === 'document_review'
+                              ? 'Verify & Approve'
+                              : 'Approve Request'}
                           </Button>
 
                           <Button
@@ -419,7 +490,11 @@ export default function AdminRequestsPage() {
               {dialogAction === 'approve' ? (
                 <>
                   <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                  Approve & Reactivate User
+                  {selectedRequest?.type === 'document_review'
+                    ? 'Verify & Approve Document'
+                    : selectedRequest?.type === 'activation'
+                    ? 'Approve & Reactivate User'
+                    : 'Approve Request'}
                 </>
               ) : (
                 <>
@@ -430,7 +505,9 @@ export default function AdminRequestsPage() {
             </DialogTitle>
             <DialogDescription className="text-slate-400 text-xs leading-relaxed">
               {dialogAction === 'approve'
-                ? `This will immediately reactivate the user account (${selectedRequest?.userEmail}), resetting any lockouts so they can log in freely.`
+                ? selectedRequest?.type === 'activation'
+                  ? `This will immediately reactivate the user account (${selectedRequest?.userEmail}), resetting any lockouts so they can log in freely.`
+                  : `This will mark the request from (${selectedRequest?.userEmail}) as approved and send a notification with your verification notes.`
                 : `This will mark the request from (${selectedRequest?.userEmail}) as rejected.`}
             </DialogDescription>
           </DialogHeader>
@@ -469,7 +546,13 @@ export default function AdminRequestsPage() {
                   : 'bg-red-600 hover:bg-red-500 text-white font-bold'
               }
             >
-              {actionLoading ? 'Saving...' : dialogAction === 'approve' ? 'Confirm & Reactivate' : 'Confirm Rejection'}
+              {actionLoading
+                ? 'Saving...'
+                : dialogAction === 'approve'
+                ? selectedRequest?.type === 'activation'
+                  ? 'Confirm & Reactivate'
+                  : 'Confirm & Approve'
+                : 'Confirm Rejection'}
             </Button>
           </DialogFooter>
         </DialogContent>

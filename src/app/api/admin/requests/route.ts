@@ -85,37 +85,51 @@ export async function PATCH(req: NextRequest) {
     adminRequest.reviewedAt = new Date();
     await adminRequest.save();
 
-    // If approved and it is an activation request, reactivate the user account immediately!
+    // Notify user of decision
     let updatedUser = null;
-    if (isApproval) {
-      const userFilter = adminRequest.userId ? { _id: adminRequest.userId } : { email: adminRequest.userEmail };
-      updatedUser = await User.findOneAndUpdate(
-        userFilter,
-        {
-          $set: {
-            accountStatus: 'active',
-            failedLoginAttempts: 0,
-            lockoutUntil: null,
-          },
-        },
-        { new: true }
-      );
+    const targetUserId = adminRequest.userId;
 
-      if (updatedUser) {
-        // Send a celebratory reactivation notification
+    if (isApproval) {
+      if (adminRequest.type === 'activation') {
+        const userFilter = adminRequest.userId ? { _id: adminRequest.userId } : { email: adminRequest.userEmail };
+        updatedUser = await User.findOneAndUpdate(
+          userFilter,
+          {
+            $set: {
+              accountStatus: 'active',
+              failedLoginAttempts: 0,
+              lockoutUntil: null,
+            },
+          },
+          { new: true }
+        );
+
+        if (updatedUser) {
+          await Notification.create({
+            userId: updatedUser._id,
+            title: 'Account Reactivated 🎉',
+            message: 'Your account activation request was approved by the administrator. All platform features are now available.',
+            type: 'system',
+          });
+        }
+      } else if (targetUserId) {
+        const notifTitle =
+          adminRequest.type === 'document_review'
+            ? 'Document Verified & Approved ✅'
+            : 'Permission Request Approved ✅';
+
         await Notification.create({
-          userId: updatedUser._id,
-          title: 'Account Reactivated 🎉',
-          message: 'Your account activation request was approved by the administrator. All platform features are now available.',
+          userId: targetUserId,
+          title: notifTitle,
+          message: `Your request "${adminRequest.title}" was approved by the administration. ${adminRequest.adminNotes}`,
           type: 'system',
         });
       }
-    } else if (adminRequest.userId) {
-      // Send rejection notification
+    } else if (targetUserId) {
       await Notification.create({
-        userId: adminRequest.userId,
-        title: 'Account Request Update',
-        message: `Your activation / permission request was reviewed: ${adminRequest.adminNotes}`,
+        userId: targetUserId,
+        title: 'Request Update: Attention Required ⚠️',
+        message: `Your request "${adminRequest.title}" was reviewed by the administration: ${adminRequest.adminNotes}`,
         type: 'system',
       });
     }
@@ -124,7 +138,7 @@ export async function PATCH(req: NextRequest) {
       request: adminRequest,
       user: updatedUser,
       message: isApproval
-        ? `Request approved successfully. User ${adminRequest.userEmail} is now active.`
+        ? `Request "${adminRequest.title}" approved successfully.`
         : `Request marked as rejected.`,
     });
   } catch (error) {

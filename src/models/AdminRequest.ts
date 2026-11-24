@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Model, Types } from 'mongoose';
 
-export type AdminRequestType = 'activation' | 'permission' | 'role_upgrade' | 'account_issue';
+export type AdminRequestType = 'activation' | 'permission' | 'document_review' | 'role_upgrade' | 'account_issue';
 export type AdminRequestStatus = 'pending' | 'approved' | 'rejected';
 
 export interface IAdminRequest extends Document {
@@ -11,6 +11,9 @@ export interface IAdminRequest extends Document {
   type: AdminRequestType;
   title: string;
   message: string;
+  documentType?: string;
+  documentUrl?: string;
+  urgency?: 'normal' | 'urgent';
   status: AdminRequestStatus;
   adminNotes?: string;
   reviewedBy?: Types.ObjectId;
@@ -39,7 +42,7 @@ const AdminRequestSchema = new Schema<IAdminRequest>(
     },
     type: {
       type: String,
-      enum: ['activation', 'permission', 'role_upgrade', 'account_issue'],
+      enum: ['activation', 'permission', 'document_review', 'role_upgrade', 'account_issue'],
       default: 'activation',
     },
     title: {
@@ -52,6 +55,23 @@ const AdminRequestSchema = new Schema<IAdminRequest>(
       type: String,
       required: [true, 'Message / reason is required'],
       trim: true,
+    },
+    documentType: {
+      type: String,
+      required: false,
+      trim: true,
+      default: '',
+    },
+    documentUrl: {
+      type: String,
+      required: false,
+      trim: true,
+      default: '',
+    },
+    urgency: {
+      type: String,
+      enum: ['normal', 'urgent'],
+      default: 'normal',
     },
     status: {
       type: String,

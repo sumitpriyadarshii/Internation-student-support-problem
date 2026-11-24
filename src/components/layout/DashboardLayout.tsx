@@ -23,6 +23,7 @@ import {
   ShieldCheck,
   ChevronRight,
   Heart,
+  FileCheck,
 } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -47,6 +48,7 @@ const navItems: NavItem[] = [
   { name: 'Task Checklist', href: '/tasks', icon: CheckSquare },
   { name: 'Buddy Network', href: '/buddies', icon: Users },
   { name: 'Community Events', href: '/community', icon: Calendar },
+  { name: 'Admin & Document Requests', href: '/requests', icon: FileCheck },
   { name: 'My Profile', href: '/profile', icon: User },
   { name: 'Account Settings', href: '/settings', icon: Settings },
   { name: 'Notifications', href: '/notifications', icon: Bell },

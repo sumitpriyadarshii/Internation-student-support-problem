@@ -34,6 +34,7 @@ import {
   Heart,
   Globe2,
   Layers,
+  FileCheck,
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -124,6 +125,7 @@ export default function StudentDashboardPage() {
   const [guides, setGuides] = useState<GuideItem[]>([]);
   const [buddies, setBuddies] = useState<BuddyItem[]>([]);
   const [events, setEvents] = useState<EventItem[]>([]);
+  const [userRequests, setUserRequests] = useState<any[]>([]);
 
   // Add Task Modal State
   const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
@@ -185,6 +187,15 @@ export default function StudentDashboardPage() {
           const eventJson = await eventRes.json();
           if (eventJson.success && Array.isArray(eventJson.data)) {
             setEvents(eventJson.data.slice(0, 3));
+          }
+        }
+
+        // 6. Fetch user admin & document requests
+        const reqRes = await fetch('/api/user-requests');
+        if (reqRes.ok) {
+          const reqJson = await reqRes.json();
+          if (reqJson.success && Array.isArray(reqJson.data?.requests)) {
+            setUserRequests(reqJson.data.requests.slice(0, 3));
           }
         }
       } catch (err) {
@@ -367,6 +378,15 @@ export default function StudentDashboardPage() {
               >
                 <Link href="/guides">
                   <BookOpen className="mr-1.5 h-4 w-4 text-orange-400" /> Destination Guides
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="ios-pill border-white/15 bg-white/[0.04] hover:bg-white/10 text-white text-xs hover:border-amber-400/30"
+              >
+                <Link href="/requests">
+                  <FileCheck className="mr-1.5 h-4 w-4 text-emerald-400" /> Document Review & Requests
                 </Link>
               </Button>
             </div>
@@ -675,6 +695,96 @@ export default function StudentDashboardPage() {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* DOCUMENT VERIFICATION & ADMIN REQUESTS WIDGET */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-lg sm:text-xl font-black text-white flex items-center gap-2">
+              <FileCheck className="h-5 w-5 text-emerald-400" />
+              <span>Official Document Reviews & Admin Requests</span>
+            </h2>
+            <p className="text-xs text-stone-400">
+              Submit your visa, I-20, or proof of funds for administration verification and tracking
+            </p>
+          </div>
+          <Link
+            href="/requests"
+            className="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 transition-colors"
+          >
+            <span>View All Requests</span>
+            <ChevronRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        {userRequests.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {userRequests.map((req) => (
+              <div
+                key={req._id}
+                className="ios-glass rounded-2xl p-5 border border-white/10 flex flex-col justify-between hover:border-amber-500/40 transition-all"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <Badge
+                      className={`text-[10px] font-bold ${
+                        req.status === 'pending'
+                          ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                          : req.status === 'approved'
+                          ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+                          : 'bg-rose-500/20 text-rose-300 border-rose-500/40'
+                      }`}
+                    >
+                      {req.status === 'pending'
+                        ? 'Under Review'
+                        : req.status === 'approved'
+                        ? 'Verified & Approved'
+                        : 'Changes Required'}
+                    </Badge>
+                    {req.documentType && (
+                      <span className="text-[10px] text-teal-300 truncate max-w-[130px]">
+                        {req.documentType}
+                      </span>
+                    )}
+                  </div>
+                  <h4 className="text-sm font-bold text-white line-clamp-1">{req.title}</h4>
+                  <p className="text-xs text-stone-400 line-clamp-2 leading-relaxed">{req.message}</p>
+                  {req.adminNotes && (
+                    <p className="text-[11px] text-amber-300/90 italic bg-amber-500/10 p-2 rounded-lg border border-amber-500/20">
+                      <strong>Admin:</strong> {req.adminNotes}
+                    </p>
+                  )}
+                </div>
+                <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-stone-500 mt-2">
+                  <span>{new Date(req.createdAt).toLocaleDateString()}</span>
+                  <Link href="/requests" className="text-amber-400 font-bold hover:underline">
+                    Details &rarr;
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="ios-glass rounded-2xl p-6 border border-dashed border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/20">
+                <FileCheck className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-white">Have documents that need review?</p>
+                <p className="text-xs text-stone-400">
+                  Submit your visa, acceptance letter, or financial documents to the administration for verification.
+                </p>
+              </div>
+            </div>
+            <Button asChild size="sm" className="btn-ios-primary text-xs shrink-0 px-4">
+              <Link href="/requests">
+                <Plus className="w-3.5 h-3.5 mr-1" /> Submit Document
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* SUGGESTED PEER BUDDIES */}

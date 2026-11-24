@@ -56,6 +56,7 @@ export const authConfig = {
         '/profile',
         '/settings',
         '/notifications',
+        '/requests',
       ];
       const isStudentRoute = studentRoutes.some((r) => pathname.startsWith(r));
 

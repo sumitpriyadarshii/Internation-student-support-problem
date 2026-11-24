@@ -1,3 +1,4 @@
+import './env-sanitize';
 import type { NextAuthConfig } from 'next-auth';
 import './auth-types';
 
@@ -33,11 +34,17 @@ export const authConfig = {
       }
       return session;
     },
-    authorized({ auth, request: { nextUrl } }) {
+    authorized({ auth, request }) {
+      const { nextUrl, headers } = request;
       const isLoggedIn = !!auth?.user;
       const isAdmin = (auth?.user as { role?: string })?.role === 'admin';
-      const isOnboardingCompleted = (auth?.user as { onboardingCompleted?: boolean })?.onboardingCompleted;
       const pathname = nextUrl.pathname;
+
+      // Determine robust public origin so redirects NEVER point to localhost in production
+      const host = headers?.get?.('x-forwarded-host') || headers?.get?.('host') || nextUrl.host || 'internationalstudentplatform.vercel.app';
+      const proto = headers?.get?.('x-forwarded-proto') || (host.includes('localhost') ? 'http' : 'https');
+      const origin = `${proto}://${host}`;
+      const toUrl = (path: string) => new URL(path, origin);
 
       // Protect student routes
       const studentRoutes = [
@@ -54,27 +61,31 @@ export const authConfig = {
 
       // Protect student routes (must be logged in)
       if (isStudentRoute && !isLoggedIn) {
-        return false;
+        const callbackUrl = encodeURIComponent(nextUrl.pathname + nextUrl.search);
+        return Response.redirect(toUrl(`/login?callbackUrl=${callbackUrl}`));
       }
 
       const isAdminRoute = pathname === '/admin' || pathname.startsWith('/admin/');
       if (isAdminRoute && !isAdmin) {
-        if (!isLoggedIn) return false;
-        return Response.redirect(new URL('/dashboard', nextUrl));
+        if (!isLoggedIn) {
+          return Response.redirect(toUrl('/admin-login'));
+        }
+        return Response.redirect(toUrl('/dashboard'));
       }
 
       if ((pathname === '/login' || pathname === '/register') && isLoggedIn) {
-        return Response.redirect(new URL('/dashboard', nextUrl));
+        if (isAdmin) return Response.redirect(toUrl('/admin'));
+        return Response.redirect(toUrl('/dashboard'));
       }
 
       // Admin login page — redirect if already logged in
       if (pathname === '/admin-login' && isLoggedIn) {
-        if (isAdmin) return Response.redirect(new URL('/admin', nextUrl));
-        return Response.redirect(new URL('/dashboard', nextUrl));
+        if (isAdmin) return Response.redirect(toUrl('/admin'));
+        return Response.redirect(toUrl('/dashboard'));
       }
 
       if (pathname.startsWith('/onboarding') && !isLoggedIn) {
-        return false;
+        return Response.redirect(toUrl('/login?callbackUrl=%2Fonboarding'));
       }
 
       return true;

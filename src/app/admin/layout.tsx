@@ -104,8 +104,15 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
                 Student Portal
               </Link>
             </Button>
-            <Button asChild className="bg-teal-600 hover:bg-teal-500 text-white">
-              <Link href="/login">Sign In With Another Account</Link>
+            <Button
+              onClick={async () => {
+                await signOut({ redirect: false });
+                window.location.replace('/admin-login');
+              }}
+              className="bg-rose-600 hover:bg-rose-500 text-white font-medium cursor-pointer"
+            >
+              <ShieldCheck className="w-4 h-4 mr-2" />
+              Sign In as Administrator
             </Button>
           </div>
         </div>

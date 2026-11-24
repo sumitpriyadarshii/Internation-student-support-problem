@@ -49,6 +49,11 @@ function AdminLoginForm() {
     setErrorCode(null);
 
     try {
+      // Clear any prior session before signing in as administrator
+      try {
+        await signOut({ redirect: false });
+      } catch {}
+
       const res = await signIn('credentials', {
         email: data.email,
         password: data.password,
@@ -85,7 +90,7 @@ function AdminLoginForm() {
         setIsLoading(false);
       } else {
         // After sign-in, verify the user is actually admin
-        const sessionRes = await fetch('/api/auth/session');
+        const sessionRes = await fetch('/api/auth/session', { cache: 'no-store' });
         const session = await sessionRes.json();
         const role = (session?.user as { role?: string })?.role;
 
@@ -101,7 +106,7 @@ function AdminLoginForm() {
         }
 
         toast.success('Welcome, Administrator!');
-        window.location.href = '/admin';
+        window.location.replace('/admin');
       }
     } catch (err: any) {
       console.error('Admin sign-in error:', err);

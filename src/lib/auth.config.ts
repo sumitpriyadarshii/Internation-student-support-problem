@@ -67,10 +67,7 @@ export const authConfig = {
 
       const isAdminRoute = pathname === '/admin' || pathname.startsWith('/admin/');
       if (isAdminRoute && !isAdmin) {
-        if (!isLoggedIn) {
-          return Response.redirect(toUrl('/admin-login'));
-        }
-        return Response.redirect(toUrl('/dashboard'));
+        return Response.redirect(toUrl('/admin-login'));
       }
 
       if ((pathname === '/login' || pathname === '/register') && isLoggedIn) {
@@ -78,10 +75,11 @@ export const authConfig = {
         return Response.redirect(toUrl('/dashboard'));
       }
 
-      // Admin login page — redirect if already logged in
+      // Admin login page — redirect if already logged in as admin
       if (pathname === '/admin-login' && isLoggedIn) {
         if (isAdmin) return Response.redirect(toUrl('/admin'));
-        return Response.redirect(toUrl('/dashboard'));
+        // If logged in as student, DO NOT redirect to /dashboard! Allow viewing /admin-login to switch to admin
+        return true;
       }
 
       if (pathname.startsWith('/onboarding') && !isLoggedIn) {

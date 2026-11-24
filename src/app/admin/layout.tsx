@@ -20,6 +20,7 @@ import {
   ChevronRight,
   ShieldCheck,
   User as UserIcon,
+  Inbox,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -54,6 +55,12 @@ const navItems = [
     name: 'Events',
     href: '/admin/events',
     icon: Calendar,
+    exact: false,
+  },
+  {
+    name: 'User Requests',
+    href: '/admin/requests',
+    icon: Inbox,
     exact: false,
   },
   {

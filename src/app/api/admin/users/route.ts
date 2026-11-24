@@ -2,6 +2,13 @@ import { NextRequest } from 'next/server';
 import { connectDB } from '@/lib/db';
 import { requireAdmin, successResponse, handleApiError, errorResponse } from '@/lib/api-helpers';
 import User from '@/models/User';
+import Task from '@/models/Task';
+import BuddyProfile from '@/models/BuddyProfile';
+import BuddyRequest from '@/models/BuddyRequest';
+import EventRegistration from '@/models/EventRegistration';
+import Notification from '@/models/Notification';
+import Bookmark from '@/models/Bookmark';
+import AdminRequest from '@/models/AdminRequest';
 
 export async function GET(req: NextRequest) {
   try {
@@ -98,6 +105,54 @@ export async function PATCH(req: NextRequest) {
     }
 
     return successResponse(updatedUser);
+  } catch (error) {
+    return handleApiError(error);
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const session = await requireAdmin();
+    await connectDB();
+
+    const { searchParams } = new URL(req.url);
+    let userId = searchParams.get('userId') || searchParams.get('id');
+
+    if (!userId) {
+      try {
+        const body = await req.json();
+        userId = body.userId || body.id;
+      } catch {}
+    }
+
+    if (!userId) {
+      return errorResponse('User ID is required', 400);
+    }
+
+    if (session.user.id === userId) {
+      return errorResponse('You cannot delete your own admin account', 400);
+    }
+
+    const targetUser = await User.findById(userId);
+    if (!targetUser) {
+      return errorResponse('User not found', 404);
+    }
+
+    // Cascade delete
+    await Promise.all([
+      User.findByIdAndDelete(userId),
+      Task.deleteMany({ userId }),
+      BuddyProfile.deleteMany({ userId }),
+      BuddyRequest.deleteMany({ $or: [{ requesterId: userId }, { recipientId: userId }] }),
+      EventRegistration.deleteMany({ userId }),
+      Notification.deleteMany({ userId }),
+      Bookmark.deleteMany({ userId }),
+      AdminRequest.deleteMany({ $or: [{ userId }, { userEmail: targetUser.email }] }),
+    ]);
+
+    return successResponse({
+      message: `User ${targetUser.email} has been permanently deleted.`,
+    });
   } catch (error) {
     return handleApiError(error);
   }

@@ -39,6 +39,10 @@ class IpBlockedError extends CredentialsSignin {
   code = 'IP_BLOCKED';
 }
 
+class AccountDeactivatedError extends CredentialsSignin {
+  code = 'ACCOUNT_DEACTIVATED';
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
@@ -59,14 +63,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         await connectDB();
         const email = (credentials.email as string).toLowerCase().trim();
-        const user = await User.findOne({
-          email,
-          accountStatus: 'active',
-        });
+        const user = await User.findOne({ email });
 
         if (!user) {
           recordFailedIpAttempt(clientIp);
           throw new UserNotFoundError();
+        }
+
+        if (user.accountStatus === 'deactivated' || user.accountStatus === 'suspended') {
+          throw new AccountDeactivatedError();
         }
 
         if (!user.passwordHash) {

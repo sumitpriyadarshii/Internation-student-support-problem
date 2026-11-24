@@ -21,6 +21,8 @@ import {
   Calendar,
   Eye,
   X,
+  Trash2,
+  Ban,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -118,7 +120,7 @@ export default function AdminUsersPage() {
     return () => clearTimeout(timer);
   }, [search, roleFilter, statusFilter]);
 
-  const handleUpdateUserStatus = async (userId: string, newStatus: 'active' | 'suspended') => {
+  const handleUpdateUserStatus = async (userId: string, newStatus: 'active' | 'suspended' | 'deactivated') => {
     try {
       setActionLoading(true);
       const res = await fetch('/api/admin/users', {
@@ -129,7 +131,7 @@ export default function AdminUsersPage() {
       const json = await res.json();
 
       if (json.success) {
-        toast.success(`User status updated to ${newStatus}`);
+        toast.success(`User status updated to ${newStatus.toUpperCase()}`);
         setUsers((prev) =>
           prev.map((u) => (u._id === userId ? { ...u, accountStatus: newStatus } : u))
         );
@@ -141,6 +143,35 @@ export default function AdminUsersPage() {
       }
     } catch (err) {
       toast.error('Error executing user status change');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleDeleteUser = async (userId: string, userEmail: string) => {
+    if (!confirm(`Are you sure you want to permanently delete user "${userEmail}"?\n\nThis will completely erase their account, tasks, profile, and all platform records. This action CANNOT be undone.`)) {
+      return;
+    }
+    try {
+      setActionLoading(true);
+      const res = await fetch(`/api/admin/users?userId=${userId}`, {
+        method: 'DELETE',
+      });
+      const json = await res.json();
+
+      if (json.success) {
+        toast.success(json.data?.message || `User ${userEmail} deleted successfully`);
+        setUsers((prev) => prev.filter((u) => u._id !== userId));
+        setTotal((prev) => Math.max(0, prev - 1));
+        if (selectedUser?._id === userId) {
+          setDetailsOpen(false);
+          setSelectedUser(null);
+        }
+      } else {
+        toast.error(json.error || 'Failed to delete user');
+      }
+    } catch {
+      toast.error('Network error deleting user');
     } finally {
       setActionLoading(false);
     }
@@ -423,15 +454,7 @@ export default function AdminUsersPage() {
                             </DropdownMenuItem>
                             <DropdownMenuSeparator className="bg-slate-800" />
 
-                            {u.accountStatus === 'active' ? (
-                              <DropdownMenuItem
-                                onClick={() => handleUpdateUserStatus(u._id, 'suspended')}
-                                className="cursor-pointer text-red-400 hover:bg-red-500/10 hover:text-red-300"
-                              >
-                                <UserX className="w-3.5 h-3.5 mr-2" />
-                                Suspend Account
-                              </DropdownMenuItem>
-                            ) : (
+                            {u.accountStatus !== 'active' && (
                               <DropdownMenuItem
                                 onClick={() => handleUpdateUserStatus(u._id, 'active')}
                                 className="cursor-pointer text-emerald-400 hover:bg-emerald-500/10 hover:text-emerald-300"
@@ -440,6 +463,36 @@ export default function AdminUsersPage() {
                                 Activate Account
                               </DropdownMenuItem>
                             )}
+
+                            {u.accountStatus !== 'deactivated' && (
+                              <DropdownMenuItem
+                                onClick={() => handleUpdateUserStatus(u._id, 'deactivated')}
+                                className="cursor-pointer text-amber-400 hover:bg-amber-500/10 hover:text-amber-300"
+                              >
+                                <Ban className="w-3.5 h-3.5 mr-2" />
+                                Deactivate Account
+                              </DropdownMenuItem>
+                            )}
+
+                            {u.accountStatus !== 'suspended' && (
+                              <DropdownMenuItem
+                                onClick={() => handleUpdateUserStatus(u._id, 'suspended')}
+                                className="cursor-pointer text-rose-400 hover:bg-rose-500/10 hover:text-rose-300"
+                              >
+                                <UserX className="w-3.5 h-3.5 mr-2" />
+                                Suspend Account
+                              </DropdownMenuItem>
+                            )}
+
+                            <DropdownMenuSeparator className="bg-slate-800" />
+
+                            <DropdownMenuItem
+                              onClick={() => handleDeleteUser(u._id, u.email)}
+                              className="cursor-pointer text-red-500 hover:bg-red-500/15 hover:text-red-400 font-semibold"
+                            >
+                              <Trash2 className="w-3.5 h-3.5 mr-2" />
+                              Delete Account Permanently
+                            </DropdownMenuItem>
 
                             {u.role === 'student' ? (
                               <DropdownMenuItem
@@ -651,21 +704,10 @@ export default function AdminUsersPage() {
             </div>
           )}
 
-          <DialogFooter className="border-t border-slate-800 pt-4 flex flex-col sm:flex-row gap-2">
+          <DialogFooter className="border-t border-slate-800 pt-4 flex flex-wrap items-center justify-between gap-2">
             {selectedUser && (
-              <>
-                {selectedUser.accountStatus === 'active' ? (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    disabled={actionLoading}
-                    onClick={() => handleUpdateUserStatus(selectedUser._id, 'suspended')}
-                    className="border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300"
-                  >
-                    <UserX className="w-3.5 h-3.5 mr-1.5" />
-                    Suspend Account
-                  </Button>
-                ) : (
+              <div className="flex flex-wrap items-center gap-2">
+                {selectedUser.accountStatus !== 'active' && (
                   <Button
                     variant="outline"
                     size="sm"
@@ -674,9 +716,46 @@ export default function AdminUsersPage() {
                     className="border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 hover:text-emerald-300"
                   >
                     <UserCheck className="w-3.5 h-3.5 mr-1.5" />
-                    Activate Account
+                    Activate
                   </Button>
                 )}
+
+                {selectedUser.accountStatus !== 'deactivated' && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={actionLoading}
+                    onClick={() => handleUpdateUserStatus(selectedUser._id, 'deactivated')}
+                    className="border-amber-500/30 text-amber-400 hover:bg-amber-500/10 hover:text-amber-300"
+                  >
+                    <Ban className="w-3.5 h-3.5 mr-1.5" />
+                    Deactivate
+                  </Button>
+                )}
+
+                {selectedUser.accountStatus !== 'suspended' && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={actionLoading}
+                    onClick={() => handleUpdateUserStatus(selectedUser._id, 'suspended')}
+                    className="border-rose-500/30 text-rose-400 hover:bg-rose-500/10 hover:text-rose-300"
+                  >
+                    <UserX className="w-3.5 h-3.5 mr-1.5" />
+                    Suspend
+                  </Button>
+                )}
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={actionLoading}
+                  onClick={() => handleDeleteUser(selectedUser._id, selectedUser.email)}
+                  className="border-red-500/40 text-red-400 hover:bg-red-500/20 hover:text-red-300 font-semibold"
+                >
+                  <Trash2 className="w-3.5 h-3.5 mr-1.5" />
+                  Delete Permanently
+                </Button>
 
                 {selectedUser.role === 'student' ? (
                   <Button
@@ -701,7 +780,7 @@ export default function AdminUsersPage() {
                     Demote to Student
                   </Button>
                 )}
-              </>
+              </div>
             )}
             <Button
               variant="secondary"

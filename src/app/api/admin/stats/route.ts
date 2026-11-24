@@ -6,6 +6,7 @@ import Task from '@/models/Task';
 import CommunityEvent from '@/models/CommunityEvent';
 import BuddyProfile from '@/models/BuddyProfile';
 import BuddyRequest from '@/models/BuddyRequest';
+import AdminRequest from '@/models/AdminRequest';
 
 interface RecentUserDoc {
   _id: unknown;
@@ -64,6 +65,8 @@ export async function GET() {
       totalBuddyRequests,
       pendingBuddyRequests,
       acceptedBuddyRequests,
+      pendingUserRequests,
+      deactivatedUsers,
     ] = await Promise.all([
       User.countDocuments(),
       User.countDocuments({ role: 'student', accountStatus: 'active' }),
@@ -83,6 +86,8 @@ export async function GET() {
       BuddyRequest.countDocuments(),
       BuddyRequest.countDocuments({ status: 'pending' }),
       BuddyRequest.countDocuments({ status: 'accepted' }),
+      AdminRequest.countDocuments({ status: 'pending' }),
+      User.countDocuments({ accountStatus: { $in: ['deactivated', 'suspended'] } }),
     ]);
 
     // 2. Task Completion Status Breakdown
@@ -278,6 +283,8 @@ export async function GET() {
         totalBuddyRequests,
         pendingBuddyRequests,
         acceptedBuddyRequests,
+        pendingUserRequests,
+        deactivatedUsers,
       },
       taskCompletionRates,
       eventsByCategory,

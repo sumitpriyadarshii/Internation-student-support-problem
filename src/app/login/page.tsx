@@ -25,6 +25,9 @@ import {
   ShieldAlert,
   Clock,
   CheckCircle2,
+  Send,
+  Ban,
+  X,
 } from 'lucide-react';
 
 const loginSchema = z.object({
@@ -60,6 +63,13 @@ function LoginForm() {
   const [errorCode, setErrorCode] = useState<string | null>(null);
   const sessionExpired = searchParams.get('reason') === 'session_expired';
 
+  // Deactivated Account Activation Request State
+  const [lastAttemptedEmail, setLastAttemptedEmail] = useState('');
+  const [activationModalOpen, setActivationModalOpen] = useState(false);
+  const [activationMessage, setActivationMessage] = useState('');
+  const [activationSubmitting, setActivationSubmitting] = useState(false);
+  const [activationSuccessMsg, setActivationSuccessMsg] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -76,6 +86,7 @@ function LoginForm() {
     setIsLoading(true);
     setErrorMessage(null);
     setErrorCode(null);
+    setLastAttemptedEmail(data.email);
 
     try {
       const res = await signIn('credentials', {
@@ -95,6 +106,8 @@ function LoginForm() {
         const errorMessages: Record<string, string> = {
           USER_NOT_FOUND:
             'We could not find an account with that email. Create a free account to get started.',
+          ACCOUNT_DEACTIVATED:
+            'Your account is currently disabled / deactivated. Contact the administrator below to request activation.',
           GOOGLE_ACCOUNT:
             'This email is connected to Google sign-in. Please use “Continue with Google”.',
           INVALID_PASSWORD:
@@ -124,6 +137,35 @@ function LoginForm() {
       );
       toast.error('Sign-in failed. Please try again.');
       setIsLoading(false);
+    }
+  };
+
+  const submitActivationRequest = async () => {
+    if (!lastAttemptedEmail) {
+      toast.error('Please enter your email address in the login field first.');
+      return;
+    }
+    try {
+      setActivationSubmitting(true);
+      const res = await fetch('/api/activation-requests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: lastAttemptedEmail,
+          message: activationMessage.trim() || 'My account has been deactivated. Please review and activate my account.',
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setActivationSuccessMsg(data.data?.message || 'Activation request sent to administrator!');
+        toast.success('Activation request submitted successfully!');
+      } else {
+        toast.error(data.error || 'Failed to submit activation request');
+      }
+    } catch {
+      toast.error('Network error submitting request');
+    } finally {
+      setActivationSubmitting(false);
     }
   };
 
@@ -195,9 +237,28 @@ function LoginForm() {
                   ? 'Network Security Notice'
                   : errorCode === 'WARNING_LAST_ATTEMPT'
                   ? 'Security Warning (1 Attempt Remaining)'
+                  : errorCode === 'ACCOUNT_DEACTIVATED'
+                  ? 'Account Deactivated / Disabled'
                   : 'Sign In Failed'}
               </p>
               <p className="text-stone-300">{errorMessage}</p>
+
+              {errorCode === 'ACCOUNT_DEACTIVATED' && (
+                <div className="mt-3 pt-3 border-t border-rose-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <span className="text-xs text-rose-200">ID disabled? Contact admin for activation:</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActivationSuccessMsg(null);
+                      setActivationModalOpen(true);
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition shadow cursor-pointer self-start sm:self-auto"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                    Request Activation
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -325,6 +386,94 @@ function LoginForm() {
         <ShieldCheck className="w-4 h-4 text-emerald-400" />
         <span>256-bit encrypted secure student authentication</span>
       </div>
+
+      {/* Activation Request Dialog */}
+      {activationModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="relative w-full max-w-md bg-[#161722] border border-amber-500/30 rounded-3xl p-6 sm:p-7 shadow-2xl text-left">
+            <button
+              onClick={() => setActivationModalOpen(false)}
+              className="absolute top-5 right-5 text-stone-400 hover:text-white p-1 rounded-lg cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-2.5 mb-2">
+              <div className="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
+                <Ban className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-bold text-base text-white">Request Account Activation</h3>
+                <p className="text-xs text-stone-400">Send an appeal directly to platform administrator</p>
+              </div>
+            </div>
+
+            {activationSuccessMsg ? (
+              <div className="my-5 p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-200 text-xs sm:text-sm">
+                <div className="flex items-center gap-2 font-bold text-white mb-1">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  Request Sent Successfully
+                </div>
+                <p>{activationSuccessMsg}</p>
+                <button
+                  type="button"
+                  onClick={() => setActivationModalOpen(false)}
+                  className="mt-4 w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs cursor-pointer"
+                >
+                  Done
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-4 my-4">
+                <div>
+                  <label className="block text-xs font-semibold text-stone-300 mb-1">
+                    Your Registered Email
+                  </label>
+                  <input
+                    type="email"
+                    value={lastAttemptedEmail}
+                    onChange={(e) => setLastAttemptedEmail(e.target.value)}
+                    placeholder="student@university.edu"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/10 text-xs text-white focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-stone-300 mb-1">
+                    Message / Reason for Reactivation
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={activationMessage}
+                    onChange={(e) => setActivationMessage(e.target.value)}
+                    placeholder="Please review and reactivate my student account."
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/10 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  />
+                </div>
+
+                <div className="flex items-center justify-end gap-2 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setActivationModalOpen(false)}
+                    className="px-4 py-2 rounded-xl text-xs text-stone-400 hover:text-white cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={submitActivationRequest}
+                    disabled={activationSubmitting}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition disabled:opacity-50 cursor-pointer"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                    {activationSubmitting ? 'Sending Request...' : 'Submit Activation Request'}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </motion.div>
   );
 }

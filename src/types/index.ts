@@ -26,6 +26,9 @@ import type {
   INotification,
   NotificationType,
   IBookmark,
+  IAdminRequest,
+  AdminRequestType,
+  AdminRequestStatus,
 } from '@/models';
 
 // Re-export core model types
@@ -57,6 +60,9 @@ export type {
   INotification,
   NotificationType,
   IBookmark,
+  IAdminRequest,
+  AdminRequestType,
+  AdminRequestStatus,
 };
 
 export * from '@/lib/constants';

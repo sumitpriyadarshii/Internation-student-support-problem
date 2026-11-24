@@ -69,3 +69,10 @@ export {
   Bookmark,
   type IBookmark,
 } from './Bookmark';
+
+export {
+  AdminRequest,
+  type IAdminRequest,
+  type AdminRequestType,
+  type AdminRequestStatus,
+} from './AdminRequest';

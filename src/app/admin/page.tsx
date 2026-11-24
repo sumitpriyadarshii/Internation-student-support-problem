@@ -19,6 +19,7 @@ import {
   FileText,
   Activity,
   Layers,
+  Inbox,
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -48,6 +49,8 @@ interface PlatformStats {
   upcomingEvents: number;
   buddyRequests: number;
   totalBuddyProfiles: number;
+  pendingUserRequests?: number;
+  deactivatedUsers?: number;
 }
 
 interface TaskCompletionRate {
@@ -146,6 +149,13 @@ export default function AdminDashboardPage() {
             Refresh
           </Button>
 
+          <Button asChild size="sm" className="bg-amber-600 hover:bg-amber-500 text-white font-medium shadow-lg shadow-amber-600/20">
+            <Link href="/admin/requests">
+              <Inbox className="w-3.5 h-3.5 mr-1.5" />
+              User Requests {stats?.pendingUserRequests ? `(${stats.pendingUserRequests})` : ''}
+            </Link>
+          </Button>
+
           <Button asChild size="sm" className="bg-teal-600 hover:bg-teal-500 text-white font-medium shadow-lg shadow-teal-600/20">
             <Link href="/admin/guides?action=create">
               <PlusCircle className="w-3.5 h-3.5 mr-1.5" />
@@ -170,7 +180,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Primary KPI Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-4">
         {/* Total Users */}
         <Card className="bg-slate-900 border-slate-800 text-slate-100 relative overflow-hidden group hover:border-slate-700 transition">
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-emerald-400" />
@@ -293,6 +303,34 @@ export default function AdminDashboardPage() {
             )}
             <p className="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
               <span className="text-rose-400 font-medium">Peer pairing</span> awaiting
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* User Appeals / Reactivation Requests */}
+        <Card className="bg-slate-900 border-slate-800 text-slate-100 relative overflow-hidden group hover:border-slate-700 transition">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-rose-400" />
+          <CardHeader className="p-4 pb-1">
+            <div className="flex items-center justify-between text-slate-400">
+              <span className="text-xs font-medium">User Appeals</span>
+              <Inbox className="w-4 h-4 text-amber-400" />
+            </div>
+          </CardHeader>
+          <CardContent className="p-4 pt-1">
+            {loading ? (
+              <Skeleton className="h-8 w-16 bg-slate-800" />
+            ) : (
+              <div className="text-2xl font-bold text-white flex items-center gap-2">
+                <span>{stats?.pendingUserRequests ?? 0}</span>
+                {(stats?.pendingUserRequests ?? 0) > 0 && (
+                  <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+                )}
+              </div>
+            )}
+            <p className="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
+              <Link href="/admin/requests" className="text-amber-400 font-medium hover:underline">
+                Review appeals →
+              </Link>
             </p>
           </CardContent>
         </Card>

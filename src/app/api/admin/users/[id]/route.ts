@@ -4,7 +4,11 @@ import { requireAdmin, successResponse, handleApiError, errorResponse } from '@/
 import User from '@/models/User';
 import Task from '@/models/Task';
 import BuddyProfile from '@/models/BuddyProfile';
+import BuddyRequest from '@/models/BuddyRequest';
 import EventRegistration from '@/models/EventRegistration';
+import Notification from '@/models/Notification';
+import Bookmark from '@/models/Bookmark';
+import AdminRequest from '@/models/AdminRequest';
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -80,6 +84,43 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
     }
 
     return successResponse(updatedUser);
+  } catch (error) {
+    return handleApiError(error);
+  }
+}
+
+export async function DELETE(req: NextRequest, { params }: RouteParams) {
+  try {
+    const session = await requireAdmin();
+    await connectDB();
+
+    const { id } = await params;
+
+    // Prevent admin from deleting their own account
+    if (session.user.id === id) {
+      return errorResponse('You cannot delete your own admin account', 400);
+    }
+
+    const targetUser = await User.findById(id);
+    if (!targetUser) {
+      return errorResponse('User not found', 404);
+    }
+
+    // Cascade delete all associated data
+    await Promise.all([
+      User.findByIdAndDelete(id),
+      Task.deleteMany({ userId: id }),
+      BuddyProfile.deleteMany({ userId: id }),
+      BuddyRequest.deleteMany({ $or: [{ requesterId: id }, { recipientId: id }] }),
+      EventRegistration.deleteMany({ userId: id }),
+      Notification.deleteMany({ userId: id }),
+      Bookmark.deleteMany({ userId: id }),
+      AdminRequest.deleteMany({ $or: [{ userId: id }, { userEmail: targetUser.email }] }),
+    ]);
+
+    return successResponse({
+      message: `User ${targetUser.email} and all associated records have been permanently deleted.`,
+    });
   } catch (error) {
     return handleApiError(error);
   }
